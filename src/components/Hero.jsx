@@ -17,7 +17,7 @@ export default function Hero() {
   const heroRef = useRef(null);
   const portraitRef = useRef(null);
 
-  // GSAP ScrollTrigger: Pin Hero and rotate portrait horizontally 360° on scroll (Left to Right)
+  // GSAP ScrollTrigger: Pin Hero and rotate portrait horizontally 360° on scroll (Right to Left)
   useEffect(() => {
     if (!heroRef.current || !portraitRef.current) return;
 
@@ -34,9 +34,9 @@ export default function Hero() {
         }
       });
 
-      // 3D Left-to-Right Horizontal Spin
+      // 3D Right-to-Left Horizontal Spin (-360deg)
       tl.to(portraitRef.current, {
-        rotationY: 360,
+        rotationY: -360,
         ease: 'none',
         transformOrigin: '50% 50%'
       });
@@ -90,7 +90,7 @@ export default function Hero() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '140px 24px 80px',
+        padding: '85px 24px 30px',
         overflow: 'hidden'
       }}
     >
@@ -517,24 +517,24 @@ export default function Hero() {
             className="animate-float"
             style={{
               position: 'absolute',
-              top: '-15px',
-              right: '-20px',
-              padding: '10px 16px',
-              borderRadius: '16px',
-              background: 'rgba(13, 20, 36, 0.9)',
+              top: '-10px',
+              right: '-12px',
+              padding: '8px 14px',
+              borderRadius: '14px',
+              background: 'rgba(13, 20, 36, 0.92)',
               backdropFilter: 'blur(16px)',
               border: '1px solid rgba(0, 242, 254, 0.4)',
               boxShadow: '0 10px 25px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 242, 254, 0.3)',
               display: 'flex',
               alignItems: 'center',
-              gap: '10px',
+              gap: '8px',
               zIndex: 20
             }}
           >
-            <Atom size={20} color="#00f2fe" className="animate-spin-slow" />
+            <Atom size={18} color="#00f2fe" className="animate-spin-slow" />
             <div>
-              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#fff' }}>React 19</div>
-              <div style={{ fontSize: '0.7rem', color: '#00f2fe', fontFamily: 'var(--font-mono)' }}>Frontend Core</div>
+              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#fff' }}>React 19</div>
+              <div style={{ fontSize: '0.68rem', color: '#00f2fe', fontFamily: 'var(--font-mono)' }}>Frontend Core</div>
             </div>
           </div>
 
@@ -543,25 +543,25 @@ export default function Hero() {
             className="animate-float"
             style={{
               position: 'absolute',
-              bottom: '40px',
-              left: '-25px',
-              padding: '10px 16px',
-              borderRadius: '16px',
-              background: 'rgba(13, 20, 36, 0.9)',
+              bottom: '30px',
+              left: '-15px',
+              padding: '8px 14px',
+              borderRadius: '14px',
+              background: 'rgba(13, 20, 36, 0.92)',
               backdropFilter: 'blur(16px)',
               border: '1px solid rgba(139, 92, 246, 0.4)',
               boxShadow: '0 10px 25px rgba(0, 0, 0, 0.6), 0 0 20px rgba(139, 92, 246, 0.3)',
               display: 'flex',
               alignItems: 'center',
-              gap: '10px',
+              gap: '8px',
               animationDelay: '1.8s',
               zIndex: 20
             }}
           >
-            <Server size={20} color="#22c55e" />
+            <Server size={18} color="#22c55e" />
             <div>
-              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#fff' }}>Node & Express</div>
-              <div style={{ fontSize: '0.7rem', color: '#10b981', fontFamily: 'var(--font-mono)' }}>REST APIs</div>
+              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#fff' }}>Node & Express</div>
+              <div style={{ fontSize: '0.68rem', color: '#10b981', fontFamily: 'var(--font-mono)' }}>REST APIs</div>
             </div>
           </div>
 
@@ -570,25 +570,25 @@ export default function Hero() {
             className="animate-float"
             style={{
               position: 'absolute',
-              bottom: '-20px',
-              right: '-10px',
-              padding: '12px 18px',
-              borderRadius: '16px',
-              background: 'rgba(13, 20, 36, 0.9)',
+              bottom: '-10px',
+              right: '-8px',
+              padding: '10px 16px',
+              borderRadius: '14px',
+              background: 'rgba(13, 20, 36, 0.92)',
               backdropFilter: 'blur(16px)',
               border: '1px solid rgba(236, 72, 153, 0.4)',
               boxShadow: '0 10px 25px rgba(0, 0, 0, 0.6), 0 0 20px rgba(236, 72, 153, 0.3)',
               display: 'flex',
               alignItems: 'center',
-              gap: '12px',
+              gap: '10px',
               animationDelay: '3s',
               zIndex: 20
             }}
           >
-            <span style={{ fontSize: '1.5rem', fontWeight: 800 }} className="gradient-text-alt">
+            <span style={{ fontSize: '1.4rem', fontWeight: 800 }} className="gradient-text-alt">
               {personalInfo.completedProjects}
             </span>
-            <span style={{ fontSize: '0.75rem', color: '#cbd5e1', lineHeight: 1.2 }}>
+            <span style={{ fontSize: '0.72rem', color: '#cbd5e1', lineHeight: 1.2 }}>
               MERN<br />Projects
             </span>
           </div>
