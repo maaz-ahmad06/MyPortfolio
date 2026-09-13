@@ -6,15 +6,15 @@ export const personalInfo = {
   firstName: "Maaz",
   lastName: "Ahmad",
   avatar: "/profile.jpg", // Place your image as profile.jpg in public folder or paste image URL here
-  tagline: "Full Stack MERN Developer & Software Engineering Undergraduate",
+  tagline: "Full Stack MERN Developer & Software Engineering Graduate",
   roles: [
     "Full Stack MERN Developer",
-    "Software Engineering Student",
+    "Software Engineering Graduate",
     "React & Modern UI Engineer",
     "Node.js & Express API Architect",
     "MongoDB & Database Specialist"
   ],
-  bio: "Passionate Software Engineering undergraduate at Islamia College University Peshawar with hands-on expertise in the Full Stack MERN ecosystem (MongoDB, Express.js, React, Node.js). Dedicated to engineering blazing-fast, scalable web applications with immersive interactive user experiences.",
+  bio: "Software Engineering Graduate from Islamia College University Peshawar with hands-on expertise in the Full Stack MERN ecosystem (MongoDB, Express.js, React, Node.js). Dedicated to engineering blazing-fast, scalable web applications with immersive interactive user experiences.",
   location: "Peshawar, Pakistan",
   hometown: "Orakzai, Pakistan",
   email: "maazahmad21988@gmail.com",
