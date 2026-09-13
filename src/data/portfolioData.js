@@ -16,19 +16,19 @@ export const personalInfo = {
   ],
   bio: "Passionate Full Stack Developer with hands-on expertise in the MERN ecosystem (MongoDB, Express.js, React, Node.js). Certified through the NAVTTC & AKTI Full Stack program, dedicated to engineering blazing-fast, scalable web applications with immersive interactive user experiences.",
   location: "Karachi, Pakistan",
-  email: "maaz.dev.mern@gmail.com",
-  phone: "+92 300 1234567",
+  email: "maazahmad21988@gmail.com",
+  phone: "+92 335 3545245",
   status: "Available for Full-time Roles & Freelance Projects",
   yearsExperience: "2+",
   completedProjects: "18+",
   satisfiedClients: "15+",
   codeCommits: "850+",
   socials: {
-    github: "https://github.com",
-    linkedin: "https://linkedin.com",
+    github: "https://github.com/maaz-ahmad06",
+    linkedin: "https://www.linkedin.com/in/maaz-ahmad-a71830414",
     twitter: "https://twitter.com",
-    whatsapp: "https://wa.me/923001234567",
-    email: "mailto:maaz.dev.mern@gmail.com"
+    whatsapp: "https://wa.me/923353545245",
+    email: "mailto:maazahmad21988@gmail.com"
   },
   resumeUrl: "#resume"
 };
@@ -240,6 +240,6 @@ export const terminalCommands = {
   about: "Maaz Ahmad - Passionate Full Stack MERN Developer from Karachi, Pakistan.",
   skills: "React, Node.js, Express, MongoDB, TailwindCSS, JavaScript ES6+, Git, REST APIs",
   projects: "DevPulse MERN Community, ShopZen E-Commerce, TaskFlow Pro, WeatherNexus, CryptoView",
-  contact: "Email: maaz.dev.mern@gmail.com | WhatsApp: +92 300 1234567",
-  socials: "GitHub: github.com | LinkedIn: linkedin.com | WhatsApp: wa.me"
+  contact: "Email: maazahmad21988@gmail.com | WhatsApp: +92 335 3545245",
+  socials: "GitHub: github.com/maaz-ahmad06 | LinkedIn: linkedin.com/in/maaz-ahmad-a71830414 | WhatsApp: wa.me/923353545245"
 };

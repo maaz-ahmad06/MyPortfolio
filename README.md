@@ -110,9 +110,9 @@ Portfolio/
 
 **Maaz Ahmad**  
 *Full Stack MERN Developer & UI/UX Craftsman*  
-- 💼 [LinkedIn](https://linkedin.com)
+- 💼 [LinkedIn](https://www.linkedin.com/in/maaz-ahmad-a71830414)
 - 🐙 [GitHub](https://github.com/maaz-ahmad06)
-- 📧 [Email](mailto:maaz.dev.mern@gmail.com)
+- 📧 [Email](mailto:maazahmad21988@gmail.com)
 
 ---
 © 2026 Maaz Ahmad. All Rights Reserved.
