@@ -134,7 +134,7 @@ export default function About() {
             </p>
 
             <p style={{ color: '#94a3b8', lineHeight: 1.7, fontSize: '0.98rem', marginBottom: '28px' }}>
-              Trained through the rigorous <strong>NAVTTC & AKTI Prime Minister Youth Skill Development Full Stack Program</strong>, I have mastered building complex state-driven React frontends, robust Node.js/Express REST microservices, and reliable MongoDB database architectures.
+              Currently pursuing my <strong>BS in Software Engineering at Islamia College University, Peshawar</strong>, I specialize in engineering state-driven React frontends, robust Node.js/Express REST APIs, and scalable MongoDB database architectures.
             </p>
 
             {/* Key Pillars */}

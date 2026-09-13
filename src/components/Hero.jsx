@@ -463,7 +463,7 @@ export default function Hero() {
                       fontWeight: 600
                     }}
                   >
-                    NAVTTC & AKTI PRIME CERTIFIED
+                    ISLAMIA COLLEGE UNIVERSITY PESHAWAR
                   </div>
                 </div>
 

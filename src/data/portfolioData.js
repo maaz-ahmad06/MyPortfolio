@@ -6,16 +6,17 @@ export const personalInfo = {
   firstName: "Maaz",
   lastName: "Ahmad",
   avatar: "/profile.jpg", // Place your image as profile.jpg in public folder or paste image URL here
-  tagline: "Full Stack MERN Developer & UI/UX Craftsman",
+  tagline: "Full Stack MERN Developer & Software Engineering Undergraduate",
   roles: [
     "Full Stack MERN Developer",
+    "Software Engineering Student",
     "React & Modern UI Engineer",
     "Node.js & Express API Architect",
-    "MongoDB & Database Specialist",
-    "Creative Web Designer"
+    "MongoDB & Database Specialist"
   ],
-  bio: "Passionate Full Stack Developer with hands-on expertise in the MERN ecosystem (MongoDB, Express.js, React, Node.js). Certified through the NAVTTC & AKTI Full Stack program, dedicated to engineering blazing-fast, scalable web applications with immersive interactive user experiences.",
-  location: "Karachi, Pakistan",
+  bio: "Passionate Software Engineering undergraduate at Islamia College University Peshawar with hands-on expertise in the Full Stack MERN ecosystem (MongoDB, Express.js, React, Node.js). Dedicated to engineering blazing-fast, scalable web applications with immersive interactive user experiences.",
+  location: "Peshawar, Pakistan",
+  hometown: "Orakzai, Pakistan",
   email: "maazahmad21988@gmail.com",
   phone: "+92 335 3545245",
   status: "Available for Full-time Roles & Freelance Projects",
@@ -80,7 +81,7 @@ export const projectsData = [
       "Real-time notifications and profile analytics"
     ],
     gradient: "linear-gradient(135deg, #00f2fe 0%, #4facfe 100%)",
-    github: "https://github.com",
+    github: "https://github.com/maaz-ahmad06",
     demo: "https://demo.devpulse-example.com",
     image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80"
   },
@@ -99,7 +100,7 @@ export const projectsData = [
       "Responsive mobile-first layout with smooth micro-interactions"
     ],
     gradient: "linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)",
-    github: "https://github.com",
+    github: "https://github.com/maaz-ahmad06",
     demo: "https://demo.shopzen-example.com",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
   },
@@ -118,7 +119,7 @@ export const projectsData = [
       "Gorgeous glassmorphism cyber dark theme"
     ],
     gradient: "linear-gradient(135deg, #10b981 0%, #00f2fe 100%)",
-    github: "https://github.com",
+    github: "https://github.com/maaz-ahmad06",
     demo: "https://demo.taskflow-example.com",
     image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80"
   },
@@ -137,7 +138,7 @@ export const projectsData = [
       "Air Quality Index (AQI) and UV radiation metrics"
     ],
     gradient: "linear-gradient(135deg, #f59e0b 0%, #ec4899 100%)",
-    github: "https://github.com",
+    github: "https://github.com/maaz-ahmad06",
     demo: "https://demo.weathernexus-example.com",
     image: "https://images.unsplash.com/photo-1592210454359-9043f067919b?auto=format&fit=crop&w=800&q=80"
   },
@@ -156,7 +157,7 @@ export const projectsData = [
       "Fast debounced search across hundreds of tokens"
     ],
     gradient: "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)",
-    github: "https://github.com",
+    github: "https://github.com/maaz-ahmad06",
     demo: "https://demo.cryptoview-example.com",
     image: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=800&q=80"
   },
@@ -175,36 +176,44 @@ export const projectsData = [
       "Full Postman collection and API documentation included"
     ],
     gradient: "linear-gradient(135deg, #00f2fe 0%, #10b981 100%)",
-    github: "https://github.com",
-    demo: "https://github.com",
+    github: "https://github.com/maaz-ahmad06",
+    demo: "https://github.com/maaz-ahmad06",
     image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80"
   }
 ];
 
 export const experienceData = [
   {
-    period: "2025 - Present",
+    period: "2022 - 2026",
+    title: "BS Software Engineering",
+    organization: "Islamia College University, Peshawar",
+    location: "Peshawar, Khyber Pakhtunkhwa",
+    desc: "Comprehensive software engineering degree covering Software Architecture, Algorithms & Data Structures, Modern Web Technologies, OOP, Database Systems, Computer Networks, and Full Stack application lifecycle.",
+    tags: ["Software Engineering", "Full Stack", "Algorithms", "React & Node.js", "Databases"]
+  },
+  {
+    period: "2024 - Present",
     title: "Full Stack Web Developer (MERN)",
-    organization: "Independent Projects & Freelance",
-    location: "Karachi, Pakistan",
-    desc: "Architecting custom full-stack web applications, dynamic React frontends, and high-performance Express/Node.js REST APIs for various real-world client use cases.",
-    tags: ["React 19", "Node.js", "Express", "MongoDB", "REST APIs"]
+    organization: "Freelance & Independent Projects",
+    location: "Peshawar, Pakistan",
+    desc: "Architecting custom full-stack web applications, dynamic React frontends, scalable Express/Node.js REST APIs, and optimized MongoDB schemas for client and real-world projects.",
+    tags: ["React 19", "Node.js", "Express", "MongoDB", "REST APIs", "TailwindCSS"]
   },
   {
-    period: "2024 - 2025",
-    title: "Full Stack Web Development Certification",
-    organization: "NAVTTC & AKTI Prime Minister Youth Skill Development",
-    location: "AKTI Center, Karachi",
-    desc: "Intensive training in modern web engineering including Frontend (HTML5, CSS3, JavaScript ES6+, React), Backend (Node.js, Express.js), Database (MongoDB & SQL), API security, and deployment pipelines.",
-    tags: ["Full Stack", "MERN Stack", "JavaScript", "Git/GitHub", "Database Design"]
+    period: "2020 - 2022",
+    title: "FSc Pre-Engineering",
+    organization: "Wisdom College, Hangu",
+    location: "Hangu, Khyber Pakhtunkhwa",
+    desc: "Strong core analytical and mathematical foundation with rigorous coursework in Calculus, Physics, Analytical Reasoning, and Scientific Methodology.",
+    tags: ["Pre-Engineering", "Mathematics", "Physics", "Analytical Problem Solving"]
   },
   {
-    period: "2022 - 2024",
-    title: "Computer Science & Information Technology",
-    organization: "Higher Secondary & Foundation Studies",
-    location: "Karachi, Pakistan",
-    desc: "Strong core foundational knowledge in algorithms, object-oriented programming concepts, database management, and computer networks.",
-    tags: ["Computer Science", "Algorithms", "Web Fundamentals"]
+    period: "2018 - 2020",
+    title: "Matriculation (Science)",
+    organization: "Al-Noor Public High School, Hangu",
+    location: "Hangu, Khyber Pakhtunkhwa",
+    desc: "Secondary School Certificate (SSC) with top academic performance and distinction in General Science, Computer Fundamentals, and Mathematics.",
+    tags: ["Matric Science", "Computer Fundamentals", "Secondary Education"]
   }
 ];
 
