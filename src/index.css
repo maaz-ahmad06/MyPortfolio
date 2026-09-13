@@ -347,6 +347,19 @@ h1, h2, h3, h4, h5, h6 {
   animation: float 6s ease-in-out infinite;
 }
 
+@keyframes bounceSlow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+.animate-bounce {
+  animation: bounceSlow 1.8s ease-in-out infinite;
+}
+
 .animate-spin-slow {
   animation: spinSlow 20s linear infinite;
 }

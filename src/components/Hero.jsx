@@ -1,14 +1,48 @@
-import { useState, useEffect } from 'react';
-import { ArrowRight, Download, MessageCircle, Terminal, Sparkles, Database, Server, Atom, Layers } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { ArrowRight, Download, MessageCircle, Terminal, Sparkles, Database, Server, Atom, Layers, ChevronDown } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './Icons';
 import { personalInfo } from '../data/portfolioData';
 import { soundManager } from '../utils/audioFx';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(100);
+
+  const heroRef = useRef(null);
+  const portraitRef = useRef(null);
+
+  // GSAP ScrollTrigger: Pin Hero and rotate portrait 360° on scroll
+  useEffect(() => {
+    if (!heroRef.current || !portraitRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: 'top top',
+          end: '+=900', // scroll distance to complete full 360 degree spin
+          pin: true,
+          pinSpacing: true,
+          scrub: 1,
+          anticipatePin: 1
+        }
+      });
+
+      tl.to(portraitRef.current, {
+        rotation: 360,
+        ease: 'power1.inOut',
+        transformOrigin: '50% 50%'
+      });
+    }, heroRef);
+
+    return () => ctx.revert();
+  }, []);
 
   // Typewriter effect
   useEffect(() => {
@@ -48,6 +82,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
+      ref={heroRef}
       style={{
         position: 'relative',
         minHeight: '100vh',
@@ -262,8 +297,9 @@ export default function Hero() {
 
         {/* Right Column: Grand Cyber Holographic Portrait Showcase */}
         <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
-          {/* Main Portrait Card Container */}
+          {/* Main Portrait Card Container with ScrollTrigger 360 Spin */}
           <div
+            ref={portraitRef}
             className="portrait-holo-card"
             style={{
               position: 'relative',
@@ -271,7 +307,8 @@ export default function Hero() {
               maxWidth: '380px',
               height: '460px',
               borderRadius: '32px',
-              zIndex: 10
+              zIndex: 10,
+              willChange: 'transform'
             }}
           >
             {/* Inner Image Container */}
@@ -444,6 +481,30 @@ export default function Hero() {
             </span>
           </div>
         </div>
+      </div>
+
+      {/* Subtle Bottom Scroll Cue */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '20px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '4px',
+          color: '#94a3b8',
+          fontSize: '0.75rem',
+          fontFamily: 'var(--font-mono)',
+          letterSpacing: '0.1em',
+          textTransform: 'uppercase',
+          pointerEvents: 'none',
+          opacity: 0.75
+        }}
+      >
+        <span style={{ color: '#00f2fe' }}>Scroll To Spin Profile</span>
+        <ChevronDown size={16} className="animate-bounce" color="#00f2fe" />
       </div>
 
       {/* Responsive Style */}
