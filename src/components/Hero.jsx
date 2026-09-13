@@ -262,7 +262,7 @@ export default function Hero() {
 
         {/* Right Column: Grand Cyber Holographic Portrait Showcase */}
         <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
-          {/* Main Hologram Portrait Card Container */}
+          {/* Main Portrait Card Container */}
           <div
             className="portrait-holo-card"
             style={{
@@ -271,16 +271,9 @@ export default function Hero() {
               maxWidth: '380px',
               height: '460px',
               borderRadius: '32px',
-              padding: '4px',
               zIndex: 10
             }}
           >
-            {/* Ambient Breathing Neon Aura */}
-            <div className="portrait-glow-aura" />
-
-            {/* Rotating Conic Gradient Cyber Ring */}
-            <div className="portrait-conic-ring" />
-
             {/* Inner Image Container */}
             <div className="portrait-inner-box">
               {/* Actual Profile Picture */}
