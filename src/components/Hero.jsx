@@ -17,7 +17,7 @@ export default function Hero() {
   const heroRef = useRef(null);
   const portraitRef = useRef(null);
 
-  // GSAP ScrollTrigger: Pin Hero and rotate portrait 360° on scroll
+  // GSAP ScrollTrigger: Pin Hero and rotate portrait horizontally 360° on scroll (Left to Right)
   useEffect(() => {
     if (!heroRef.current || !portraitRef.current) return;
 
@@ -26,17 +26,18 @@ export default function Hero() {
         scrollTrigger: {
           trigger: heroRef.current,
           start: 'top top',
-          end: '+=900', // scroll distance to complete full 360 degree spin
+          end: '+=1000', // scroll distance for full horizontal 3D flip
           pin: true,
           pinSpacing: true,
-          scrub: 1,
+          scrub: 1.2,
           anticipatePin: 1
         }
       });
 
+      // 3D Left-to-Right Horizontal Spin
       tl.to(portraitRef.current, {
-        rotation: 360,
-        ease: 'power1.inOut',
+        rotationY: 360,
+        ease: 'none',
         transformOrigin: '50% 50%'
       });
     }, heroRef);
@@ -295,105 +296,216 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right Column: Grand Cyber Holographic Portrait Showcase */}
+        {/* Right Column: Grand 3D Flip Portrait Showcase */}
         <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
-          {/* Main Portrait Card Container with ScrollTrigger 360 Spin */}
-          <div
-            ref={portraitRef}
-            className="portrait-holo-card"
-            style={{
-              position: 'relative',
-              width: '100%',
-              maxWidth: '380px',
-              height: '460px',
-              borderRadius: '32px',
-              zIndex: 10,
-              willChange: 'transform'
-            }}
-          >
-            {/* Inner Image Container */}
-            <div className="portrait-inner-box">
-              {/* Actual Profile Picture */}
-              <img
-                src={personalInfo.avatar}
-                alt={personalInfo.name}
-                className="portrait-image"
-                onError={(e) => {
-                  e.currentTarget.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80";
-                }}
-              />
+          {/* 3D Perspective Wrapper */}
+          <div className="portrait-3d-wrapper">
+            {/* Main Double-Sided Flipping Card (Left to Right 360 Spin) */}
+            <div ref={portraitRef} className="portrait-holo-card">
+              {/* FRONT FACE: Profile Picture & Live HUD */}
+              <div className="portrait-face portrait-front">
+                {/* Actual Profile Picture */}
+                <img
+                  src={personalInfo.avatar}
+                  alt={personalInfo.name}
+                  className="portrait-image"
+                  onError={(e) => {
+                    e.currentTarget.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80";
+                  }}
+                />
 
-              {/* Laser Scanline Effect */}
-              <div className="laser-scanline" />
+                {/* Laser Scanline Effect */}
+                <div className="laser-scanline" />
 
-              {/* Cyber HUD Corner Brackets */}
-              <div className="hud-corner hud-tl" />
-              <div className="hud-corner hud-tr" />
-              <div className="hud-corner hud-bl" />
-              <div className="hud-corner hud-br" />
+                {/* Cyber HUD Corner Brackets */}
+                <div className="hud-corner hud-tl" />
+                <div className="hud-corner hud-tr" />
+                <div className="hud-corner hud-bl" />
+                <div className="hud-corner hud-br" />
 
-              {/* Dark Gradient Overlay for bottom text clarity */}
-              <div
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: 'linear-gradient(to top, rgba(6, 9, 19, 0.95) 0%, rgba(6, 9, 19, 0.4) 35%, transparent 65%)',
-                  pointerEvents: 'none'
-                }}
-              />
-
-              {/* Top Developer HUD Tag */}
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '16px',
-                  left: '16px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  padding: '5px 12px',
-                  borderRadius: '9999px',
-                  background: 'rgba(6, 9, 19, 0.75)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(0, 242, 254, 0.4)',
-                  boxShadow: '0 0 15px rgba(0, 242, 254, 0.2)'
-                }}
-              >
-                <span className="radar-dot" />
-                <span className="font-mono" style={{ fontSize: '0.75rem', color: '#00f2fe', fontWeight: 700 }}>
-                  SYSTEM ACTIVE
-                </span>
-              </div>
-
-              {/* Bottom Identity & Code Pill */}
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: '20px',
-                  left: '20px',
-                  right: '20px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '4px'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <h3 style={{ fontSize: '1.4rem', color: '#fff', letterSpacing: '-0.02em', margin: 0 }}>
-                    {personalInfo.name}
-                  </h3>
-                  <Sparkles size={16} color="#00f2fe" />
-                </div>
+                {/* Dark Gradient Overlay for bottom text clarity */}
                 <div
-                  className="font-mono"
                   style={{
-                    fontSize: '0.82rem',
-                    color: '#38bdf8',
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(to top, rgba(6, 9, 19, 0.95) 0%, rgba(6, 9, 19, 0.4) 35%, transparent 65%)',
+                    pointerEvents: 'none'
+                  }}
+                />
+
+                {/* Top Developer HUD Tag */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '16px',
+                    left: '16px',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '6px'
+                    gap: '6px',
+                    padding: '5px 12px',
+                    borderRadius: '9999px',
+                    background: 'rgba(6, 9, 19, 0.75)',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(0, 242, 254, 0.4)',
+                    boxShadow: '0 0 15px rgba(0, 242, 254, 0.2)'
                   }}
                 >
-                  <span>Full Stack MERN Developer</span>
+                  <span className="radar-dot" />
+                  <span className="font-mono" style={{ fontSize: '0.75rem', color: '#00f2fe', fontWeight: 700 }}>
+                    SYSTEM ACTIVE
+                  </span>
+                </div>
+
+                {/* Bottom Identity & Code Pill */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: '20px',
+                    left: '20px',
+                    right: '20px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '4px'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <h3 style={{ fontSize: '1.4rem', color: '#fff', letterSpacing: '-0.02em', margin: 0 }}>
+                      {personalInfo.name}
+                    </h3>
+                    <Sparkles size={16} color="#00f2fe" />
+                  </div>
+                  <div
+                    className="font-mono"
+                    style={{
+                      fontSize: '0.82rem',
+                      color: '#38bdf8',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px'
+                    }}
+                  >
+                    <span>Full Stack MERN Developer</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* BACK FACE: Futuristic Cyber Hologram Developer ID */}
+              <div className="portrait-face portrait-back">
+                {/* Cyber HUD Corner Brackets */}
+                <div className="hud-corner hud-tl" style={{ borderColor: '#8b5cf6' }} />
+                <div className="hud-corner hud-tr" style={{ borderColor: '#8b5cf6' }} />
+                <div className="hud-corner hud-bl" style={{ borderColor: '#8b5cf6' }} />
+                <div className="hud-corner hud-br" style={{ borderColor: '#8b5cf6' }} />
+
+                {/* Top Back Header */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      padding: '4px 10px',
+                      borderRadius: '9999px',
+                      background: 'rgba(139, 92, 246, 0.15)',
+                      border: '1px solid rgba(139, 92, 246, 0.4)',
+                      color: '#a855f7',
+                      fontSize: '0.72rem',
+                      fontFamily: 'var(--font-mono)',
+                      fontWeight: 700
+                    }}
+                  >
+                    <Terminal size={12} />
+                    <span>DEV_CARD // #MERN</span>
+                  </div>
+
+                  <span className="font-mono" style={{ fontSize: '0.72rem', color: '#94a3b8' }}>
+                    ID: 2026-MAAZ
+                  </span>
+                </div>
+
+                {/* Center Holographic Crest */}
+                <div style={{ textAlign: 'center', padding: '10px 0' }}>
+                  <div
+                    style={{
+                      width: '70px',
+                      height: '70px',
+                      margin: '0 auto 10px',
+                      borderRadius: '20px',
+                      background: 'linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(139, 92, 246, 0.3))',
+                      border: '1px solid rgba(139, 92, 246, 0.5)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 0 25px rgba(139, 92, 246, 0.35)',
+                      position: 'relative'
+                    }}
+                  >
+                    <Atom size={36} color="#00f2fe" className="animate-spin-slow" />
+                  </div>
+
+                  <h4 style={{ fontSize: '1.25rem', color: '#fff', marginBottom: '2px', fontWeight: 800 }}>
+                    {personalInfo.name}
+                  </h4>
+                  <p className="gradient-text" style={{ fontSize: '0.8rem', fontWeight: 700, fontFamily: 'var(--font-mono)', marginBottom: '8px' }}>
+                    FULL STACK MERN ENGINEER
+                  </p>
+
+                  <div
+                    style={{
+                      display: 'inline-block',
+                      padding: '3px 10px',
+                      borderRadius: '6px',
+                      background: 'rgba(16, 185, 129, 0.1)',
+                      border: '1px solid rgba(16, 185, 129, 0.3)',
+                      color: '#10b981',
+                      fontSize: '0.7rem',
+                      fontFamily: 'var(--font-mono)',
+                      fontWeight: 600
+                    }}
+                  >
+                    NAVTTC & AKTI PRIME CERTIFIED
+                  </div>
+                </div>
+
+                {/* Core Stack Badges */}
+                <div>
+                  <div style={{ fontSize: '0.72rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '8px', textAlign: 'center' }}>
+                    Core Competencies
+                  </div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px', justifyContent: 'center' }}>
+                    {['React 19', 'Node.js', 'Express', 'MongoDB', 'REST APIs', 'Tailwind'].map((tech, i) => (
+                      <span
+                        key={i}
+                        style={{
+                          padding: '3px 8px',
+                          borderRadius: '6px',
+                          background: 'rgba(255, 255, 255, 0.05)',
+                          border: '1px solid rgba(255, 255, 255, 0.1)',
+                          color: '#38bdf8',
+                          fontSize: '0.72rem',
+                          fontFamily: 'var(--font-mono)'
+                        }}
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Bottom Back Tag */}
+                <div
+                  style={{
+                    paddingTop: '10px',
+                    borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    fontSize: '0.72rem',
+                    color: '#94a3b8'
+                  }}
+                >
+                  <span style={{ color: '#10b981', fontWeight: 600 }}>● OPEN TO WORK</span>
+                  <span>{personalInfo.location}</span>
                 </div>
               </div>
             </div>
