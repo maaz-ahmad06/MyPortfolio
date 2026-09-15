@@ -14,7 +14,6 @@ import Footer from './components/Footer';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
-  const [isSoundOn, setIsSoundOn] = useState(false);
 
   return (
     <div style={{ position: 'relative', minHeight: '100vh' }}>
@@ -28,7 +27,7 @@ export default function App() {
       <CustomCursor />
 
       {/* Floating Glassmorphism Navbar */}
-      <Navbar isSoundOn={isSoundOn} setIsSoundOn={setIsSoundOn} />
+      <Navbar />
 
       {/* Main Content Sections */}
       <main>

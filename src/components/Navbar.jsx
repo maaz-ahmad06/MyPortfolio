@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Volume2, VolumeX, Menu, X, Code2, Sparkles, Send } from 'lucide-react';
+import { Menu, X, Code2, Sparkles, Send } from 'lucide-react';
 import { personalInfo } from '../data/portfolioData';
 import { soundManager } from '../utils/audioFx';
 
-export default function Navbar({ isSoundOn, setIsSoundOn }) {
+export default function Navbar() {
   const [activeSection, setActiveSection] = useState('hero');
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -41,11 +41,6 @@ export default function Navbar({ isSoundOn, setIsSoundOn }) {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const toggleAudio = () => {
-    const state = soundManager.toggleSound();
-    setIsSoundOn(state);
-  };
 
   const handleNavClick = (href) => {
     soundManager.playClick();
@@ -179,29 +174,6 @@ export default function Navbar({ isSoundOn, setIsSoundOn }) {
 
         {/* Action Controls */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          {/* Sound Toggle */}
-          <button
-            onClick={toggleAudio}
-            onMouseEnter={() => soundManager.playHover()}
-            title={isSoundOn ? "Mute Sci-Fi Audio" : "Enable Sci-Fi Audio"}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '38px',
-              height: '38px',
-              borderRadius: '50%',
-              background: isSoundOn ? 'rgba(0, 242, 254, 0.15)' : 'rgba(255, 255, 255, 0.05)',
-              border: isSoundOn ? '1px solid rgba(0, 242, 254, 0.4)' : '1px solid rgba(255, 255, 255, 0.1)',
-              color: isSoundOn ? '#00f2fe' : '#94a3b8',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
-              boxShadow: isSoundOn ? '0 0 12px rgba(0, 242, 254, 0.3)' : 'none'
-            }}
-          >
-            {isSoundOn ? <Volume2 size={18} /> : <VolumeX size={18} />}
-          </button>
-
           {/* Quick Contact CTA */}
           <a
             href="#contact"
