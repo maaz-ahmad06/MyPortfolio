@@ -36,8 +36,8 @@ export default function Experience() {
             top: '10px',
             bottom: '10px',
             width: '2px',
-            background: 'linear-gradient(180deg, #00f2fe 0%, #8b5cf6 50%, #ec4899 100%)',
-            boxShadow: '0 0 10px rgba(0, 242, 254, 0.5)'
+            background: 'linear-gradient(180deg, #0284c7 0%, #6366f1 50%, #db2777 100%)',
+            boxShadow: '0 0 10px rgba(2, 132, 199, 0.25)'
           }}
         />
 
@@ -60,9 +60,9 @@ export default function Experience() {
                   width: '16px',
                   height: '16px',
                   borderRadius: '50%',
-                  backgroundColor: '#00f2fe',
-                  border: '3px solid #060913',
-                  boxShadow: '0 0 12px #00f2fe'
+                  backgroundColor: '#0284c7',
+                  border: '3px solid #f4f7fb',
+                  boxShadow: '0 0 0 3px rgba(2, 132, 199, 0.22)'
                 }}
               />
 
@@ -84,9 +84,9 @@ export default function Experience() {
                     gap: '6px',
                     padding: '4px 12px',
                     borderRadius: '9999px',
-                    background: 'rgba(0, 242, 254, 0.1)',
-                    border: '1px solid rgba(0, 242, 254, 0.3)',
-                    color: '#00f2fe',
+                    background: 'rgba(2, 132, 199, 0.09)',
+                    border: '1px solid rgba(2, 132, 199, 0.25)',
+                    color: '#0284c7',
                     fontSize: '0.8rem',
                     fontFamily: 'var(--font-mono)',
                     fontWeight: 600
@@ -101,24 +101,24 @@ export default function Experience() {
                     display: 'flex',
                     alignItems: 'center',
                     gap: '6px',
-                    color: '#94a3b8',
+                    color: '#475569',
                     fontSize: '0.85rem'
                   }}
                 >
-                  <MapPin size={14} color="#ec4899" />
+                  <MapPin size={14} color="#db2777" />
                   <span>{item.location}</span>
                 </div>
               </div>
 
               {/* Title & Organization */}
-              <h3 style={{ fontSize: '1.35rem', color: '#fff', marginBottom: '6px' }}>
+              <h3 style={{ fontSize: '1.35rem', color: '#0f172a', marginBottom: '6px' }}>
                 {item.title}
               </h3>
               <div
                 style={{
                   fontSize: '1rem',
                   fontWeight: 600,
-                  color: '#8b5cf6',
+                  color: '#4f46e5',
                   marginBottom: '14px'
                 }}
               >
@@ -129,7 +129,7 @@ export default function Experience() {
               <p
                 style={{
                   fontSize: '0.95rem',
-                  color: '#cbd5e1',
+                  color: '#475569',
                   lineHeight: 1.7,
                   marginBottom: '20px'
                 }}
@@ -145,10 +145,11 @@ export default function Experience() {
                     style={{
                       padding: '4px 10px',
                       borderRadius: '6px',
-                      background: 'rgba(255, 255, 255, 0.04)',
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
-                      color: '#38bdf8',
+                      background: 'rgba(2, 132, 199, 0.08)',
+                      border: '1px solid rgba(2, 132, 199, 0.18)',
+                      color: '#0369a1',
                       fontSize: '0.78rem',
+                      fontWeight: 600,
                       fontFamily: 'var(--font-mono)'
                     }}
                   >

@@ -24,9 +24,9 @@ export default function ProjectModal({ project, onClose }) {
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(4, 7, 15, 0.85)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
+        backgroundColor: 'rgba(15, 23, 42, 0.5)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
         zIndex: 99999,
         display: 'flex',
         alignItems: 'center',
@@ -48,10 +48,10 @@ export default function ProjectModal({ project, onClose }) {
           width: '100%',
           maxHeight: '90vh',
           overflowY: 'auto',
-          background: 'rgba(11, 17, 33, 0.98)',
-          border: '1px solid rgba(0, 242, 254, 0.3)',
+          background: '#ffffff',
+          border: '1px solid rgba(15, 23, 42, 0.1)',
           borderRadius: '24px',
-          boxShadow: '0 25px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(0, 242, 254, 0.2)',
+          boxShadow: '0 30px 60px -15px rgba(15, 23, 42, 0.28)',
           padding: '32px'
         }}
         onClick={(e) => e.stopPropagation()}
@@ -72,25 +72,26 @@ export default function ProjectModal({ project, onClose }) {
             width: '40px',
             height: '40px',
             borderRadius: '50%',
-            background: 'rgba(255, 255, 255, 0.08)',
-            border: '1px solid rgba(255, 255, 255, 0.15)',
-            color: '#fff',
+            background: 'rgba(255, 255, 255, 0.92)',
+            border: '1px solid rgba(15, 23, 42, 0.14)',
+            color: '#0f172a',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             cursor: 'pointer',
             zIndex: 10,
+            boxShadow: '0 4px 12px rgba(15, 23, 42, 0.12)',
             transition: 'all 0.2s ease'
           }}
           onMouseOver={(e) => {
-            e.currentTarget.style.background = 'rgba(236, 72, 153, 0.2)';
-            e.currentTarget.style.borderColor = '#ec4899';
-            e.currentTarget.style.color = '#ec4899';
+            e.currentTarget.style.background = 'rgba(219, 39, 119, 0.1)';
+            e.currentTarget.style.borderColor = '#db2777';
+            e.currentTarget.style.color = '#db2777';
           }}
           onMouseOut={(e) => {
-            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
-            e.currentTarget.style.color = '#fff';
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.92)';
+            e.currentTarget.style.borderColor = 'rgba(15, 23, 42, 0.14)';
+            e.currentTarget.style.color = '#0f172a';
           }}
         >
           <X size={20} />
@@ -104,7 +105,7 @@ export default function ProjectModal({ project, onClose }) {
             borderRadius: '16px',
             overflow: 'hidden',
             marginBottom: '24px',
-            border: '1px solid rgba(255, 255, 255, 0.1)'
+            border: '1px solid rgba(15, 23, 42, 0.08)'
           }}
         >
           <img
@@ -120,7 +121,7 @@ export default function ProjectModal({ project, onClose }) {
             style={{
               position: 'absolute',
               inset: 0,
-              background: 'linear-gradient(to top, rgba(11, 17, 33, 0.9) 0%, transparent 60%)'
+              background: 'linear-gradient(to top, rgba(15, 23, 42, 0.65) 0%, transparent 60%)'
             }}
           />
           <div
@@ -133,10 +134,10 @@ export default function ProjectModal({ project, onClose }) {
               gap: '6px',
               padding: '6px 14px',
               borderRadius: '9999px',
-              background: 'rgba(0, 242, 254, 0.2)',
+              background: 'rgba(255, 255, 255, 0.94)',
               backdropFilter: 'blur(8px)',
-              border: '1px solid rgba(0, 242, 254, 0.5)',
-              color: '#00f2fe',
+              border: '1px solid rgba(2, 132, 199, 0.3)',
+              color: '#0284c7',
               fontSize: '0.8rem',
               fontWeight: 700,
               fontFamily: 'var(--font-mono)'
@@ -152,7 +153,7 @@ export default function ProjectModal({ project, onClose }) {
           id="project-modal-title"
           style={{
             fontSize: '1.8rem',
-            color: '#fff',
+            color: '#0f172a',
             marginBottom: '14px',
             lineHeight: 1.2
           }}
@@ -164,7 +165,7 @@ export default function ProjectModal({ project, onClose }) {
         <p
           style={{
             fontSize: '1rem',
-            color: '#cbd5e1',
+            color: '#475569',
             lineHeight: 1.7,
             marginBottom: '24px'
           }}
@@ -177,7 +178,7 @@ export default function ProjectModal({ project, onClose }) {
           <h4
             style={{
               fontSize: '0.9rem',
-              color: '#94a3b8',
+              color: '#64748b',
               textTransform: 'uppercase',
               letterSpacing: '0.08em',
               marginBottom: '10px'
@@ -192,10 +193,11 @@ export default function ProjectModal({ project, onClose }) {
                 style={{
                   padding: '6px 14px',
                   borderRadius: '8px',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(0, 242, 254, 0.2)',
-                  color: '#00f2fe',
+                  background: 'rgba(2, 132, 199, 0.08)',
+                  border: '1px solid rgba(2, 132, 199, 0.2)',
+                  color: '#0369a1',
                   fontSize: '0.85rem',
+                  fontWeight: 600,
                   fontFamily: 'var(--font-mono)'
                 }}
               >
@@ -211,7 +213,7 @@ export default function ProjectModal({ project, onClose }) {
             <h4
               style={{
                 fontSize: '0.9rem',
-                color: '#94a3b8',
+                color: '#64748b',
                 textTransform: 'uppercase',
                 letterSpacing: '0.08em',
                 marginBottom: '12px'
@@ -222,8 +224,8 @@ export default function ProjectModal({ project, onClose }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {project.highlights.map((h, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                  <CheckCircle2 size={18} color="#10b981" style={{ flexShrink: 0, marginTop: '2px' }} />
-                  <span style={{ fontSize: '0.92rem', color: '#e2e8f0', lineHeight: 1.5 }}>{h}</span>
+                  <CheckCircle2 size={18} color="#059669" style={{ flexShrink: 0, marginTop: '2px' }} />
+                  <span style={{ fontSize: '0.92rem', color: '#334155', lineHeight: 1.5 }}>{h}</span>
                 </div>
               ))}
             </div>

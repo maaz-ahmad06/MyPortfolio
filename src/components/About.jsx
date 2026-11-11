@@ -90,8 +90,8 @@ export default function About() {
                   height: '64px',
                   borderRadius: '18px',
                   padding: '2.5px',
-                  background: 'linear-gradient(135deg, #00f2fe, #8b5cf6)',
-                  boxShadow: '0 0 15px rgba(0, 242, 254, 0.4)',
+                  background: 'linear-gradient(135deg, #0284c7, #6366f1)',
+                  boxShadow: '0 6px 18px rgba(2, 132, 199, 0.25)',
                   flexShrink: 0
                 }}
               >
@@ -118,8 +118,8 @@ export default function About() {
                     gap: '8px',
                     padding: '4px 12px',
                     borderRadius: '8px',
-                    background: 'rgba(0, 242, 254, 0.1)',
-                    color: '#00f2fe',
+                    background: 'rgba(2, 132, 199, 0.09)',
+                    color: '#0284c7',
                     fontSize: '0.78rem',
                     fontWeight: 600,
                     fontFamily: 'var(--font-mono)',
@@ -129,17 +129,17 @@ export default function About() {
                   <Sparkles size={13} />
                   <span>PASSIONATE DEVELOPER</span>
                 </div>
-                <h3 style={{ fontSize: '1.6rem', color: '#fff', margin: 0 }}>
+                <h3 style={{ fontSize: '1.6rem', color: '#0f172a', margin: 0 }}>
                   Hello! I'm <span className="gradient-text">{personalInfo.name}</span>
                 </h3>
               </div>
             </div>
 
-            <p style={{ color: '#cbd5e1', lineHeight: 1.8, fontSize: '1.05rem', marginBottom: '20px' }}>
+            <p style={{ color: '#334155', lineHeight: 1.8, fontSize: '1.05rem', marginBottom: '20px' }}>
               I am a Full Stack MERN Developer based in <strong>{personalInfo.location}</strong>. My passion lies in engineering end-to-end modern web applications that are not only performant and scalable under the hood, but also visually breathtaking and effortless to use.
             </p>
 
-            <p style={{ color: '#94a3b8', lineHeight: 1.7, fontSize: '0.98rem', marginBottom: '28px' }}>
+            <p style={{ color: '#475569', lineHeight: 1.7, fontSize: '0.98rem', marginBottom: '28px' }}>
               A <strong>Software Engineering Graduate from Islamia College University, Peshawar</strong>, I specialize in engineering state-driven React frontends, robust Node.js/Express REST APIs, and scalable MongoDB database architectures.
             </p>
 
@@ -159,8 +159,8 @@ export default function About() {
                 'Clean Code & Optimization'
               ].map((item, idx) => (
                 <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <CheckCircle size={16} color="#00f2fe" />
-                  <span style={{ fontSize: '0.9rem', color: '#e2e8f0', fontWeight: 500 }}>{item}</span>
+                  <CheckCircle size={16} color="#0284c7" />
+                  <span style={{ fontSize: '0.9rem', color: '#1e293b', fontWeight: 500 }}>{item}</span>
                 </div>
               ))}
             </div>
@@ -238,7 +238,7 @@ export default function About() {
                 style={{
                   color:
                     item.type === 'user'
-                      ? '#00f2fe'
+                      ? '#38bdf8'
                       : item.type === 'response'
                       ? '#e2e8f0'
                       : '#94a3b8'
@@ -253,11 +253,11 @@ export default function About() {
           <div
             style={{
               padding: '10px 16px',
-              borderTop: '1px solid rgba(255, 255, 255, 0.06)',
+              borderTop: '1px solid rgba(255, 255, 255, 0.08)',
               display: 'flex',
               flexWrap: 'wrap',
               gap: '6px',
-              background: 'rgba(0, 0, 0, 0.3)'
+              background: 'rgba(30, 41, 59, 0.55)'
             }}
           >
             {['about', 'skills', 'projects', 'socials', 'contact', 'clear'].map((cmd) => (
@@ -267,9 +267,9 @@ export default function About() {
                 onClick={() => handleCommand(cmd)}
                 onMouseEnter={() => soundManager.playHover()}
                 style={{
-                  background: 'rgba(0, 242, 254, 0.1)',
-                  border: '1px solid rgba(0, 242, 254, 0.25)',
-                  color: '#00f2fe',
+                  background: 'rgba(56, 189, 248, 0.12)',
+                  border: '1px solid rgba(56, 189, 248, 0.28)',
+                  color: '#38bdf8',
                   borderRadius: '6px',
                   padding: '3px 10px',
                   fontSize: '0.75rem',
@@ -287,14 +287,14 @@ export default function About() {
           <div
             style={{
               padding: '12px 16px',
-              background: 'rgba(13, 20, 36, 0.95)',
+              background: '#1e293b',
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
               borderTop: '1px solid rgba(255, 255, 255, 0.08)'
             }}
           >
-            <span style={{ color: '#00f2fe', fontWeight: 700 }}>$</span>
+            <span style={{ color: '#38bdf8', fontWeight: 700 }}>$</span>
             <input
               type="text"
               aria-label="Terminal command input"
@@ -321,19 +321,19 @@ export default function About() {
             number: personalInfo.yearsExperience,
             label: "Years of Experience",
             sub: "In modern full-stack web engineering & responsive design.",
-            color: "#00f2fe"
+            color: "#0284c7"
           },
           {
             number: personalInfo.completedProjects,
             label: "Projects Completed",
             sub: "Spanning MERN platforms, API architectures, and frontend apps.",
-            color: "#8b5cf6"
+            color: "#6366f1"
           },
           {
             number: "100%",
             label: "Commitment & Precision",
             sub: "Dedicated to writing clean, maintainable, production-ready code.",
-            color: "#10b981"
+            color: "#059669"
           }
         ].map((stat, i) => (
           <TiltCard
@@ -349,16 +349,15 @@ export default function About() {
                 fontSize: '2.8rem',
                 fontWeight: 900,
                 color: stat.color,
-                marginBottom: '6px',
-                textShadow: `0 0 20px ${stat.color}40`
+                marginBottom: '6px'
               }}
             >
               {stat.number}
             </div>
-            <h4 style={{ fontSize: '1.15rem', color: '#fff', marginBottom: '8px' }}>
+            <h4 style={{ fontSize: '1.15rem', color: '#0f172a', marginBottom: '8px' }}>
               {stat.label}
             </h4>
-            <p style={{ fontSize: '0.85rem', color: '#94a3b8', lineHeight: 1.5 }}>
+            <p style={{ fontSize: '0.85rem', color: '#475569', lineHeight: 1.5 }}>
               {stat.sub}
             </p>
           </TiltCard>

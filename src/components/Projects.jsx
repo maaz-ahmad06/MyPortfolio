@@ -58,15 +58,15 @@ export default function Projects() {
                 padding: '10px 22px',
                 borderRadius: '9999px',
                 background: isActive
-                  ? 'linear-gradient(135deg, #00f2fe, #8b5cf6)'
-                  : 'rgba(13, 20, 36, 0.7)',
-                color: isActive ? '#060913' : '#94a3b8',
-                border: isActive ? 'none' : '1px solid rgba(255, 255, 255, 0.08)',
+                  ? 'linear-gradient(135deg, #0284c7, #4f46e5)'
+                  : 'rgba(255, 255, 255, 0.85)',
+                color: isActive ? '#ffffff' : '#475569',
+                border: isActive ? 'none' : '1px solid rgba(15, 23, 42, 0.1)',
                 fontWeight: 700,
                 fontSize: '0.9rem',
                 cursor: 'pointer',
                 transition: 'all 0.25s ease',
-                boxShadow: isActive ? '0 0 20px rgba(0, 242, 254, 0.4)' : 'none'
+                boxShadow: isActive ? '0 6px 18px rgba(37, 99, 235, 0.28)' : '0 2px 8px rgba(15, 23, 42, 0.04)'
               }}
             >
               {cat}
@@ -102,7 +102,7 @@ export default function Projects() {
                 position: 'relative',
                 height: '210px',
                 overflow: 'hidden',
-                borderBottom: '1px solid rgba(255, 255, 255, 0.08)'
+                borderBottom: '1px solid rgba(15, 23, 42, 0.08)'
               }}
             >
               <img
@@ -121,7 +121,7 @@ export default function Projects() {
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  background: 'linear-gradient(to top, rgba(13, 20, 36, 0.95) 0%, transparent 60%)'
+                  background: 'linear-gradient(to top, rgba(15, 23, 42, 0.55) 0%, transparent 55%)'
                 }}
               />
 
@@ -133,13 +133,14 @@ export default function Projects() {
                   left: '14px',
                   padding: '4px 12px',
                   borderRadius: '9999px',
-                  background: 'rgba(6, 9, 19, 0.8)',
+                  background: 'rgba(255, 255, 255, 0.92)',
                   backdropFilter: 'blur(8px)',
-                  border: '1px solid rgba(0, 242, 254, 0.4)',
-                  color: '#00f2fe',
+                  border: '1px solid rgba(2, 132, 199, 0.28)',
+                  color: '#0284c7',
                   fontSize: '0.75rem',
                   fontFamily: 'var(--font-mono)',
-                  fontWeight: 600
+                  fontWeight: 700,
+                  boxShadow: '0 4px 12px rgba(15, 23, 42, 0.12)'
                 }}
               >
                 {project.badge}
@@ -154,14 +155,14 @@ export default function Projects() {
                   width: '36px',
                   height: '36px',
                   borderRadius: '50%',
-                  background: 'rgba(0, 242, 254, 0.2)',
+                  background: 'rgba(255, 255, 255, 0.92)',
                   backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(0, 242, 254, 0.5)',
+                  border: '1px solid rgba(2, 132, 199, 0.35)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#00f2fe',
-                  boxShadow: '0 0 15px rgba(0, 242, 254, 0.3)'
+                  color: '#0284c7',
+                  boxShadow: '0 4px 14px rgba(15, 23, 42, 0.16)'
                 }}
               >
                 <ArrowUpRight size={18} />
@@ -182,7 +183,7 @@ export default function Projects() {
                 <h3
                   style={{
                     fontSize: '1.25rem',
-                    color: '#fff',
+                    color: '#0f172a',
                     marginBottom: '10px',
                     lineHeight: 1.3
                   }}
@@ -192,7 +193,7 @@ export default function Projects() {
                 <p
                   style={{
                     fontSize: '0.9rem',
-                    color: '#94a3b8',
+                    color: '#475569',
                     lineHeight: 1.6,
                     marginBottom: '20px'
                   }}
@@ -217,10 +218,11 @@ export default function Projects() {
                       style={{
                         padding: '4px 10px',
                         borderRadius: '6px',
-                        background: 'rgba(255, 255, 255, 0.04)',
-                        border: '1px solid rgba(255, 255, 255, 0.08)',
-                        color: '#38bdf8',
+                        background: 'rgba(2, 132, 199, 0.08)',
+                        border: '1px solid rgba(2, 132, 199, 0.18)',
+                        color: '#0369a1',
                         fontSize: '0.78rem',
+                        fontWeight: 600,
                         fontFamily: 'var(--font-mono)'
                       }}
                     >
@@ -232,8 +234,8 @@ export default function Projects() {
                       style={{
                         padding: '4px 8px',
                         borderRadius: '6px',
-                        background: 'rgba(255, 255, 255, 0.04)',
-                        color: '#94a3b8',
+                        background: 'rgba(15, 23, 42, 0.05)',
+                        color: '#475569',
                         fontSize: '0.75rem',
                         fontFamily: 'var(--font-mono)'
                       }}
@@ -250,7 +252,7 @@ export default function Projects() {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     paddingTop: '16px',
-                    borderTop: '1px solid rgba(255, 255, 255, 0.06)'
+                    borderTop: '1px solid rgba(15, 23, 42, 0.08)'
                   }}
                   onClick={(e) => e.stopPropagation()}
                 >
@@ -263,9 +265,9 @@ export default function Projects() {
                     style={{
                       background: 'none',
                       border: 'none',
-                      color: '#00f2fe',
+                      color: '#0284c7',
                       fontSize: '0.85rem',
-                      fontWeight: 600,
+                      fontWeight: 700,
                       cursor: 'pointer',
                       display: 'flex',
                       alignItems: 'center',
@@ -285,13 +287,13 @@ export default function Projects() {
                       onMouseEnter={() => soundManager.playHover()}
                       onClick={() => soundManager.playClick()}
                       style={{
-                        color: '#94a3b8',
+                        color: '#64748b',
                         transition: 'color 0.2s',
                         display: 'flex',
                         alignItems: 'center'
                       }}
-                      onMouseOver={(e) => (e.currentTarget.style.color = '#fff')}
-                      onMouseOut={(e) => (e.currentTarget.style.color = '#94a3b8')}
+                      onMouseOver={(e) => (e.currentTarget.style.color = '#0f172a')}
+                      onMouseOut={(e) => (e.currentTarget.style.color = '#64748b')}
                     >
                       <GithubIcon size={18} />
                     </a>
@@ -303,7 +305,7 @@ export default function Projects() {
                       onMouseEnter={() => soundManager.playHover()}
                       onClick={() => soundManager.playClick()}
                       style={{
-                        color: '#00f2fe',
+                        color: '#0284c7',
                         transition: 'color 0.2s',
                         display: 'flex',
                         alignItems: 'center'

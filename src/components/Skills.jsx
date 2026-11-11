@@ -81,15 +81,17 @@ export default function Skills() {
                     gap: '8px',
                     padding: '8px 20px',
                     borderRadius: '9999px',
-                    background: 'rgba(13, 20, 36, 0.7)',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
-                    color: '#e2e8f0',
+                    background: 'rgba(255, 255, 255, 0.9)',
+                    border: '1px solid rgba(15, 23, 42, 0.09)',
+                    color: '#1e293b',
                     fontSize: '0.85rem',
+                    fontWeight: 600,
                     fontFamily: 'var(--font-mono)',
+                    boxShadow: '0 4px 12px rgba(15, 23, 42, 0.04)',
                     whiteSpace: 'nowrap'
                   }}
                 >
-                  <span style={{ color: '#00f2fe' }}>⚡</span>
+                  <span style={{ color: '#0284c7' }}>⚡</span>
                   <span>{item}</span>
                 </div>
               ))}
@@ -135,14 +137,14 @@ export default function Skills() {
               style={{
                 padding: '10px 22px',
                 borderRadius: '9999px',
-                background: isActive ? 'linear-gradient(135deg, #00f2fe, #8b5cf6)' : 'rgba(13, 20, 36, 0.6)',
-                color: isActive ? '#060913' : '#94a3b8',
-                border: isActive ? 'none' : '1px solid rgba(255, 255, 255, 0.08)',
+                background: isActive ? 'linear-gradient(135deg, #0284c7, #4f46e5)' : 'rgba(255, 255, 255, 0.85)',
+                color: isActive ? '#ffffff' : '#475569',
+                border: isActive ? 'none' : '1px solid rgba(15, 23, 42, 0.1)',
                 fontWeight: 700,
                 fontSize: '0.9rem',
                 cursor: 'pointer',
                 transition: 'all 0.25s ease',
-                boxShadow: isActive ? '0 0 20px rgba(0, 242, 254, 0.4)' : 'none'
+                boxShadow: isActive ? '0 6px 18px rgba(37, 99, 235, 0.28)' : '0 2px 8px rgba(15, 23, 42, 0.04)'
               }}
             >
               {tab.label}
@@ -176,12 +178,11 @@ export default function Skills() {
                   width: '46px',
                   height: '46px',
                   borderRadius: '12px',
-                  background: 'rgba(255, 255, 255, 0.04)',
-                  border: `1px solid ${skill.color}40`,
+                  background: `${skill.color}12`,
+                  border: `1px solid ${skill.color}30`,
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: `0 0 15px ${skill.color}25`
+                  justifyContent: 'center'
                 }}
               >
                 {getIcon(skill.icon, skill.color)}
@@ -201,10 +202,10 @@ export default function Skills() {
 
             {/* Skill Title & Desc */}
             <div>
-              <h4 style={{ fontSize: '1.2rem', color: '#fff', marginBottom: '6px' }}>
+              <h4 style={{ fontSize: '1.2rem', color: '#0f172a', marginBottom: '6px' }}>
                 {skill.name}
               </h4>
-              <p style={{ fontSize: '0.82rem', color: '#94a3b8', lineHeight: 1.5 }}>
+              <p style={{ fontSize: '0.82rem', color: '#475569', lineHeight: 1.5 }}>
                 {skill.desc}
               </p>
             </div>
@@ -214,7 +215,7 @@ export default function Skills() {
               style={{
                 width: '100%',
                 height: '6px',
-                background: 'rgba(255, 255, 255, 0.08)',
+                background: 'rgba(15, 23, 42, 0.08)',
                 borderRadius: '9999px',
                 overflow: 'hidden'
               }}
@@ -223,9 +224,8 @@ export default function Skills() {
                 style={{
                   width: `${skill.level}%`,
                   height: '100%',
-                  background: `linear-gradient(90deg, ${skill.color}, #00f2fe)`,
-                  borderRadius: '9999px',
-                  boxShadow: `0 0 8px ${skill.color}`
+                  background: `linear-gradient(90deg, ${skill.color}, #0284c7)`,
+                  borderRadius: '9999px'
                 }}
               />
             </div>

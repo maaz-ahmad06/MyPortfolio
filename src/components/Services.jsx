@@ -57,25 +57,24 @@ export default function Services() {
                   width: '56px',
                   height: '56px',
                   borderRadius: '16px',
-                  background: 'rgba(255, 255, 255, 0.04)',
-                  border: `1px solid ${service.color}40`,
+                  background: `${service.color}12`,
+                  border: `1px solid ${service.color}30`,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  marginBottom: '20px',
-                  boxShadow: `0 0 20px ${service.color}25`
+                  marginBottom: '20px'
                 }}
               >
                 {getIcon(service.icon, service.color)}
               </div>
 
               {/* Service Title */}
-              <h3 style={{ fontSize: '1.35rem', color: '#fff', marginBottom: '12px' }}>
+              <h3 style={{ fontSize: '1.35rem', color: '#0f172a', marginBottom: '12px' }}>
                 {service.title}
               </h3>
 
               {/* Service Description */}
-              <p style={{ fontSize: '0.92rem', color: '#94a3b8', lineHeight: 1.7 }}>
+              <p style={{ fontSize: '0.92rem', color: '#475569', lineHeight: 1.7 }}>
                 {service.desc}
               </p>
             </div>

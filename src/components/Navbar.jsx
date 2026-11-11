@@ -75,13 +75,13 @@ export default function Navbar() {
           justifyContent: 'space-between',
           padding: '10px 20px',
           borderRadius: '9999px',
-          background: isScrolled ? 'rgba(8, 13, 27, 0.88)' : 'rgba(13, 20, 36, 0.65)',
+          background: isScrolled ? 'rgba(255, 255, 255, 0.92)' : 'rgba(255, 255, 255, 0.78)',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
-          border: isScrolled ? '1px solid rgba(0, 242, 254, 0.3)' : '1px solid rgba(255, 255, 255, 0.1)',
+          border: isScrolled ? '1px solid rgba(2, 132, 199, 0.25)' : '1px solid rgba(15, 23, 42, 0.08)',
           boxShadow: isScrolled
-            ? '0 10px 30px -5px rgba(0, 0, 0, 0.7), 0 0 20px -5px rgba(0, 242, 254, 0.2)'
-            : '0 8px 24px rgba(0, 0, 0, 0.3)'
+            ? '0 12px 30px -8px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(2, 132, 199, 0.08)'
+            : '0 8px 24px -6px rgba(15, 23, 42, 0.07)'
         }}
       >
         {/* Brand / Logo */}
@@ -97,7 +97,7 @@ export default function Navbar() {
             alignItems: 'center',
             gap: '10px',
             textDecoration: 'none',
-            color: '#fff',
+            color: '#0f172a',
             fontWeight: 800,
             fontSize: '1.2rem',
             letterSpacing: '-0.02em'
@@ -110,8 +110,8 @@ export default function Navbar() {
               height: '38px',
               borderRadius: '50%',
               padding: '2px',
-              background: 'linear-gradient(135deg, #00f2fe 0%, #8b5cf6 100%)',
-              boxShadow: '0 0 15px rgba(0, 242, 254, 0.5)',
+              background: 'linear-gradient(135deg, #0284c7 0%, #6366f1 100%)',
+              boxShadow: '0 4px 12px rgba(2, 132, 199, 0.28)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -160,14 +160,14 @@ export default function Navbar() {
                 style={{
                   textDecoration: 'none',
                   fontSize: '0.9rem',
-                  fontWeight: 500,
+                  fontWeight: 600,
                   padding: '8px 14px',
                   borderRadius: '9999px',
-                  color: isActive ? '#00f2fe' : '#94a3b8',
-                  background: isActive ? 'rgba(0, 242, 254, 0.12)' : 'transparent',
-                  border: isActive ? '1px solid rgba(0, 242, 254, 0.3)' : '1px solid transparent',
+                  color: isActive ? '#0284c7' : '#475569',
+                  background: isActive ? 'rgba(2, 132, 199, 0.1)' : 'transparent',
+                  border: isActive ? '1px solid rgba(2, 132, 199, 0.25)' : '1px solid transparent',
                   transition: 'all 0.25s ease',
-                  boxShadow: isActive ? '0 0 15px rgba(0, 242, 254, 0.2)' : 'none'
+                  boxShadow: isActive ? '0 2px 10px rgba(2, 132, 199, 0.12)' : 'none'
                 }}
               >
                 {link.label}
@@ -214,9 +214,9 @@ export default function Navbar() {
               width: '38px',
               height: '38px',
               borderRadius: '10px',
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              color: '#fff',
+              background: 'rgba(15, 23, 42, 0.04)',
+              border: '1px solid rgba(15, 23, 42, 0.12)',
+              color: '#0f172a',
               cursor: 'pointer'
             }}
             className="mobile-nav-toggle"
@@ -234,13 +234,13 @@ export default function Navbar() {
             top: 'calc(100% + 10px)',
             left: 0,
             right: 0,
-            background: 'rgba(9, 13, 25, 0.96)',
+            background: 'rgba(255, 255, 255, 0.97)',
             backdropFilter: 'blur(25px)',
             WebkitBackdropFilter: 'blur(25px)',
-            border: '1px solid rgba(0, 242, 254, 0.25)',
+            border: '1px solid rgba(2, 132, 199, 0.22)',
             borderRadius: '20px',
             padding: '20px',
-            boxShadow: '0 15px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 242, 254, 0.2)',
+            boxShadow: '0 18px 40px -10px rgba(15, 23, 42, 0.16)',
             display: 'flex',
             flexDirection: 'column',
             gap: '8px',
@@ -257,20 +257,20 @@ export default function Navbar() {
               }}
               style={{
                 textDecoration: 'none',
-                color: activeSection === link.id ? '#00f2fe' : '#cbd5e1',
+                color: activeSection === link.id ? '#0284c7' : '#334155',
                 padding: '12px 16px',
                 borderRadius: '12px',
-                background: activeSection === link.id ? 'rgba(0, 242, 254, 0.12)' : 'rgba(255, 255, 255, 0.03)',
+                background: activeSection === link.id ? 'rgba(2, 132, 199, 0.1)' : 'rgba(15, 23, 42, 0.03)',
                 fontWeight: 600,
                 fontSize: '1rem',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                border: activeSection === link.id ? '1px solid rgba(0, 242, 254, 0.3)' : '1px solid transparent'
+                border: activeSection === link.id ? '1px solid rgba(2, 132, 199, 0.25)' : '1px solid transparent'
               }}
             >
               <span>{link.label}</span>
-              {activeSection === link.id && <Sparkles size={16} color="#00f2fe" />}
+              {activeSection === link.id && <Sparkles size={16} color="#0284c7" />}
             </a>
           ))}
         </div>

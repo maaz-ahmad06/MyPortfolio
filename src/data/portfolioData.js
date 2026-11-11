@@ -36,26 +36,26 @@ export const personalInfo = {
 
 export const skillsData = {
   frontend: [
-    { name: "React.js", level: 95, icon: "Atom", color: "#00f2fe", desc: "Hooks, Context, Redux Toolkit, React Router, Custom Hooks" },
-    { name: "JavaScript (ES6+)", level: 92, icon: "Code2", color: "#f7df1e", desc: "Async/Await, Closures, DOM, Prototypes, Modern Features" },
-    { name: "HTML5 / CSS3", level: 98, icon: "Layout", color: "#e34f26", desc: "Semantic HTML, Flexbox, CSS Grid, Custom Animations" },
-    { name: "TailwindCSS", level: 95, icon: "Palette", color: "#38bdf8", desc: "Utility-first design, Responsive layouts, Custom themes" },
-    { name: "Redux Toolkit", level: 88, icon: "Cpu", color: "#764abc", desc: "Global state management, RTK Query, Slices, Middleware" },
-    { name: "Next.js", level: 80, icon: "Layers", color: "#ffffff", desc: "SSR, SSG, App Router, Server Components" }
+    { name: "React.js", level: 95, icon: "Atom", color: "#0284c7", desc: "Hooks, Context, Redux Toolkit, React Router, Custom Hooks" },
+    { name: "JavaScript (ES6+)", level: 92, icon: "Code2", color: "#ca8a04", desc: "Async/Await, Closures, DOM, Prototypes, Modern Features" },
+    { name: "HTML5 / CSS3", level: 98, icon: "Layout", color: "#ea580c", desc: "Semantic HTML, Flexbox, CSS Grid, Custom Animations" },
+    { name: "TailwindCSS", level: 95, icon: "Palette", color: "#0ea5e9", desc: "Utility-first design, Responsive layouts, Custom themes" },
+    { name: "Redux Toolkit", level: 88, icon: "Cpu", color: "#7c3aed", desc: "Global state management, RTK Query, Slices, Middleware" },
+    { name: "Next.js", level: 80, icon: "Layers", color: "#0f172a", desc: "SSR, SSG, App Router, Server Components" }
   ],
   backend: [
-    { name: "Node.js", level: 90, icon: "Server", color: "#22c55e", desc: "Event loop, Streams, Async operations, File system" },
-    { name: "Express.js", level: 92, icon: "Zap", color: "#94a3b8", desc: "RESTful APIs, Middleware, JWT Auth, Error handling" },
-    { name: "MongoDB & Mongoose", level: 88, icon: "Database", color: "#10b981", desc: "Schema design, Aggregations, Indexing, CRUD" },
-    { name: "REST APIs", level: 95, icon: "Network", color: "#8b5cf6", desc: "API Architecture, Rate limiting, CORS, Documentation" },
-    { name: "JWT & Auth", level: 90, icon: "ShieldCheck", color: "#f43f5e", desc: "Bcrypt, Role-based access, OAuth 2.0, Secure cookies" }
+    { name: "Node.js", level: 90, icon: "Server", color: "#16a34a", desc: "Event loop, Streams, Async operations, File system" },
+    { name: "Express.js", level: 92, icon: "Zap", color: "#475569", desc: "RESTful APIs, Middleware, JWT Auth, Error handling" },
+    { name: "MongoDB & Mongoose", level: 88, icon: "Database", color: "#059669", desc: "Schema design, Aggregations, Indexing, CRUD" },
+    { name: "REST APIs", level: 95, icon: "Network", color: "#6366f1", desc: "API Architecture, Rate limiting, CORS, Documentation" },
+    { name: "JWT & Auth", level: 90, icon: "ShieldCheck", color: "#e11d48", desc: "Bcrypt, Role-based access, OAuth 2.0, Secure cookies" }
   ],
   tools: [
-    { name: "Git & GitHub", level: 92, icon: "GitBranch", color: "#f05032", desc: "Version control, Branching workflows, PR reviews" },
-    { name: "Postman", level: 90, icon: "Send", color: "#ff6c37", desc: "API testing, Automated tests, Mock servers" },
-    { name: "Vite & Webpack", level: 88, icon: "Rocket", color: "#bd34fe", desc: "Fast build tooling, Module bundling, Optimizations" },
-    { name: "VS Code", level: 95, icon: "Terminal", color: "#007acc", desc: "Productivity extensions, Debugging, Snippets" },
-    { name: "Figma", level: 80, icon: "Figma", color: "#a259ff", desc: "UI wireframing, Prototyping, Design-to-code" }
+    { name: "Git & GitHub", level: 92, icon: "GitBranch", color: "#dc2626", desc: "Version control, Branching workflows, PR reviews" },
+    { name: "Postman", level: 90, icon: "Send", color: "#ea580c", desc: "API testing, Automated tests, Mock servers" },
+    { name: "Vite & Webpack", level: 88, icon: "Rocket", color: "#9333ea", desc: "Fast build tooling, Module bundling, Optimizations" },
+    { name: "VS Code", level: 95, icon: "Terminal", color: "#0284c7", desc: "Productivity extensions, Debugging, Snippets" },
+    { name: "Figma", level: 80, icon: "Figma", color: "#7c3aed", desc: "UI wireframing, Prototyping, Design-to-code" }
   ]
 };
 
@@ -222,25 +222,25 @@ export const servicesData = [
     icon: "Code",
     title: "Full Stack MERN Development",
     desc: "End-to-end web application development from scalable MongoDB schemas and robust Express APIs to dynamic, responsive React user interfaces.",
-    color: "#00f2fe"
+    color: "#0284c7"
   },
   {
     icon: "Layout",
     title: "Modern UI/UX & Frontend",
     desc: "Pixel-perfect, ultra-smooth frontends built with modern React, TailwindCSS, glassmorphism, and engaging micro-animations.",
-    color: "#8b5cf6"
+    color: "#6366f1"
   },
   {
     icon: "Server",
     title: "RESTful API Engineering",
     desc: "Secure, well-documented REST APIs with JWT authentication, role-based access control, caching, and rate limiting.",
-    color: "#10b981"
+    color: "#059669"
   },
   {
     icon: "Zap",
     title: "Performance & Optimization",
     desc: "Lightning-fast page load speeds, SEO optimization, responsive mobile compatibility, and clean code standards.",
-    color: "#f59e0b"
+    color: "#d97706"
   }
 ];
 

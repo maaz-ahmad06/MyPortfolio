@@ -63,7 +63,7 @@ export default function Contact() {
           particleCount: 120,
           spread: 70,
           origin: { y: 0.6 },
-          colors: ['#00f2fe', '#4facfe', '#8b5cf6', '#ec4899', '#10b981']
+          colors: ['#0284c7', '#2563eb', '#6366f1', '#db2777', '#059669']
         });
       } catch {
         // Fallback if canvas confetti fails
@@ -78,20 +78,20 @@ export default function Contact() {
     width: '100%',
     padding: '12px 16px',
     borderRadius: '12px',
-    background: 'rgba(6, 9, 19, 0.7)',
-    border: '1px solid rgba(255, 255, 255, 0.12)',
-    color: '#fff',
+    background: '#f8fafc',
+    border: '1px solid rgba(15, 23, 42, 0.14)',
+    color: '#0f172a',
     fontSize: '0.95rem',
     outline: 'none',
-    transition: 'border-color 0.25s ease'
+    transition: 'border-color 0.25s ease, background-color 0.25s ease'
   };
 
   const labelStyle = {
     display: 'block',
     fontSize: '0.85rem',
-    color: '#94a3b8',
+    color: '#475569',
     marginBottom: '8px',
-    fontWeight: 500
+    fontWeight: 600
   };
 
   return (
@@ -137,19 +137,19 @@ export default function Contact() {
                   width: '46px',
                   height: '46px',
                   borderRadius: '12px',
-                  background: 'rgba(0, 242, 254, 0.1)',
-                  border: '1px solid rgba(0, 242, 254, 0.3)',
+                  background: 'rgba(2, 132, 199, 0.1)',
+                  border: '1px solid rgba(2, 132, 199, 0.22)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#00f2fe'
+                  color: '#0284c7'
                 }}
               >
                 <Mail size={22} />
               </div>
               <div>
-                <span style={{ fontSize: '0.8rem', color: '#94a3b8', textTransform: 'uppercase' }}>Email Address</span>
-                <h4 style={{ fontSize: '1rem', color: '#fff', wordBreak: 'break-all' }}>{personalInfo.email}</h4>
+                <span style={{ fontSize: '0.8rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 600 }}>Email Address</span>
+                <h4 style={{ fontSize: '1rem', color: '#0f172a', wordBreak: 'break-all' }}>{personalInfo.email}</h4>
               </div>
             </div>
 
@@ -158,16 +158,17 @@ export default function Contact() {
               onClick={() => handleCopy(personalInfo.email, 'email')}
               title="Copy Email"
               style={{
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                color: copiedType === 'email' ? '#10b981' : '#94a3b8',
+                background: '#f8fafc',
+                border: '1px solid rgba(15, 23, 42, 0.14)',
+                color: copiedType === 'email' ? '#059669' : '#475569',
                 borderRadius: '10px',
                 padding: '8px 12px',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '6px',
-                fontSize: '0.78rem'
+                fontSize: '0.78rem',
+                fontWeight: 600
               }}
             >
               {copiedType === 'email' ? <Check size={16} /> : <Copy size={16} />}
@@ -191,19 +192,19 @@ export default function Contact() {
                   width: '46px',
                   height: '46px',
                   borderRadius: '12px',
-                  background: 'rgba(16, 185, 129, 0.1)',
-                  border: '1px solid rgba(16, 185, 129, 0.3)',
+                  background: 'rgba(5, 150, 105, 0.1)',
+                  border: '1px solid rgba(5, 150, 105, 0.25)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#10b981'
+                  color: '#059669'
                 }}
               >
                 <MessageCircle size={22} />
               </div>
               <div>
-                <span style={{ fontSize: '0.8rem', color: '#94a3b8', textTransform: 'uppercase' }}>WhatsApp Direct</span>
-                <h4 style={{ fontSize: '1rem', color: '#fff' }}>{personalInfo.phone}</h4>
+                <span style={{ fontSize: '0.8rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 600 }}>WhatsApp Direct</span>
+                <h4 style={{ fontSize: '1rem', color: '#0f172a' }}>{personalInfo.phone}</h4>
               </div>
             </div>
 
@@ -214,9 +215,9 @@ export default function Contact() {
               onClick={() => soundManager.playClick()}
               onMouseEnter={() => soundManager.playHover()}
               style={{
-                background: 'rgba(16, 185, 129, 0.15)',
-                border: '1px solid rgba(16, 185, 129, 0.4)',
-                color: '#10b981',
+                background: 'rgba(5, 150, 105, 0.1)',
+                border: '1px solid rgba(5, 150, 105, 0.3)',
+                color: '#059669',
                 borderRadius: '10px',
                 padding: '8px 14px',
                 textDecoration: 'none',
@@ -241,8 +242,8 @@ export default function Contact() {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <MapPin size={20} color="#ec4899" />
-              <span style={{ color: '#cbd5e1', fontSize: '0.95rem', fontWeight: 500 }}>
+              <MapPin size={20} color="#db2777" />
+              <span style={{ color: '#334155', fontSize: '0.95rem', fontWeight: 600 }}>
                 {personalInfo.location}
               </span>
             </div>
@@ -253,11 +254,11 @@ export default function Contact() {
                 alignItems: 'center',
                 gap: '10px',
                 paddingTop: '10px',
-                borderTop: '1px solid rgba(255, 255, 255, 0.06)'
+                borderTop: '1px solid rgba(15, 23, 42, 0.08)'
               }}
             >
               <span className="radar-dot" />
-              <span style={{ fontSize: '0.85rem', color: '#10b981', fontWeight: 600 }}>
+              <span style={{ fontSize: '0.85rem', color: '#059669', fontWeight: 600 }}>
                 {personalInfo.status}
               </span>
             </div>
@@ -280,9 +281,9 @@ export default function Contact() {
               style={{
                 padding: '16px 20px',
                 borderRadius: '12px',
-                background: 'rgba(16, 185, 129, 0.15)',
-                border: '1px solid rgba(16, 185, 129, 0.4)',
-                color: '#10b981',
+                background: 'rgba(5, 150, 105, 0.1)',
+                border: '1px solid rgba(5, 150, 105, 0.3)',
+                color: '#047857',
                 marginBottom: '24px',
                 display: 'flex',
                 alignItems: 'center',
@@ -313,8 +314,8 @@ export default function Contact() {
                   onChange={handleChange}
                   placeholder="e.g. John Doe"
                   style={fieldStyle}
-                  onFocus={(e) => (e.target.style.borderColor = '#00f2fe')}
-                  onBlur={(e) => (e.target.style.borderColor = 'rgba(255, 255, 255, 0.12)')}
+                  onFocus={(e) => (e.target.style.borderColor = '#0284c7')}
+                  onBlur={(e) => (e.target.style.borderColor = 'rgba(15, 23, 42, 0.14)')}
                 />
               </div>
 
@@ -331,8 +332,8 @@ export default function Contact() {
                   onChange={handleChange}
                   placeholder="e.g. john@example.com"
                   style={fieldStyle}
-                  onFocus={(e) => (e.target.style.borderColor = '#00f2fe')}
-                  onBlur={(e) => (e.target.style.borderColor = 'rgba(255, 255, 255, 0.12)')}
+                  onFocus={(e) => (e.target.style.borderColor = '#0284c7')}
+                  onBlur={(e) => (e.target.style.borderColor = 'rgba(15, 23, 42, 0.14)')}
                 />
               </div>
             </div>
@@ -351,8 +352,8 @@ export default function Contact() {
                 onChange={handleChange}
                 placeholder="e.g. MERN Web App / Full-time Role / Contract"
                 style={fieldStyle}
-                onFocus={(e) => (e.target.style.borderColor = '#00f2fe')}
-                onBlur={(e) => (e.target.style.borderColor = 'rgba(255, 255, 255, 0.12)')}
+                onFocus={(e) => (e.target.style.borderColor = '#0284c7')}
+                onBlur={(e) => (e.target.style.borderColor = 'rgba(15, 23, 42, 0.14)')}
               />
             </div>
 
@@ -370,8 +371,8 @@ export default function Contact() {
                 onChange={handleChange}
                 placeholder="Tell me about your project scope, timeline, and goals..."
                 style={{ ...fieldStyle, resize: 'vertical' }}
-                onFocus={(e) => (e.target.style.borderColor = '#00f2fe')}
-                onBlur={(e) => (e.target.style.borderColor = 'rgba(255, 255, 255, 0.12)')}
+                onFocus={(e) => (e.target.style.borderColor = '#0284c7')}
+                onBlur={(e) => (e.target.style.borderColor = 'rgba(15, 23, 42, 0.14)')}
               />
             </div>
 

@@ -75,8 +75,8 @@ export default function Preloader({ onComplete }) {
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: '#060913',
-        backgroundImage: 'radial-gradient(circle at center, rgba(0, 242, 254, 0.12) 0%, rgba(6, 9, 19, 0.98) 70%)',
+        backgroundColor: '#f4f7fb',
+        backgroundImage: 'radial-gradient(circle at center, rgba(2, 132, 199, 0.1) 0%, rgba(244, 247, 251, 0.98) 70%)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -110,7 +110,7 @@ export default function Preloader({ onComplete }) {
               cx="65"
               cy="65"
               r={circleRadius}
-              stroke="rgba(255, 255, 255, 0.08)"
+              stroke="rgba(15, 23, 42, 0.08)"
               strokeWidth="5"
               fill="transparent"
             />
@@ -127,14 +127,14 @@ export default function Preloader({ onComplete }) {
               fill="transparent"
               style={{
                 transition: 'stroke-dashoffset 0.08s ease-out',
-                filter: 'drop-shadow(0 0 10px rgba(0, 242, 254, 0.8))'
+                filter: 'drop-shadow(0 2px 6px rgba(2, 132, 199, 0.35))'
               }}
             />
             <defs>
               <linearGradient id="preloaderGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#00f2fe" />
-                <stop offset="50%" stopColor="#4facfe" />
-                <stop offset="100%" stopColor="#8b5cf6" />
+                <stop offset="0%" stopColor="#0284c7" />
+                <stop offset="50%" stopColor="#2563eb" />
+                <stop offset="100%" stopColor="#6366f1" />
               </linearGradient>
             </defs>
           </svg>
@@ -155,8 +155,7 @@ export default function Preloader({ onComplete }) {
               style={{
                 fontSize: '1.8rem',
                 fontWeight: 800,
-                color: '#f8fafc',
-                textShadow: '0 0 15px rgba(0, 242, 254, 0.7)'
+                color: '#0f172a'
               }}
             >
               {progress}%
@@ -165,7 +164,7 @@ export default function Preloader({ onComplete }) {
               style={{
                 fontSize: '0.65rem',
                 letterSpacing: '0.2em',
-                color: '#00f2fe',
+                color: '#0284c7',
                 fontWeight: 600,
                 textTransform: 'uppercase'
               }}
@@ -184,13 +183,13 @@ export default function Preloader({ onComplete }) {
               gap: '8px',
               padding: '6px 14px',
               borderRadius: '9999px',
-              background: 'rgba(0, 242, 254, 0.08)',
-              border: '1px solid rgba(0, 242, 254, 0.25)',
+              background: 'rgba(2, 132, 199, 0.08)',
+              border: '1px solid rgba(2, 132, 199, 0.22)',
               marginBottom: '10px'
             }}
           >
-            <Cpu size={15} color="#00f2fe" className="animate-spin-slow" />
-            <span className="font-mono" style={{ fontSize: '0.8rem', color: '#00f2fe', letterSpacing: '0.08em' }}>
+            <Cpu size={15} color="#0284c7" className="animate-spin-slow" />
+            <span className="font-mono" style={{ fontSize: '0.8rem', color: '#0284c7', letterSpacing: '0.08em' }}>
               MERN STACK ARCHITECTURE
             </span>
           </div>
@@ -203,30 +202,30 @@ export default function Preloader({ onComplete }) {
               marginBottom: '4px'
             }}
           >
-            <span className="gradient-text">PORTFOLIO</span> <span style={{ color: '#fff' }}>OS</span>
+            <span className="gradient-text">PORTFOLIO</span> <span style={{ color: '#0f172a' }}>OS</span>
           </h2>
         </div>
 
         {/* Terminal Boot Log */}
         <div
           style={{
-            background: 'rgba(13, 20, 36, 0.8)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
+            background: 'rgba(255, 255, 255, 0.9)',
+            border: '1px solid rgba(15, 23, 42, 0.1)',
             borderRadius: '10px',
             padding: '8px 18px',
             display: 'flex',
             alignItems: 'center',
             gap: '10px',
             width: 'min(360px, 90vw)',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)'
+            boxShadow: '0 8px 24px -6px rgba(15, 23, 42, 0.1)'
           }}
         >
-          <Terminal size={14} color="#00f2fe" />
+          <Terminal size={14} color="#0284c7" />
           <span
             className="font-mono"
             style={{
               fontSize: '0.75rem',
-              color: progress === 100 ? '#10b981' : '#94a3b8',
+              color: progress === 100 ? '#059669' : '#475569',
               letterSpacing: '0.05em',
               whiteSpace: 'nowrap',
               overflow: 'hidden',
@@ -245,10 +244,10 @@ export default function Preloader({ onComplete }) {
             triggerExit(0);
           }}
           style={{
-            background: 'transparent',
-            border: '1px solid rgba(255, 255, 255, 0.12)',
+            background: 'rgba(255, 255, 255, 0.8)',
+            border: '1px solid rgba(15, 23, 42, 0.14)',
             borderRadius: '9999px',
-            color: '#94a3b8',
+            color: '#475569',
             fontSize: '0.75rem',
             fontFamily: 'var(--font-mono)',
             padding: '5px 14px',
@@ -256,12 +255,12 @@ export default function Preloader({ onComplete }) {
             transition: 'color 0.2s, border-color 0.2s'
           }}
           onMouseOver={(e) => {
-            e.currentTarget.style.color = '#00f2fe';
-            e.currentTarget.style.borderColor = 'rgba(0, 242, 254, 0.4)';
+            e.currentTarget.style.color = '#0284c7';
+            e.currentTarget.style.borderColor = 'rgba(2, 132, 199, 0.45)';
           }}
           onMouseOut={(e) => {
-            e.currentTarget.style.color = '#94a3b8';
-            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.12)';
+            e.currentTarget.style.color = '#475569';
+            e.currentTarget.style.borderColor = 'rgba(15, 23, 42, 0.14)';
           }}
         >
           Skip Intro →

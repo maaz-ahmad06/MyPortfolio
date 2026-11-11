@@ -122,12 +122,12 @@ export default function CustomCursor() {
           left: 0,
           width: isHovered ? '8px' : '6px',
           height: isHovered ? '8px' : '6px',
-          backgroundColor: '#00f2fe',
+          backgroundColor: '#0284c7',
           borderRadius: '50%',
           pointerEvents: 'none',
           zIndex: 99999,
           opacity: isVisible ? 1 : 0,
-          boxShadow: '0 0 10px #00f2fe, 0 0 20px #00f2fe',
+          boxShadow: '0 0 8px rgba(2, 132, 199, 0.45)',
           transition: 'width 0.2s ease, height 0.2s ease, opacity 0.15s ease'
         }}
       />
@@ -141,12 +141,12 @@ export default function CustomCursor() {
           width: isHovered ? '48px' : '32px',
           height: isHovered ? '48px' : '32px',
           borderRadius: '50%',
-          border: isHovered ? '1.5px solid rgba(0, 242, 254, 0.9)' : '1px solid rgba(139, 92, 246, 0.5)',
-          background: isHovered ? 'rgba(0, 242, 254, 0.08)' : 'transparent',
+          border: isHovered ? '1.5px solid rgba(2, 132, 199, 0.75)' : '1.5px solid rgba(99, 102, 241, 0.4)',
+          background: isHovered ? 'rgba(2, 132, 199, 0.08)' : 'transparent',
           pointerEvents: 'none',
           zIndex: 99998,
           opacity: isVisible ? 1 : 0,
-          boxShadow: isHovered ? '0 0 20px rgba(0, 242, 254, 0.4)' : 'none',
+          boxShadow: isHovered ? '0 0 16px rgba(2, 132, 199, 0.18)' : 'none',
           transition:
             'width 0.25s cubic-bezier(0.1, 1, 0.1, 1), height 0.25s cubic-bezier(0.1, 1, 0.1, 1), border 0.25s ease, background 0.25s ease, opacity 0.15s ease'
         }}

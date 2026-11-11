@@ -33,8 +33,8 @@ export default function Footer() {
     <footer
       style={{
         position: 'relative',
-        borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-        background: 'rgba(5, 8, 17, 0.95)',
+        borderTop: '1px solid rgba(15, 23, 42, 0.08)',
+        background: 'rgba(255, 255, 255, 0.88)',
         backdropFilter: 'blur(20px)',
         padding: '60px 24px 30px',
         zIndex: 10
@@ -67,11 +67,11 @@ export default function Footer() {
                 height: '42px',
                 borderRadius: '50%',
                 padding: '2px',
-                background: 'linear-gradient(135deg, #00f2fe 0%, #8b5cf6 100%)',
+                background: 'linear-gradient(135deg, #0284c7 0%, #6366f1 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 0 15px rgba(0, 242, 254, 0.4)',
+                boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)',
                 overflow: 'hidden'
               }}
             >
@@ -90,10 +90,10 @@ export default function Footer() {
               />
             </div>
             <div>
-              <h3 style={{ fontSize: '1.2rem', color: '#fff', letterSpacing: '-0.02em' }}>
+              <h3 style={{ fontSize: '1.2rem', color: '#0f172a', letterSpacing: '-0.02em' }}>
                 {personalInfo.firstName} <span className="gradient-text">{personalInfo.lastName}</span>
               </h3>
-              <p style={{ fontSize: '0.8rem', color: '#94a3b8' }}>
+              <p style={{ fontSize: '0.8rem', color: '#475569' }}>
                 Full Stack MERN Developer
               </p>
             </div>
@@ -107,15 +107,15 @@ export default function Footer() {
               gap: '8px',
               padding: '8px 16px',
               borderRadius: '9999px',
-              background: 'rgba(255, 255, 255, 0.03)',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
+              background: '#f8fafc',
+              border: '1px solid rgba(15, 23, 42, 0.1)',
               fontSize: '0.82rem',
-              color: '#cbd5e1'
+              color: '#334155'
             }}
           >
-            <Clock size={15} color="#00f2fe" />
+            <Clock size={15} color="#0284c7" />
             <span>PKT (GMT+5): </span>
-            <span className="font-mono" style={{ color: '#00f2fe', fontWeight: 600 }}>
+            <span className="font-mono" style={{ color: '#0284c7', fontWeight: 600 }}>
               {currentTime || 'Loading...'}
             </span>
           </div>
@@ -131,21 +131,21 @@ export default function Footer() {
               gap: '8px',
               padding: '10px 18px',
               borderRadius: '9999px',
-              background: 'rgba(0, 242, 254, 0.1)',
-              border: '1px solid rgba(0, 242, 254, 0.3)',
-              color: '#00f2fe',
+              background: 'rgba(2, 132, 199, 0.08)',
+              border: '1px solid rgba(2, 132, 199, 0.25)',
+              color: '#0284c7',
               cursor: 'pointer',
               fontWeight: 600,
               fontSize: '0.85rem',
               transition: 'all 0.25s ease'
             }}
             onMouseOver={(e) => {
-              e.currentTarget.style.background = 'rgba(0, 242, 254, 0.2)';
+              e.currentTarget.style.background = 'rgba(2, 132, 199, 0.14)';
               e.currentTarget.style.transform = 'translateY(-3px)';
-              e.currentTarget.style.boxShadow = '0 0 20px rgba(0, 242, 254, 0.3)';
+              e.currentTarget.style.boxShadow = '0 8px 20px rgba(2, 132, 199, 0.18)';
             }}
             onMouseOut={(e) => {
-              e.currentTarget.style.background = 'rgba(0, 242, 254, 0.1)';
+              e.currentTarget.style.background = 'rgba(2, 132, 199, 0.08)';
               e.currentTarget.style.transform = 'translateY(0)';
               e.currentTarget.style.boxShadow = 'none';
             }}
@@ -164,7 +164,7 @@ export default function Footer() {
             flexWrap: 'wrap',
             gap: '16px',
             paddingTop: '24px',
-            borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+            borderTop: '1px solid rgba(15, 23, 42, 0.08)',
             fontSize: '0.85rem',
             color: '#64748b'
           }}
@@ -178,9 +178,9 @@ export default function Footer() {
               href={personalInfo.socials.github}
               target="_blank"
               rel="noreferrer"
-              style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s' }}
-              onMouseOver={(e) => (e.target.style.color = '#00f2fe')}
-              onMouseOut={(e) => (e.target.style.color = '#94a3b8')}
+              style={{ color: '#475569', textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500 }}
+              onMouseOver={(e) => (e.target.style.color = '#0284c7')}
+              onMouseOut={(e) => (e.target.style.color = '#475569')}
             >
               GitHub
             </a>
@@ -188,9 +188,9 @@ export default function Footer() {
               href={personalInfo.socials.linkedin}
               target="_blank"
               rel="noreferrer"
-              style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s' }}
-              onMouseOver={(e) => (e.target.style.color = '#00f2fe')}
-              onMouseOut={(e) => (e.target.style.color = '#94a3b8')}
+              style={{ color: '#475569', textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500 }}
+              onMouseOver={(e) => (e.target.style.color = '#0284c7')}
+              onMouseOut={(e) => (e.target.style.color = '#475569')}
             >
               LinkedIn
             </a>
@@ -198,9 +198,9 @@ export default function Footer() {
               href={personalInfo.socials.whatsapp}
               target="_blank"
               rel="noreferrer"
-              style={{ color: '#94a3b8', textDecoration: 'none', transition: 'color 0.2s' }}
-              onMouseOver={(e) => (e.target.style.color = '#00f2fe')}
-              onMouseOut={(e) => (e.target.style.color = '#94a3b8')}
+              style={{ color: '#475569', textDecoration: 'none', transition: 'color 0.2s', fontWeight: 500 }}
+              onMouseOver={(e) => (e.target.style.color = '#0284c7')}
+              onMouseOut={(e) => (e.target.style.color = '#475569')}
             >
               WhatsApp
             </a>

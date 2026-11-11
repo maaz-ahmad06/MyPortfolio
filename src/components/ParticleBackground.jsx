@@ -43,7 +43,7 @@ export default function ParticleBackground() {
     const particleCount = Math.min(Math.floor((width * height) / 11000), 90);
     const particles = [];
 
-    const colors = ['#00f2fe', '#4facfe', '#8b5cf6', '#ec4899', '#38bdf8'];
+    const colors = ['#0284c7', '#2563eb', '#6366f1', '#0ea5e9', '#14b8a6'];
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
@@ -53,7 +53,7 @@ export default function ParticleBackground() {
         vy: (Math.random() - 0.5) * 0.8,
         size: Math.random() * 2.2 + 1,
         color: colors[Math.floor(Math.random() * colors.length)],
-        baseAlpha: Math.random() * 0.5 + 0.3
+        baseAlpha: Math.random() * 0.35 + 0.2
       });
     }
 
@@ -68,8 +68,8 @@ export default function ParticleBackground() {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < 120) {
-            const alpha = (1 - dist / 120) * 0.18;
-            ctx.strokeStyle = `rgba(0, 242, 254, ${alpha})`;
+            const alpha = (1 - dist / 120) * 0.14;
+            ctx.strokeStyle = `rgba(2, 132, 199, ${alpha})`;
             ctx.lineWidth = 0.75;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);

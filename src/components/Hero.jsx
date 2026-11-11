@@ -67,7 +67,7 @@ export default function Hero() {
           width: '400px',
           height: '400px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(0, 242, 254, 0.15) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(14, 165, 233, 0.16) 0%, transparent 70%)',
           filter: 'blur(60px)',
           pointerEvents: 'none',
           animation: 'pulseGlow 8s ease-in-out infinite'
@@ -81,7 +81,7 @@ export default function Hero() {
           width: '450px',
           height: '450px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(99, 102, 241, 0.14) 0%, transparent 70%)',
           filter: 'blur(60px)',
           pointerEvents: 'none',
           animation: 'pulseGlow 10s ease-in-out infinite'
@@ -111,14 +111,14 @@ export default function Hero() {
               gap: '10px',
               padding: '6px 16px',
               borderRadius: '9999px',
-              background: 'rgba(16, 185, 129, 0.08)',
-              border: '1px solid rgba(16, 185, 129, 0.3)',
+              background: 'rgba(5, 150, 105, 0.08)',
+              border: '1px solid rgba(5, 150, 105, 0.25)',
               marginBottom: '24px',
-              boxShadow: '0 0 20px rgba(16, 185, 129, 0.15)'
+              boxShadow: '0 4px 14px rgba(5, 150, 105, 0.1)'
             }}
           >
             <span className="radar-dot" />
-            <span className="font-mono" style={{ fontSize: '0.85rem', color: '#10b981', fontWeight: 600 }}>
+            <span className="font-mono" style={{ fontSize: '0.85rem', color: '#059669', fontWeight: 600 }}>
               {personalInfo.status}
             </span>
           </div>
@@ -129,7 +129,8 @@ export default function Hero() {
               fontSize: 'clamp(2.5rem, 5.5vw, 4.4rem)',
               lineHeight: 1.1,
               fontWeight: 800,
-              marginBottom: '16px'
+              marginBottom: '16px',
+              color: 'var(--text-primary)'
             }}
           >
             Hi, I'm{' '}
@@ -150,7 +151,7 @@ export default function Hero() {
               style={{
                 fontSize: 'clamp(1.2rem, 2.8vw, 1.85rem)',
                 fontWeight: 700,
-                color: '#38bdf8'
+                color: '#0284c7'
               }}
             >
               {displayText}
@@ -159,7 +160,7 @@ export default function Hero() {
                   display: 'inline-block',
                   width: '3px',
                   height: '1.1em',
-                  backgroundColor: '#00f2fe',
+                  backgroundColor: '#2563eb',
                   marginLeft: '4px',
                   animation: 'pulseGlow 1s infinite'
                 }}
@@ -235,23 +236,24 @@ export default function Hero() {
                   width: '40px',
                   height: '40px',
                   borderRadius: '12px',
-                  background: 'rgba(13, 20, 36, 0.7)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  color: '#94a3b8',
+                  background: 'rgba(255, 255, 255, 0.9)',
+                  border: '1px solid rgba(15, 23, 42, 0.12)',
+                  color: '#475569',
                   textDecoration: 'none',
+                  boxShadow: '0 4px 10px rgba(15, 23, 42, 0.05)',
                   transition: 'all 0.25s ease'
                 }}
                 onMouseOver={(e) => {
-                  e.currentTarget.style.color = '#00f2fe';
-                  e.currentTarget.style.borderColor = 'rgba(0, 242, 254, 0.4)';
+                  e.currentTarget.style.color = '#0284c7';
+                  e.currentTarget.style.borderColor = 'rgba(2, 132, 199, 0.4)';
                   e.currentTarget.style.transform = 'translateY(-3px)';
-                  e.currentTarget.style.boxShadow = '0 0 15px rgba(0, 242, 254, 0.3)';
+                  e.currentTarget.style.boxShadow = '0 8px 18px rgba(2, 132, 199, 0.18)';
                 }}
                 onMouseOut={(e) => {
-                  e.currentTarget.style.color = '#94a3b8';
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                  e.currentTarget.style.color = '#475569';
+                  e.currentTarget.style.borderColor = 'rgba(15, 23, 42, 0.12)';
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'none';
+                  e.currentTarget.style.boxShadow = '0 4px 10px rgba(15, 23, 42, 0.05)';
                 }}
               >
                 {s.icon}
@@ -290,7 +292,7 @@ export default function Hero() {
                   style={{
                     position: 'absolute',
                     inset: 0,
-                    background: 'linear-gradient(to top, rgba(6, 9, 19, 0.95) 0%, rgba(6, 9, 19, 0.4) 35%, transparent 65%)',
+                    background: 'linear-gradient(to top, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.25) 35%, transparent 65%)',
                     pointerEvents: 'none'
                   }}
                 />
@@ -306,14 +308,14 @@ export default function Hero() {
                     gap: '6px',
                     padding: '5px 12px',
                     borderRadius: '9999px',
-                    background: 'rgba(6, 9, 19, 0.75)',
+                    background: 'rgba(255, 255, 255, 0.92)',
                     backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(0, 242, 254, 0.4)',
-                    boxShadow: '0 0 15px rgba(0, 242, 254, 0.2)'
+                    border: '1px solid rgba(2, 132, 199, 0.28)',
+                    boxShadow: '0 6px 16px rgba(15, 23, 42, 0.14)'
                   }}
                 >
                   <span className="radar-dot" />
-                  <span className="font-mono" style={{ fontSize: '0.75rem', color: '#00f2fe', fontWeight: 700 }}>
+                  <span className="font-mono" style={{ fontSize: '0.75rem', color: '#0284c7', fontWeight: 700 }}>
                     SYSTEM ACTIVE
                   </span>
                 </div>
@@ -334,7 +336,7 @@ export default function Hero() {
                     <h3 style={{ fontSize: '1.4rem', color: '#fff', letterSpacing: '-0.02em', margin: 0 }}>
                       {personalInfo.name}
                     </h3>
-                    <Sparkles size={16} color="#00f2fe" />
+                    <Sparkles size={16} color="#38bdf8" />
                   </div>
                   <div
                     className="font-mono"
@@ -363,20 +365,20 @@ export default function Hero() {
               right: '-12px',
               padding: '8px 14px',
               borderRadius: '14px',
-              background: 'rgba(13, 20, 36, 0.92)',
+              background: 'rgba(255, 255, 255, 0.94)',
               backdropFilter: 'blur(16px)',
-              border: '1px solid rgba(0, 242, 254, 0.4)',
-              boxShadow: '0 10px 25px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 242, 254, 0.3)',
+              border: '1px solid rgba(2, 132, 199, 0.28)',
+              boxShadow: '0 12px 28px -6px rgba(15, 23, 42, 0.14)',
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
               zIndex: 20
             }}
           >
-            <Atom size={18} color="#00f2fe" className="animate-spin-slow" />
+            <Atom size={18} color="#0284c7" className="animate-spin-slow" />
             <div>
-              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#fff' }}>React 19</div>
-              <div style={{ fontSize: '0.68rem', color: '#00f2fe', fontFamily: 'var(--font-mono)' }}>Frontend Core</div>
+              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a' }}>React 19</div>
+              <div style={{ fontSize: '0.68rem', color: '#0284c7', fontFamily: 'var(--font-mono)' }}>Frontend Core</div>
             </div>
           </div>
 
@@ -389,10 +391,10 @@ export default function Hero() {
               left: '-15px',
               padding: '8px 14px',
               borderRadius: '14px',
-              background: 'rgba(13, 20, 36, 0.92)',
+              background: 'rgba(255, 255, 255, 0.94)',
               backdropFilter: 'blur(16px)',
-              border: '1px solid rgba(139, 92, 246, 0.4)',
-              boxShadow: '0 10px 25px rgba(0, 0, 0, 0.6), 0 0 20px rgba(139, 92, 246, 0.3)',
+              border: '1px solid rgba(99, 102, 241, 0.28)',
+              boxShadow: '0 12px 28px -6px rgba(15, 23, 42, 0.14)',
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
@@ -400,10 +402,10 @@ export default function Hero() {
               zIndex: 20
             }}
           >
-            <Server size={18} color="#22c55e" />
+            <Server size={18} color="#059669" />
             <div>
-              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#fff' }}>Node & Express</div>
-              <div style={{ fontSize: '0.68rem', color: '#10b981', fontFamily: 'var(--font-mono)' }}>REST APIs</div>
+              <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a' }}>Node & Express</div>
+              <div style={{ fontSize: '0.68rem', color: '#059669', fontFamily: 'var(--font-mono)' }}>REST APIs</div>
             </div>
           </div>
 
@@ -416,10 +418,10 @@ export default function Hero() {
               right: '-8px',
               padding: '10px 16px',
               borderRadius: '14px',
-              background: 'rgba(13, 20, 36, 0.92)',
+              background: 'rgba(255, 255, 255, 0.94)',
               backdropFilter: 'blur(16px)',
-              border: '1px solid rgba(236, 72, 153, 0.4)',
-              boxShadow: '0 10px 25px rgba(0, 0, 0, 0.6), 0 0 20px rgba(236, 72, 153, 0.3)',
+              border: '1px solid rgba(219, 39, 119, 0.28)',
+              boxShadow: '0 12px 28px -6px rgba(15, 23, 42, 0.14)',
               display: 'flex',
               alignItems: 'center',
               gap: '10px',
@@ -430,7 +432,7 @@ export default function Hero() {
             <span style={{ fontSize: '1.4rem', fontWeight: 800 }} className="gradient-text-alt">
               {personalInfo.completedProjects}
             </span>
-            <span style={{ fontSize: '0.72rem', color: '#cbd5e1', lineHeight: 1.2 }}>
+            <span style={{ fontSize: '0.72rem', color: '#475569', fontWeight: 600, lineHeight: 1.2 }}>
               MERN<br />Projects
             </span>
           </div>
@@ -448,17 +450,17 @@ export default function Hero() {
           flexDirection: 'column',
           alignItems: 'center',
           gap: '4px',
-          color: '#94a3b8',
+          color: '#64748b',
           fontSize: '0.75rem',
           fontFamily: 'var(--font-mono)',
           letterSpacing: '0.1em',
           textTransform: 'uppercase',
           pointerEvents: 'none',
-          opacity: 0.75
+          opacity: 0.85
         }}
       >
-        <span style={{ color: '#00f2fe' }}>Scroll To Explore</span>
-        <ChevronDown size={16} className="animate-bounce" color="#00f2fe" />
+        <span style={{ color: '#0284c7', fontWeight: 600 }}>Scroll To Explore</span>
+        <ChevronDown size={16} className="animate-bounce" color="#0284c7" />
       </div>
 
       {/* Responsive Style */}
