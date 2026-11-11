@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import Preloader from './components/Preloader';
 import ParticleBackground from './components/ParticleBackground';
 import CustomCursor from './components/CustomCursor';
@@ -12,13 +12,37 @@ import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
+const ResumeModal = lazy(() => import('./components/ResumeModal'));
+
+const INTRO_STORAGE_KEY = 'portfolio_intro_seen';
+
+function shouldShowIntro() {
+  if (typeof window === 'undefined') return false;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+  try {
+    return window.sessionStorage.getItem(INTRO_STORAGE_KEY) !== '1';
+  } catch {
+    return false;
+  }
+}
+
 export default function App() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(shouldShowIntro);
+  const [showResume, setShowResume] = useState(false);
+
+  const handleIntroComplete = () => {
+    try {
+      window.sessionStorage.setItem(INTRO_STORAGE_KEY, '1');
+    } catch {
+      // Ignore storage errors in restricted contexts
+    }
+    setLoading(false);
+  };
 
   return (
     <div style={{ position: 'relative', minHeight: '100vh' }}>
-      {/* 0-100% Cyber Preloader */}
-      {loading && <Preloader onComplete={() => setLoading(false)} />}
+      {/* First-visit Preloader */}
+      {loading && <Preloader onComplete={handleIntroComplete} />}
 
       {/* Interactive Canvas Physics Particle Constellation */}
       <ParticleBackground />
@@ -31,8 +55,8 @@ export default function App() {
 
       {/* Main Content Sections */}
       <main>
-        <Hero />
-        <About />
+        <Hero onOpenResume={() => setShowResume(true)} />
+        <About onOpenResume={() => setShowResume(true)} />
         <Skills />
         <Projects />
         <Services />
@@ -42,6 +66,13 @@ export default function App() {
 
       {/* Footer */}
       <Footer />
+
+      {/* Printable ATS Resume Modal */}
+      {showResume && (
+        <Suspense fallback={null}>
+          <ResumeModal onClose={() => setShowResume(false)} />
+        </Suspense>
+      )}
     </div>
   );
 }

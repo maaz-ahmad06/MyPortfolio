@@ -77,23 +77,48 @@ export default function Experience() {
                   marginBottom: '12px'
                 }}
               >
-                <div
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    padding: '4px 12px',
-                    borderRadius: '9999px',
-                    background: 'rgba(2, 132, 199, 0.09)',
-                    border: '1px solid rgba(2, 132, 199, 0.25)',
-                    color: '#0284c7',
-                    fontSize: '0.8rem',
-                    fontFamily: 'var(--font-mono)',
-                    fontWeight: 600
-                  }}
-                >
-                  <Calendar size={13} />
-                  <span>{item.period}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                  <div
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      padding: '4px 12px',
+                      borderRadius: '9999px',
+                      background: 'rgba(2, 132, 199, 0.09)',
+                      border: '1px solid rgba(2, 132, 199, 0.25)',
+                      color: '#0284c7',
+                      fontSize: '0.8rem',
+                      fontFamily: 'var(--font-mono)',
+                      fontWeight: 600
+                    }}
+                  >
+                    <Calendar size={13} />
+                    <span>{item.period}</span>
+                  </div>
+
+                  {item.type && (
+                    <span
+                      className="font-mono"
+                      style={{
+                        padding: '4px 10px',
+                        borderRadius: '9999px',
+                        fontSize: '0.74rem',
+                        fontWeight: 700,
+                        background:
+                          item.type === 'Experience'
+                            ? 'rgba(5, 150, 105, 0.1)'
+                            : 'rgba(99, 102, 241, 0.1)',
+                        border:
+                          item.type === 'Experience'
+                            ? '1px solid rgba(5, 150, 105, 0.25)'
+                            : '1px solid rgba(99, 102, 241, 0.25)',
+                        color: item.type === 'Experience' ? '#059669' : '#4f46e5'
+                      }}
+                    >
+                      {item.type}
+                    </span>
+                  )}
                 </div>
 
                 <div

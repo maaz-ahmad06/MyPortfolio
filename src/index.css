@@ -551,3 +551,31 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 0.95rem;
   }
 }
+
+/* Clean ATS Resume Print Styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .resume-modal-backdrop,
+  .printable-resume-wrapper,
+  .printable-resume,
+  .printable-resume * {
+    visibility: visible;
+  }
+  .resume-modal-backdrop {
+    position: static !important;
+    background: #ffffff !important;
+    padding: 0 !important;
+  }
+  .printable-resume-wrapper {
+    max-height: none !important;
+    overflow: visible !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}

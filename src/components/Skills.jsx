@@ -161,76 +161,90 @@ export default function Skills() {
           gap: '24px'
         }}
       >
-        {filteredSkills.map((skill) => (
-          <TiltCard
-            key={skill.name}
-            style={{
-              padding: '24px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '16px'
-            }}
-          >
-            {/* Top row: Icon & level badge */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div
-                style={{
-                  width: '46px',
-                  height: '46px',
-                  borderRadius: '12px',
-                  background: `${skill.color}12`,
-                  border: `1px solid ${skill.color}30`,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}
-              >
-                {getIcon(skill.icon, skill.color)}
-              </div>
+        {filteredSkills.map((skill) => {
+          const segmentCount =
+            skill.tier === 'Core Stack' ? 3 : skill.tier === 'Production Ready' ? 2 : 1;
 
-              <span
-                className="font-mono"
-                style={{
-                  fontSize: '0.85rem',
-                  fontWeight: 700,
-                  color: skill.color
-                }}
-              >
-                {skill.level}%
-              </span>
-            </div>
-
-            {/* Skill Title & Desc */}
-            <div>
-              <h4 style={{ fontSize: '1.2rem', color: '#0f172a', marginBottom: '6px' }}>
-                {skill.name}
-              </h4>
-              <p style={{ fontSize: '0.82rem', color: '#475569', lineHeight: 1.5 }}>
-                {skill.desc}
-              </p>
-            </div>
-
-            {/* Level Progress Bar */}
-            <div
+          return (
+            <TiltCard
+              key={skill.name}
               style={{
-                width: '100%',
-                height: '6px',
-                background: 'rgba(15, 23, 42, 0.08)',
-                borderRadius: '9999px',
-                overflow: 'hidden'
+                padding: '24px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '16px'
               }}
             >
+              {/* Top row: Icon & proficiency tier badge */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
+                <div
+                  style={{
+                    width: '46px',
+                    height: '46px',
+                    borderRadius: '12px',
+                    background: `${skill.color}12`,
+                    border: `1px solid ${skill.color}30`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  {getIcon(skill.icon, skill.color)}
+                </div>
+
+                <span
+                  className="font-mono"
+                  style={{
+                    fontSize: '0.74rem',
+                    fontWeight: 700,
+                    color: skill.color,
+                    background: `${skill.color}12`,
+                    border: `1px solid ${skill.color}30`,
+                    padding: '4px 10px',
+                    borderRadius: '9999px'
+                  }}
+                >
+                  {skill.tier}
+                </span>
+              </div>
+
+              {/* Skill Title & Desc */}
+              <div>
+                <h4 style={{ fontSize: '1.2rem', color: '#0f172a', marginBottom: '6px' }}>
+                  {skill.name}
+                </h4>
+                <p style={{ fontSize: '0.82rem', color: '#475569', lineHeight: 1.5 }}>
+                  {skill.desc}
+                </p>
+              </div>
+
+              {/* 3-Segment Depth Indicator */}
               <div
+                aria-label={`${skill.name}: ${skill.tier}`}
                 style={{
-                  width: `${skill.level}%`,
-                  height: '100%',
-                  background: `linear-gradient(90deg, ${skill.color}, #0284c7)`,
-                  borderRadius: '9999px'
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(3, 1fr)',
+                  gap: '6px',
+                  marginTop: 'auto'
                 }}
-              />
-            </div>
-          </TiltCard>
-        ))}
+              >
+                {[1, 2, 3].map((step) => (
+                  <div
+                    key={step}
+                    style={{
+                      height: '6px',
+                      borderRadius: '9999px',
+                      background:
+                        step <= segmentCount
+                          ? `linear-gradient(90deg, ${skill.color}, #0284c7)`
+                          : 'rgba(15, 23, 42, 0.08)'
+                    }}
+                  />
+                ))}
+              </div>
+            </TiltCard>
+          );
+        })}
       </div>
     </section>
   );

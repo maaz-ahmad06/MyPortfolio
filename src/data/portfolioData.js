@@ -27,7 +27,6 @@ export const personalInfo = {
   socials: {
     github: "https://github.com/maaz-ahmad06",
     linkedin: "https://www.linkedin.com/in/maaz-ahmad-a71830414",
-    twitter: "https://twitter.com",
     whatsapp: "https://wa.me/923353545245",
     email: "mailto:maazahmad21988@gmail.com"
   },
@@ -36,26 +35,26 @@ export const personalInfo = {
 
 export const skillsData = {
   frontend: [
-    { name: "React.js", level: 95, icon: "Atom", color: "#0284c7", desc: "Hooks, Context, Redux Toolkit, React Router, Custom Hooks" },
-    { name: "JavaScript (ES6+)", level: 92, icon: "Code2", color: "#ca8a04", desc: "Async/Await, Closures, DOM, Prototypes, Modern Features" },
-    { name: "HTML5 / CSS3", level: 98, icon: "Layout", color: "#ea580c", desc: "Semantic HTML, Flexbox, CSS Grid, Custom Animations" },
-    { name: "TailwindCSS", level: 95, icon: "Palette", color: "#0ea5e9", desc: "Utility-first design, Responsive layouts, Custom themes" },
-    { name: "Redux Toolkit", level: 88, icon: "Cpu", color: "#7c3aed", desc: "Global state management, RTK Query, Slices, Middleware" },
-    { name: "Next.js", level: 80, icon: "Layers", color: "#0f172a", desc: "SSR, SSG, App Router, Server Components" }
+    { name: "React.js", tier: "Core Stack", icon: "Atom", color: "#0284c7", desc: "Hooks, Context, Redux Toolkit, React Router, Custom Hooks" },
+    { name: "JavaScript (ES6+)", tier: "Core Stack", icon: "Code2", color: "#ca8a04", desc: "Async/Await, Closures, DOM, Prototypes, Modern Features" },
+    { name: "HTML5 / CSS3", tier: "Core Stack", icon: "Layout", color: "#ea580c", desc: "Semantic HTML, Flexbox, CSS Grid, Custom Animations" },
+    { name: "TailwindCSS", tier: "Core Stack", icon: "Palette", color: "#0ea5e9", desc: "Utility-first design, Responsive layouts, Custom themes" },
+    { name: "Redux Toolkit", tier: "Production Ready", icon: "Cpu", color: "#7c3aed", desc: "Global state management, RTK Query, Slices, Middleware" },
+    { name: "Next.js", tier: "Working Knowledge", icon: "Layers", color: "#0f172a", desc: "SSR, SSG, App Router, Server Components" }
   ],
   backend: [
-    { name: "Node.js", level: 90, icon: "Server", color: "#16a34a", desc: "Event loop, Streams, Async operations, File system" },
-    { name: "Express.js", level: 92, icon: "Zap", color: "#475569", desc: "RESTful APIs, Middleware, JWT Auth, Error handling" },
-    { name: "MongoDB & Mongoose", level: 88, icon: "Database", color: "#059669", desc: "Schema design, Aggregations, Indexing, CRUD" },
-    { name: "REST APIs", level: 95, icon: "Network", color: "#6366f1", desc: "API Architecture, Rate limiting, CORS, Documentation" },
-    { name: "JWT & Auth", level: 90, icon: "ShieldCheck", color: "#e11d48", desc: "Bcrypt, Role-based access, OAuth 2.0, Secure cookies" }
+    { name: "Node.js", tier: "Core Stack", icon: "Server", color: "#16a34a", desc: "Event loop, Streams, Async operations, File system" },
+    { name: "Express.js", tier: "Core Stack", icon: "Zap", color: "#475569", desc: "RESTful APIs, Middleware, JWT Auth, Error handling" },
+    { name: "MongoDB & Mongoose", tier: "Production Ready", icon: "Database", color: "#059669", desc: "Schema design, Aggregations, Indexing, CRUD" },
+    { name: "REST APIs", tier: "Core Stack", icon: "Network", color: "#6366f1", desc: "API Architecture, Rate limiting, CORS, Documentation" },
+    { name: "JWT & Auth", tier: "Production Ready", icon: "ShieldCheck", color: "#e11d48", desc: "Bcrypt, Role-based access, OAuth 2.0, Secure cookies" }
   ],
   tools: [
-    { name: "Git & GitHub", level: 92, icon: "GitBranch", color: "#dc2626", desc: "Version control, Branching workflows, PR reviews" },
-    { name: "Postman", level: 90, icon: "Send", color: "#ea580c", desc: "API testing, Automated tests, Mock servers" },
-    { name: "Vite & Webpack", level: 88, icon: "Rocket", color: "#9333ea", desc: "Fast build tooling, Module bundling, Optimizations" },
-    { name: "VS Code", level: 95, icon: "Terminal", color: "#0284c7", desc: "Productivity extensions, Debugging, Snippets" },
-    { name: "Figma", level: 80, icon: "Figma", color: "#7c3aed", desc: "UI wireframing, Prototyping, Design-to-code" }
+    { name: "Git & GitHub", tier: "Core Stack", icon: "GitBranch", color: "#dc2626", desc: "Version control, Branching workflows, PR reviews" },
+    { name: "Postman", tier: "Production Ready", icon: "Send", color: "#ea580c", desc: "API testing, Automated tests, Mock servers" },
+    { name: "Vite & Webpack", tier: "Production Ready", icon: "Rocket", color: "#9333ea", desc: "Fast build tooling, Module bundling, Optimizations" },
+    { name: "VS Code", tier: "Core Stack", icon: "Terminal", color: "#0284c7", desc: "Productivity extensions, Debugging, Snippets" },
+    { name: "Figma", tier: "Working Knowledge", icon: "Figma", color: "#7c3aed", desc: "UI wireframing, Prototyping, Design-to-code" }
   ]
 };
 
@@ -184,6 +183,7 @@ export const projectsData = [
 
 export const experienceData = [
   {
+    type: "Education",
     period: "2022 - 2026",
     title: "BS Software Engineering",
     organization: "Islamia College University, Peshawar",
@@ -192,6 +192,7 @@ export const experienceData = [
     tags: ["Software Engineering", "Full Stack", "Algorithms", "React & Node.js", "Databases"]
   },
   {
+    type: "Experience",
     period: "2024 - Present",
     title: "Full Stack Web Developer (MERN)",
     organization: "Freelance & Independent Projects",
@@ -200,6 +201,7 @@ export const experienceData = [
     tags: ["React 19", "Node.js", "Express", "MongoDB", "REST APIs", "TailwindCSS"]
   },
   {
+    type: "Education",
     period: "2020 - 2022",
     title: "FSc Pre-Engineering",
     organization: "Wisdom College, Hangu",
@@ -208,6 +210,7 @@ export const experienceData = [
     tags: ["Pre-Engineering", "Mathematics", "Physics", "Analytical Problem Solving"]
   },
   {
+    type: "Education",
     period: "2018 - 2020",
     title: "Matriculation (Science)",
     organization: "Al-Noor Public High School, Hangu",

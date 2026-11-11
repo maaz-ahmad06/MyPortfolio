@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { User, CheckCircle, ExternalLink, Sparkles } from 'lucide-react';
+import { User, CheckCircle, ExternalLink, FileText, Sparkles } from 'lucide-react';
 import { personalInfo, terminalCommands } from '../data/portfolioData';
 import { soundManager } from '../utils/audioFx';
 import TiltCard from './TiltCard';
 
-export default function About() {
+export default function About({ onOpenResume }) {
   const [terminalInput, setTerminalInput] = useState('');
   const [terminalHistory, setTerminalHistory] = useState([
     { type: 'system', text: `Welcome to ${personalInfo.name}'s Interactive Terminal!` },
@@ -192,6 +192,19 @@ export default function About() {
               <span>View GitHub</span>
               <ExternalLink size={15} />
             </a>
+            <button
+              type="button"
+              onClick={() => {
+                soundManager.playClick();
+                if (onOpenResume) onOpenResume();
+              }}
+              onMouseEnter={() => soundManager.playHover()}
+              className="btn-magnetic btn-glass-glow"
+              style={{ padding: '12px 24px', fontSize: '0.9rem' }}
+            >
+              <FileText size={15} />
+              <span>Resume / CV</span>
+            </button>
           </div>
         </TiltCard>
 

@@ -38,10 +38,10 @@ export default function Preloader({ onComplete }) {
           clearInterval(interval);
           return 100;
         }
-        const step = Math.floor(Math.random() * 5) + (prev > 65 ? 6 : 4);
+        const step = Math.floor(Math.random() * 6) + (prev > 60 ? 9 : 6);
         return Math.min(prev + step, 100);
       });
-    }, 35);
+    }, 30);
 
     return () => {
       clearInterval(interval);
@@ -50,7 +50,7 @@ export default function Preloader({ onComplete }) {
 
   useEffect(() => {
     if (progress === 100) {
-      triggerExit(200);
+      triggerExit(120);
     }
   });
 

@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { ArrowRight, MessageCircle, Sparkles, Server, Atom, ChevronDown } from 'lucide-react';
+import { ArrowRight, FileText, MessageCircle, Sparkles, Server, Atom, ChevronDown } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './Icons';
 import { personalInfo } from '../data/portfolioData';
 import { soundManager } from '../utils/audioFx';
 
-export default function Hero() {
+export default function Hero({ onOpenResume }) {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -211,6 +211,19 @@ export default function Hero() {
               <MessageCircle size={18} />
               <span>Let's Talk</span>
             </a>
+
+            <button
+              type="button"
+              onClick={() => {
+                soundManager.playClick();
+                if (onOpenResume) onOpenResume();
+              }}
+              onMouseEnter={() => soundManager.playHover()}
+              className="btn-magnetic btn-glass-glow"
+            >
+              <FileText size={18} />
+              <span>View / Save CV</span>
+            </button>
           </div>
 
           {/* Social Quick Links */}

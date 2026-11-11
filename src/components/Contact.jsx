@@ -12,7 +12,7 @@ export default function Contact() {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
   const [copiedType, setCopiedType] = useState(null);
 
   const timersRef = useRef([]);
@@ -45,33 +45,81 @@ export default function Contact() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const triggerConfetti = async () => {
+    try {
+      const { default: confetti } = await import('canvas-confetti');
+      confetti({
+        particleCount: 120,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#0284c7', '#2563eb', '#6366f1', '#db2777', '#059669']
+      });
+    } catch {
+      // Fallback if canvas confetti fails
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     soundManager.playClick();
     setIsSubmitting(true);
+    setSubmitStatus(null);
 
-    // Simulate sending message
-    scheduleTimer(async () => {
+    const accessKey = import.meta.env.VITE_WEB3FORMS_KEY?.trim();
+
+    if (!accessKey) {
+      const mailtoSubject = encodeURIComponent(`[Portfolio] ${formData.subject}`);
+      const mailtoBody = encodeURIComponent(
+        `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
+      );
+      window.location.href = `mailto:${personalInfo.email}?subject=${mailtoSubject}&body=${mailtoBody}`;
       setIsSubmitting(false);
-      setIsSuccess(true);
-      soundManager.playSuccess();
+      setSubmitStatus({
+        type: 'success',
+        text: `Opening your email client to send directly to ${personalInfo.email}. You can also use WhatsApp or Copy Email on the left.`
+      });
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      scheduleTimer(() => setSubmitStatus(null), 7000);
+      return;
+    }
 
-      // Dynamically load confetti only on submission
-      try {
-        const { default: confetti } = await import('canvas-confetti');
-        confetti({
-          particleCount: 120,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ['#0284c7', '#2563eb', '#6366f1', '#db2777', '#059669']
-        });
-      } catch {
-        // Fallback if canvas confetti fails
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message
+        })
+      });
+
+      const data = await response.json();
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || 'Failed to deliver message.');
       }
 
+      soundManager.playSuccess();
+      setSubmitStatus({
+        type: 'success',
+        text: 'Thank you! Your message has been sent successfully. I will get back to you soon!'
+      });
       setFormData({ name: '', email: '', subject: '', message: '' });
-      scheduleTimer(() => setIsSuccess(false), 5000);
-    }, 1000);
+      await triggerConfetti();
+      scheduleTimer(() => setSubmitStatus(null), 6000);
+    } catch {
+      setSubmitStatus({
+        type: 'error',
+        text: `Could not send inline right now. Please email ${personalInfo.email} directly or chat on WhatsApp.`
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const fieldStyle = {
@@ -273,27 +321,32 @@ export default function Contact() {
             borderRadius: '24px'
           }}
         >
-          {/* Success Banner */}
-          {isSuccess && (
+          {/* Submit Status Banner */}
+          {submitStatus && (
             <div
               role="status"
               aria-live="polite"
               style={{
                 padding: '16px 20px',
                 borderRadius: '12px',
-                background: 'rgba(5, 150, 105, 0.1)',
-                border: '1px solid rgba(5, 150, 105, 0.3)',
-                color: '#047857',
+                background:
+                  submitStatus.type === 'error'
+                    ? 'rgba(225, 29, 72, 0.08)'
+                    : 'rgba(5, 150, 105, 0.1)',
+                border:
+                  submitStatus.type === 'error'
+                    ? '1px solid rgba(225, 29, 72, 0.25)'
+                    : '1px solid rgba(5, 150, 105, 0.3)',
+                color: submitStatus.type === 'error' ? '#be123c' : '#047857',
                 marginBottom: '24px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '12px',
-                animation: 'float 3s ease-in-out infinite'
+                gap: '12px'
               }}
             >
-              <Check size={20} />
+              <Check size={20} style={{ flexShrink: 0 }} />
               <span style={{ fontWeight: 600, fontSize: '0.95rem' }}>
-                Thank you! Your message has been sent successfully. I will get back to you soon!
+                {submitStatus.text}
               </span>
             </div>
           )}
