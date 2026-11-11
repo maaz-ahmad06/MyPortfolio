@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { User, Terminal as TermIcon, Award, Code, CheckCircle, Download, ExternalLink, Sparkles } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { User, CheckCircle, ExternalLink, Sparkles } from 'lucide-react';
 import { personalInfo, terminalCommands } from '../data/portfolioData';
 import { soundManager } from '../utils/audioFx';
+import TiltCard from './TiltCard';
 
 export default function About() {
   const [terminalInput, setTerminalInput] = useState('');
@@ -9,6 +10,13 @@ export default function About() {
     { type: 'system', text: `Welcome to ${personalInfo.name}'s Interactive Terminal!` },
     { type: 'system', text: "Type 'help' or click any quick command chip below." }
   ]);
+  const terminalBodyRef = useRef(null);
+
+  useEffect(() => {
+    if (terminalBodyRef.current) {
+      terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight;
+    }
+  }, [terminalHistory]);
 
   const handleCommand = (cmd) => {
     soundManager.playClick();
@@ -63,8 +71,7 @@ export default function About() {
         className="about-bento-grid"
       >
         {/* Card 1: Main Story (7 columns) */}
-        <div
-          className="tilt-card"
+        <TiltCard
           style={{
             gridColumn: 'span 7',
             padding: '36px',
@@ -73,7 +80,6 @@ export default function About() {
             justifyContent: 'space-between'
           }}
         >
-          <div className="spotlight-overlay" />
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' }}>
               {/* Profile Image Avatar */}
@@ -163,7 +169,11 @@ export default function About() {
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
             <a
               href="#contact"
-              onClick={() => soundManager.playClick()}
+              onClick={(e) => {
+                e.preventDefault();
+                soundManager.playClick();
+                document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+              }}
               onMouseEnter={() => soundManager.playHover()}
               className="btn-magnetic btn-primary-glow"
               style={{ padding: '12px 24px', fontSize: '0.9rem' }}
@@ -183,11 +193,12 @@ export default function About() {
               <ExternalLink size={15} />
             </a>
           </div>
-        </div>
+        </TiltCard>
 
         {/* Card 2: Interactive Cyber Terminal (5 columns) */}
-        <div
-          className="tilt-card cyber-terminal"
+        <TiltCard
+          tilt={false}
+          className="cyber-terminal"
           style={{
             gridColumn: 'span 5',
             display: 'flex',
@@ -209,6 +220,7 @@ export default function About() {
 
           {/* Terminal Output Area */}
           <div
+            ref={terminalBodyRef}
             style={{
               flex: 1,
               padding: '16px',
@@ -248,8 +260,9 @@ export default function About() {
               background: 'rgba(0, 0, 0, 0.3)'
             }}
           >
-            {['skills', 'projects', 'contact', 'clear'].map((cmd) => (
+            {['about', 'skills', 'projects', 'socials', 'contact', 'clear'].map((cmd) => (
               <button
+                type="button"
                 key={cmd}
                 onClick={() => handleCommand(cmd)}
                 onMouseEnter={() => soundManager.playHover()}
@@ -284,6 +297,7 @@ export default function About() {
             <span style={{ color: '#00f2fe', fontWeight: 700 }}>$</span>
             <input
               type="text"
+              aria-label="Terminal command input"
               value={terminalInput}
               onChange={(e) => setTerminalInput(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -299,7 +313,7 @@ export default function About() {
               }}
             />
           </div>
-        </div>
+        </TiltCard>
 
         {/* Card 3: Metrics & Highlights Row (12 columns split into 3 cards) */}
         {[
@@ -322,16 +336,14 @@ export default function About() {
             color: "#10b981"
           }
         ].map((stat, i) => (
-          <div
+          <TiltCard
             key={i}
-            className="tilt-card"
             style={{
               gridColumn: 'span 4',
               padding: '28px',
               textAlign: 'center'
             }}
           >
-            <div className="spotlight-overlay" />
             <div
               style={{
                 fontSize: '2.8rem',
@@ -349,7 +361,7 @@ export default function About() {
             <p style={{ fontSize: '0.85rem', color: '#94a3b8', lineHeight: 1.5 }}>
               {stat.sub}
             </p>
-          </div>
+          </TiltCard>
         ))}
       </div>
 

@@ -1,9 +1,11 @@
-import { useState } from 'react';
-import { FolderGit2, ExternalLink, Sparkles, Eye, ArrowUpRight } from 'lucide-react';
+import { lazy, Suspense, useState } from 'react';
+import { FolderGit2, ExternalLink, Eye, ArrowUpRight } from 'lucide-react';
 import { GithubIcon } from './Icons';
 import { projectsData } from '../data/portfolioData';
 import { soundManager } from '../utils/audioFx';
-import ProjectModal from './ProjectModal';
+import TiltCard from './TiltCard';
+
+const ProjectModal = lazy(() => import('./ProjectModal'));
 
 export default function Projects() {
   const [filter, setFilter] = useState('All');
@@ -15,15 +17,6 @@ export default function Projects() {
     filter === 'All'
       ? projectsData
       : projectsData.filter((p) => p.category === filter);
-
-  const handleCardMouseMove = (e) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    card.style.setProperty('--mouse-x', `${x}px`);
-    card.style.setProperty('--mouse-y', `${y}px`);
-  };
 
   return (
     <section id="projects" className="section-wrapper">
@@ -86,15 +79,13 @@ export default function Projects() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 340px), 1fr))',
           gap: '30px'
         }}
       >
         {filteredProjects.map((project) => (
-          <div
+          <TiltCard
             key={project.id}
-            className="tilt-card"
-            onMouseMove={handleCardMouseMove}
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -105,8 +96,6 @@ export default function Projects() {
               setSelectedProject(project);
             }}
           >
-            <div className="spotlight-overlay" />
-
             {/* Thumbnail Image */}
             <div
               style={{
@@ -326,16 +315,18 @@ export default function Projects() {
                 </div>
               </div>
             </div>
-          </div>
+          </TiltCard>
         ))}
       </div>
 
       {/* Project Detail Modal */}
       {selectedProject && (
-        <ProjectModal
-          project={selectedProject}
-          onClose={() => setSelectedProject(null)}
-        />
+        <Suspense fallback={null}>
+          <ProjectModal
+            project={selectedProject}
+            onClose={() => setSelectedProject(null)}
+          />
+        </Suspense>
       )}
     </section>
   );

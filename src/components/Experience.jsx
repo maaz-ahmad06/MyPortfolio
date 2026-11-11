@@ -1,5 +1,6 @@
-import { Briefcase, Calendar, MapPin, Sparkles, GraduationCap, CheckCircle } from 'lucide-react';
+import { Calendar, MapPin, GraduationCap } from 'lucide-react';
 import { experienceData } from '../data/portfolioData';
+import TiltCard from './TiltCard';
 
 export default function Experience() {
   return (
@@ -42,17 +43,14 @@ export default function Experience() {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '36px' }}>
           {experienceData.map((item, idx) => (
-            <div
+            <TiltCard
               key={idx}
-              className="tilt-card"
               style={{
                 position: 'relative',
                 padding: '28px',
                 marginLeft: '15px'
               }}
             >
-              <div className="spotlight-overlay" />
-
               {/* Glowing Node Dot on Timeline */}
               <div
                 style={{
@@ -158,7 +156,7 @@ export default function Experience() {
                   </span>
                 ))}
               </div>
-            </div>
+            </TiltCard>
           ))}
         </div>
       </div>

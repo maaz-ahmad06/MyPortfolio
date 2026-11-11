@@ -1,49 +1,14 @@
-import { useState, useEffect, useRef } from 'react';
-import { ArrowRight, Download, MessageCircle, Terminal, Sparkles, Database, Server, Atom, Layers, ChevronDown } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ArrowRight, MessageCircle, Sparkles, Server, Atom, ChevronDown } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './Icons';
 import { personalInfo } from '../data/portfolioData';
 import { soundManager } from '../utils/audioFx';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(100);
-
-  const heroRef = useRef(null);
-  const portraitRef = useRef(null);
-
-  // GSAP ScrollTrigger: Pin Hero and rotate portrait horizontally 360° on scroll (Right to Left)
-  useEffect(() => {
-    if (!heroRef.current || !portraitRef.current) return;
-
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: 'top top',
-          end: '+=1000', // scroll distance for full horizontal 3D flip
-          pin: true,
-          pinSpacing: true,
-          scrub: 1.2,
-          anticipatePin: 1
-        }
-      });
-
-      // 3D Right-to-Left Horizontal Spin (-360deg)
-      tl.to(portraitRef.current, {
-        rotationY: -360,
-        ease: 'none',
-        transformOrigin: '50% 50%'
-      });
-    }, heroRef);
-
-    return () => ctx.revert();
-  }, []);
 
   // Typewriter effect
   useEffect(() => {
@@ -83,7 +48,6 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      ref={heroRef}
       style={{
         position: 'relative',
         minHeight: '100vh',
@@ -296,13 +260,11 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right Column: Grand 3D Flip Portrait Showcase */}
+        {/* Right Column: Cyber Portrait Showcase */}
         <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
-          {/* 3D Perspective Wrapper */}
           <div className="portrait-3d-wrapper">
-            {/* Main Double-Sided Flipping Card (Left to Right 360 Spin) */}
-            <div ref={portraitRef} className="portrait-holo-card">
-              {/* FRONT FACE: Profile Picture & Live HUD */}
+            <div className="portrait-holo-card">
+              {/* Profile Picture & Live HUD */}
               <div className="portrait-face portrait-front">
                 {/* Actual Profile Picture */}
                 <img
@@ -386,126 +348,6 @@ export default function Hero() {
                   >
                     <span>Full Stack MERN Developer</span>
                   </div>
-                </div>
-              </div>
-
-              {/* BACK FACE: Futuristic Cyber Hologram Developer ID */}
-              <div className="portrait-face portrait-back">
-                {/* Cyber HUD Corner Brackets */}
-                <div className="hud-corner hud-tl" style={{ borderColor: '#8b5cf6' }} />
-                <div className="hud-corner hud-tr" style={{ borderColor: '#8b5cf6' }} />
-                <div className="hud-corner hud-bl" style={{ borderColor: '#8b5cf6' }} />
-                <div className="hud-corner hud-br" style={{ borderColor: '#8b5cf6' }} />
-
-                {/* Top Back Header */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <div
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      padding: '4px 10px',
-                      borderRadius: '9999px',
-                      background: 'rgba(139, 92, 246, 0.15)',
-                      border: '1px solid rgba(139, 92, 246, 0.4)',
-                      color: '#a855f7',
-                      fontSize: '0.72rem',
-                      fontFamily: 'var(--font-mono)',
-                      fontWeight: 700
-                    }}
-                  >
-                    <Terminal size={12} />
-                    <span>DEV_CARD // #MERN</span>
-                  </div>
-
-                  <span className="font-mono" style={{ fontSize: '0.72rem', color: '#94a3b8' }}>
-                    ID: 2026-MAAZ
-                  </span>
-                </div>
-
-                {/* Center Holographic Crest */}
-                <div style={{ textAlign: 'center', padding: '10px 0' }}>
-                  <div
-                    style={{
-                      width: '70px',
-                      height: '70px',
-                      margin: '0 auto 10px',
-                      borderRadius: '20px',
-                      background: 'linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(139, 92, 246, 0.3))',
-                      border: '1px solid rgba(139, 92, 246, 0.5)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: '0 0 25px rgba(139, 92, 246, 0.35)',
-                      position: 'relative'
-                    }}
-                  >
-                    <Atom size={36} color="#00f2fe" className="animate-spin-slow" />
-                  </div>
-
-                  <h4 style={{ fontSize: '1.25rem', color: '#fff', marginBottom: '2px', fontWeight: 800 }}>
-                    {personalInfo.name}
-                  </h4>
-                  <p className="gradient-text" style={{ fontSize: '0.8rem', fontWeight: 700, fontFamily: 'var(--font-mono)', marginBottom: '8px' }}>
-                    FULL STACK MERN ENGINEER
-                  </p>
-
-                  <div
-                    style={{
-                      display: 'inline-block',
-                      padding: '3px 10px',
-                      borderRadius: '6px',
-                      background: 'rgba(16, 185, 129, 0.1)',
-                      border: '1px solid rgba(16, 185, 129, 0.3)',
-                      color: '#10b981',
-                      fontSize: '0.7rem',
-                      fontFamily: 'var(--font-mono)',
-                      fontWeight: 600
-                    }}
-                  >
-                    ISLAMIA COLLEGE UNIVERSITY PESHAWAR
-                  </div>
-                </div>
-
-                {/* Core Stack Badges */}
-                <div>
-                  <div style={{ fontSize: '0.72rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '8px', textAlign: 'center' }}>
-                    Core Competencies
-                  </div>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px', justifyContent: 'center' }}>
-                    {['React 19', 'Node.js', 'Express', 'MongoDB', 'REST APIs', 'Tailwind'].map((tech, i) => (
-                      <span
-                        key={i}
-                        style={{
-                          padding: '3px 8px',
-                          borderRadius: '6px',
-                          background: 'rgba(255, 255, 255, 0.05)',
-                          border: '1px solid rgba(255, 255, 255, 0.1)',
-                          color: '#38bdf8',
-                          fontSize: '0.72rem',
-                          fontFamily: 'var(--font-mono)'
-                        }}
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Bottom Back Tag */}
-                <div
-                  style={{
-                    paddingTop: '10px',
-                    borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    fontSize: '0.72rem',
-                    color: '#94a3b8'
-                  }}
-                >
-                  <span style={{ color: '#10b981', fontWeight: 600 }}>● OPEN TO WORK</span>
-                  <span>{personalInfo.location}</span>
                 </div>
               </div>
             </div>
@@ -615,7 +457,7 @@ export default function Hero() {
           opacity: 0.75
         }}
       >
-        <span style={{ color: '#00f2fe' }}>Scroll To Spin Profile</span>
+        <span style={{ color: '#00f2fe' }}>Scroll To Explore</span>
         <ChevronDown size={16} className="animate-bounce" color="#00f2fe" />
       </div>
 

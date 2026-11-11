@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowUp, Code2, Clock } from 'lucide-react';
+import { ArrowUp, Clock } from 'lucide-react';
 import { personalInfo } from '../data/portfolioData';
 import { soundManager } from '../utils/audioFx';
 

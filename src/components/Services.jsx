@@ -1,6 +1,7 @@
-import { Code, Layout, Server, Zap, CheckCircle2, Sparkles, ArrowRight } from 'lucide-react';
+import { Code, Layout, Server, Zap, Sparkles, ArrowRight } from 'lucide-react';
 import { servicesData } from '../data/portfolioData';
 import { soundManager } from '../utils/audioFx';
+import TiltCard from './TiltCard';
 
 export default function Services() {
   const getIcon = (iconName, color) => {
@@ -39,9 +40,8 @@ export default function Services() {
         }}
       >
         {servicesData.map((service, idx) => (
-          <div
+          <TiltCard
             key={idx}
-            className="tilt-card"
             style={{
               padding: '32px',
               display: 'flex',
@@ -50,8 +50,6 @@ export default function Services() {
               gap: '24px'
             }}
           >
-            <div className="spotlight-overlay" />
-
             <div>
               {/* Icon Container */}
               <div
@@ -85,7 +83,11 @@ export default function Services() {
             {/* Quick Contact CTA */}
             <a
               href="#contact"
-              onClick={() => soundManager.playClick()}
+              onClick={(e) => {
+                e.preventDefault();
+                soundManager.playClick();
+                document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+              }}
               onMouseEnter={() => soundManager.playHover()}
               style={{
                 display: 'inline-flex',
@@ -101,7 +103,7 @@ export default function Services() {
               <span>Discuss this requirement</span>
               <ArrowRight size={16} />
             </a>
-          </div>
+          </TiltCard>
         ))}
       </div>
     </section>

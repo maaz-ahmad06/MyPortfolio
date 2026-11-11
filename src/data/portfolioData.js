@@ -239,14 +239,14 @@ export const servicesData = [
   {
     icon: "Zap",
     title: "Performance & Optimization",
-    desc: "Lightning-fast page load speeds, SEO optimization, responsive mobile compatibility, and clean clean code standards.",
+    desc: "Lightning-fast page load speeds, SEO optimization, responsive mobile compatibility, and clean code standards.",
     color: "#f59e0b"
   }
 ];
 
 export const terminalCommands = {
   help: "Available commands: 'about', 'skills', 'projects', 'contact', 'clear', 'socials'",
-  about: "Maaz Ahmad - Passionate Full Stack MERN Developer from Karachi, Pakistan.",
+  about: "Maaz Ahmad - Passionate Full Stack MERN Developer from Peshawar, Pakistan.",
   skills: "React, Node.js, Express, MongoDB, TailwindCSS, JavaScript ES6+, Git, REST APIs",
   projects: "DevPulse MERN Community, ShopZen E-Commerce, TaskFlow Pro, WeatherNexus, CryptoView",
   contact: "Email: maazahmad21988@gmail.com | WhatsApp: +92 335 3545245",

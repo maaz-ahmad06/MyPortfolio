@@ -39,6 +39,9 @@ export default function ProjectModal({ project, onClose }) {
       }}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="project-modal-title"
         style={{
           position: 'relative',
           maxWidth: '750px',
@@ -55,6 +58,8 @@ export default function ProjectModal({ project, onClose }) {
       >
         {/* Close button */}
         <button
+          type="button"
+          aria-label="Close project details"
           onClick={() => {
             soundManager.playClick();
             onClose();
@@ -144,6 +149,7 @@ export default function ProjectModal({ project, onClose }) {
 
         {/* Title */}
         <h3
+          id="project-modal-title"
           style={{
             fontSize: '1.8rem',
             color: '#fff',

@@ -1,45 +1,49 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Code2, Sparkles, Send } from 'lucide-react';
+import { Menu, X, Sparkles, Send } from 'lucide-react';
 import { personalInfo } from '../data/portfolioData';
 import { soundManager } from '../utils/audioFx';
+
+const NAV_LINKS = [
+  { label: 'Home', href: '#hero', id: 'hero' },
+  { label: 'About', href: '#about', id: 'about' },
+  { label: 'Skills', href: '#skills', id: 'skills' },
+  { label: 'Projects', href: '#projects', id: 'projects' },
+  { label: 'Services', href: '#services', id: 'services' },
+  { label: 'Journey', href: '#experience', id: 'experience' },
+  { label: 'Contact', href: '#contact', id: 'contact' }
+];
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState('hero');
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navLinks = [
-    { label: 'Home', href: '#hero', id: 'hero' },
-    { label: 'About', href: '#about', id: 'about' },
-    { label: 'Skills', href: '#skills', id: 'skills' },
-    { label: 'Projects', href: '#projects', id: 'projects' },
-    { label: 'Services', href: '#services', id: 'services' },
-    { label: 'Journey', href: '#experience', id: 'experience' },
-    { label: 'Contact', href: '#contact', id: 'contact' }
-  ];
-
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 40) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 40);
 
-      const sections = navLinks.map((l) => document.getElementById(l.id));
+      const sections = NAV_LINKS.map((l) => document.getElementById(l.id));
       const scrollPos = window.scrollY + 200;
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const sec = sections[i];
         if (sec && sec.offsetTop <= scrollPos) {
-          setActiveSection(navLinks[i].id);
+          setActiveSection(NAV_LINKS[i].id);
           break;
         }
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setMobileMenuOpen(false);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
   const handleNavClick = (href) => {
@@ -142,7 +146,7 @@ export default function Navbar() {
           }}
           className="desktop-nav-menu"
         >
-          {navLinks.map((link) => {
+          {NAV_LINKS.map((link) => {
             const isActive = activeSection === link.id;
             return (
               <a
@@ -196,6 +200,9 @@ export default function Navbar() {
 
           {/* Mobile Menu Toggle Button */}
           <button
+            type="button"
+            aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={mobileMenuOpen}
             onClick={() => {
               soundManager.playClick();
               setMobileMenuOpen(!mobileMenuOpen);
@@ -240,7 +247,7 @@ export default function Navbar() {
             animation: 'float 0.3s ease-out'
           }}
         >
-          {navLinks.map((link) => (
+          {NAV_LINKS.map((link) => (
             <a
               key={link.id}
               href={link.href}

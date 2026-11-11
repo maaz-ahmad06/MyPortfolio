@@ -1,27 +1,25 @@
 import { useState } from 'react';
-import { 
-  Code2, 
-  Cpu, 
-  Layers, 
-  Server, 
-  Database, 
-  Globe, 
-  Sparkles, 
-  Terminal, 
-  CheckCircle, 
-  ShieldCheck, 
-  Layout, 
-  Send, 
-  Rocket, 
-  GitBranch, 
-  Network, 
-  Zap, 
-  Atom, 
-  Palette 
+import {
+  Code2,
+  Cpu,
+  Layers,
+  Server,
+  Database,
+  Terminal,
+  ShieldCheck,
+  Layout,
+  Send,
+  Rocket,
+  GitBranch,
+  Network,
+  Zap,
+  Atom,
+  Palette
 } from 'lucide-react';
 import { FigmaIcon } from './Icons';
 import { skillsData, marqueeSkills } from '../data/portfolioData';
 import { soundManager } from '../utils/audioFx';
+import TiltCard from './TiltCard';
 
 export default function Skills() {
   const [activeTab, setActiveTab] = useState('all');
@@ -72,29 +70,31 @@ export default function Skills() {
       {/* Infinite Marquee Strip */}
       <div style={{ marginBottom: '60px' }}>
         <div className="marquee-container">
-          <div className="marquee-content">
-            {marqueeSkills.concat(marqueeSkills).map((item, idx) => (
-              <div
-                key={idx}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  padding: '8px 20px',
-                  borderRadius: '9999px',
-                  background: 'rgba(13, 20, 36, 0.7)',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
-                  color: '#e2e8f0',
-                  fontSize: '0.85rem',
-                  fontFamily: 'var(--font-mono)',
-                  whiteSpace: 'nowrap'
-                }}
-              >
-                <span style={{ color: '#00f2fe' }}>⚡</span>
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
+          {[0, 1].map((track) => (
+            <div key={track} className="marquee-content" aria-hidden={track === 1}>
+              {marqueeSkills.map((item, idx) => (
+                <div
+                  key={`${track}-${idx}`}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '8px 20px',
+                    borderRadius: '9999px',
+                    background: 'rgba(13, 20, 36, 0.7)',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    color: '#e2e8f0',
+                    fontSize: '0.85rem',
+                    fontFamily: 'var(--font-mono)',
+                    whiteSpace: 'nowrap'
+                  }}
+                >
+                  <span style={{ color: '#00f2fe' }}>⚡</span>
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
 
@@ -159,10 +159,9 @@ export default function Skills() {
           gap: '24px'
         }}
       >
-        {filteredSkills.map((skill, idx) => (
-          <div
-            key={idx}
-            className="tilt-card"
+        {filteredSkills.map((skill) => (
+          <TiltCard
+            key={skill.name}
             style={{
               padding: '24px',
               display: 'flex',
@@ -170,8 +169,6 @@ export default function Skills() {
               gap: '16px'
             }}
           >
-            <div className="spotlight-overlay" />
-
             {/* Top row: Icon & level badge */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div
@@ -232,7 +229,7 @@ export default function Skills() {
                 }}
               />
             </div>
-          </div>
+          </TiltCard>
         ))}
       </div>
     </section>

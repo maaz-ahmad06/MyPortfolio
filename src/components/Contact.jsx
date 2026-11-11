@@ -1,9 +1,8 @@
-import { useState } from 'react';
-import { Mail, Phone, MapPin, Send, Check, Copy, MessageCircle, Sparkles } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from './Icons';
-import confetti from 'canvas-confetti';
+import { useEffect, useRef, useState } from 'react';
+import { Mail, MapPin, Send, Check, Copy, MessageCircle } from 'lucide-react';
 import { personalInfo } from '../data/portfolioData';
 import { soundManager } from '../utils/audioFx';
+import TiltCard from './TiltCard';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -16,15 +15,34 @@ export default function Contact() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [copiedType, setCopiedType] = useState(null);
 
+  const timersRef = useRef([]);
+
+  useEffect(() => {
+    const timers = timersRef.current;
+    return () => {
+      timers.forEach((id) => clearTimeout(id));
+    };
+  }, []);
+
+  const scheduleTimer = (fn, delay) => {
+    const id = setTimeout(fn, delay);
+    timersRef.current.push(id);
+    return id;
+  };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleCopy = (text, type) => {
+  const handleCopy = async (text, type) => {
     soundManager.playClick();
-    navigator.clipboard.writeText(text);
-    setCopiedType(type);
-    setTimeout(() => setCopiedType(null), 2500);
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedType(type);
+      scheduleTimer(() => setCopiedType(null), 2500);
+    } catch {
+      // Clipboard API may be blocked in insecure contexts
+    }
   };
 
   const handleSubmit = (e) => {
@@ -33,13 +51,14 @@ export default function Contact() {
     setIsSubmitting(true);
 
     // Simulate sending message
-    setTimeout(() => {
+    scheduleTimer(async () => {
       setIsSubmitting(false);
       setIsSuccess(true);
       soundManager.playSuccess();
 
-      // Trigger Confetti Celebration!
+      // Dynamically load confetti only on submission
       try {
+        const { default: confetti } = await import('canvas-confetti');
         confetti({
           particleCount: 120,
           spread: 70,
@@ -51,8 +70,28 @@ export default function Contact() {
       }
 
       setFormData({ name: '', email: '', subject: '', message: '' });
-      setTimeout(() => setIsSuccess(false), 5000);
+      scheduleTimer(() => setIsSuccess(false), 5000);
     }, 1000);
+  };
+
+  const fieldStyle = {
+    width: '100%',
+    padding: '12px 16px',
+    borderRadius: '12px',
+    background: 'rgba(6, 9, 19, 0.7)',
+    border: '1px solid rgba(255, 255, 255, 0.12)',
+    color: '#fff',
+    fontSize: '0.95rem',
+    outline: 'none',
+    transition: 'border-color 0.25s ease'
+  };
+
+  const labelStyle = {
+    display: 'block',
+    fontSize: '0.85rem',
+    color: '#94a3b8',
+    marginBottom: '8px',
+    fontWeight: 500
   };
 
   return (
@@ -83,8 +122,7 @@ export default function Contact() {
         {/* Left Column: Direct Contact Info & Quick Copy Badges */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           {/* Email Quick Card */}
-          <div
-            className="tilt-card"
+          <TiltCard
             style={{
               padding: '24px',
               display: 'flex',
@@ -93,7 +131,6 @@ export default function Contact() {
               gap: '16px'
             }}
           >
-            <div className="spotlight-overlay" />
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
               <div
                 style={{
@@ -117,6 +154,7 @@ export default function Contact() {
             </div>
 
             <button
+              type="button"
               onClick={() => handleCopy(personalInfo.email, 'email')}
               title="Copy Email"
               style={{
@@ -135,11 +173,10 @@ export default function Contact() {
               {copiedType === 'email' ? <Check size={16} /> : <Copy size={16} />}
               <span>{copiedType === 'email' ? 'Copied' : 'Copy'}</span>
             </button>
-          </div>
+          </TiltCard>
 
           {/* WhatsApp Direct Card */}
-          <div
-            className="tilt-card"
+          <TiltCard
             style={{
               padding: '24px',
               display: 'flex',
@@ -148,7 +185,6 @@ export default function Contact() {
               gap: '16px'
             }}
           >
-            <div className="spotlight-overlay" />
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
               <div
                 style={{
@@ -193,11 +229,10 @@ export default function Contact() {
             >
               <span>Chat</span>
             </a>
-          </div>
+          </TiltCard>
 
           {/* Location & Status Card */}
-          <div
-            className="tilt-card"
+          <TiltCard
             style={{
               padding: '24px',
               display: 'flex',
@@ -205,7 +240,6 @@ export default function Contact() {
               gap: '12px'
             }}
           >
-            <div className="spotlight-overlay" />
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <MapPin size={20} color="#ec4899" />
               <span style={{ color: '#cbd5e1', fontSize: '0.95rem', fontWeight: 500 }}>
@@ -227,22 +261,22 @@ export default function Contact() {
                 {personalInfo.status}
               </span>
             </div>
-          </div>
+          </TiltCard>
         </div>
 
         {/* Right Column: Interactive Cyber Glass Contact Form */}
-        <div
-          className="tilt-card"
+        <TiltCard
+          tilt={false}
           style={{
             padding: '36px',
             borderRadius: '24px'
           }}
         >
-          <div className="spotlight-overlay" />
-
           {/* Success Banner */}
           {isSuccess && (
             <div
+              role="status"
+              aria-live="polite"
               style={{
                 padding: '16px 20px',
                 borderRadius: '12px',
@@ -267,54 +301,36 @@ export default function Contact() {
             {/* Name and Email */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }} className="form-row">
               <div>
-                <label style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '8px', fontWeight: 500 }}>
+                <label htmlFor="contact-name" style={labelStyle}>
                   Your Name *
                 </label>
                 <input
+                  id="contact-name"
                   type="text"
                   name="name"
                   required
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="e.g. John Doe"
-                  style={{
-                    width: '100%',
-                    padding: '12px 16px',
-                    borderRadius: '12px',
-                    background: 'rgba(6, 9, 19, 0.7)',
-                    border: '1px solid rgba(255, 255, 255, 0.12)',
-                    color: '#fff',
-                    fontSize: '0.95rem',
-                    outline: 'none',
-                    transition: 'border-color 0.25s ease'
-                  }}
+                  style={fieldStyle}
                   onFocus={(e) => (e.target.style.borderColor = '#00f2fe')}
                   onBlur={(e) => (e.target.style.borderColor = 'rgba(255, 255, 255, 0.12)')}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '8px', fontWeight: 500 }}>
+                <label htmlFor="contact-email" style={labelStyle}>
                   Your Email *
                 </label>
                 <input
+                  id="contact-email"
                   type="email"
                   name="email"
                   required
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="e.g. john@example.com"
-                  style={{
-                    width: '100%',
-                    padding: '12px 16px',
-                    borderRadius: '12px',
-                    background: 'rgba(6, 9, 19, 0.7)',
-                    border: '1px solid rgba(255, 255, 255, 0.12)',
-                    color: '#fff',
-                    fontSize: '0.95rem',
-                    outline: 'none',
-                    transition: 'border-color 0.25s ease'
-                  }}
+                  style={fieldStyle}
                   onFocus={(e) => (e.target.style.borderColor = '#00f2fe')}
                   onBlur={(e) => (e.target.style.borderColor = 'rgba(255, 255, 255, 0.12)')}
                 />
@@ -323,27 +339,18 @@ export default function Contact() {
 
             {/* Subject */}
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '8px', fontWeight: 500 }}>
+              <label htmlFor="contact-subject" style={labelStyle}>
                 Subject / Project Type *
               </label>
               <input
+                id="contact-subject"
                 type="text"
                 name="subject"
                 required
                 value={formData.subject}
                 onChange={handleChange}
                 placeholder="e.g. MERN Web App / Full-time Role / Contract"
-                style={{
-                  width: '100%',
-                  padding: '12px 16px',
-                  borderRadius: '12px',
-                  background: 'rgba(6, 9, 19, 0.7)',
-                  border: '1px solid rgba(255, 255, 255, 0.12)',
-                  color: '#fff',
-                  fontSize: '0.95rem',
-                  outline: 'none',
-                  transition: 'border-color 0.25s ease'
-                }}
+                style={fieldStyle}
                 onFocus={(e) => (e.target.style.borderColor = '#00f2fe')}
                 onBlur={(e) => (e.target.style.borderColor = 'rgba(255, 255, 255, 0.12)')}
               />
@@ -351,28 +358,18 @@ export default function Contact() {
 
             {/* Message */}
             <div>
-              <label style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '8px', fontWeight: 500 }}>
+              <label htmlFor="contact-message" style={labelStyle}>
                 Your Message *
               </label>
               <textarea
+                id="contact-message"
                 name="message"
                 required
                 rows={5}
                 value={formData.message}
                 onChange={handleChange}
                 placeholder="Tell me about your project scope, timeline, and goals..."
-                style={{
-                  width: '100%',
-                  padding: '12px 16px',
-                  borderRadius: '12px',
-                  background: 'rgba(6, 9, 19, 0.7)',
-                  border: '1px solid rgba(255, 255, 255, 0.12)',
-                  color: '#fff',
-                  fontSize: '0.95rem',
-                  outline: 'none',
-                  resize: 'vertical',
-                  transition: 'border-color 0.25s ease'
-                }}
+                style={{ ...fieldStyle, resize: 'vertical' }}
                 onFocus={(e) => (e.target.style.borderColor = '#00f2fe')}
                 onBlur={(e) => (e.target.style.borderColor = 'rgba(255, 255, 255, 0.12)')}
               />
@@ -395,7 +392,7 @@ export default function Contact() {
               <span>{isSubmitting ? 'Transmitting Message...' : 'Send Message'}</span>
             </button>
           </form>
-        </div>
+        </TiltCard>
       </div>
 
       {/* Responsive adjustments */}
