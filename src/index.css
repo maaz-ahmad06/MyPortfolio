@@ -413,23 +413,23 @@ h1, h2, h3, h4, h5, h6 {
   pointer-events: none;
 }
 
-/* Terminal Window Styles (Dark Slate Editor Contrast Card) */
+/* Terminal Window Styles (Light Frost Glass Theme) */
 .cyber-terminal {
-  background: #0f172a;
-  border: 1px solid rgba(15, 23, 42, 0.2);
-  border-radius: 16px;
-  box-shadow: 0 20px 45px -12px rgba(15, 23, 42, 0.28);
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px -12px rgba(15, 23, 42, 0.08);
   font-family: var(--font-mono);
   overflow: hidden;
 }
 
 .terminal-header {
-  background: #1e293b;
+  background: #f1f5f9;
   padding: 12px 16px;
   display: flex;
   align-items: center;
   gap: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
 }
 
 .terminal-btn {

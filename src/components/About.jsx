@@ -226,7 +226,7 @@ export default function About({ onOpenResume }) {
               <span className="terminal-btn btn-yellow" />
               <span className="terminal-btn btn-green" />
             </div>
-            <span style={{ fontSize: '0.75rem', color: '#94a3b8', marginLeft: 'auto' }}>
+            <span style={{ fontSize: '0.75rem', color: '#475569', fontWeight: 600, marginLeft: 'auto' }}>
               terminal@maaz-dev:~
             </span>
           </div>
@@ -251,10 +251,11 @@ export default function About({ onOpenResume }) {
                 style={{
                   color:
                     item.type === 'user'
-                      ? '#38bdf8'
+                      ? '#0284c7'
                       : item.type === 'response'
-                      ? '#e2e8f0'
-                      : '#94a3b8'
+                      ? '#0f172a'
+                      : '#475569',
+                  fontWeight: item.type === 'user' ? 700 : 400
                 }}
               >
                 {item.text}
@@ -266,11 +267,11 @@ export default function About({ onOpenResume }) {
           <div
             style={{
               padding: '10px 16px',
-              borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+              borderTop: '1px solid rgba(15, 23, 42, 0.08)',
               display: 'flex',
               flexWrap: 'wrap',
               gap: '6px',
-              background: 'rgba(30, 41, 59, 0.55)'
+              background: '#f8fafc'
             }}
           >
             {['about', 'skills', 'projects', 'socials', 'contact', 'clear'].map((cmd) => (
@@ -280,12 +281,13 @@ export default function About({ onOpenResume }) {
                 onClick={() => handleCommand(cmd)}
                 onMouseEnter={() => soundManager.playHover()}
                 style={{
-                  background: 'rgba(56, 189, 248, 0.12)',
-                  border: '1px solid rgba(56, 189, 248, 0.28)',
-                  color: '#38bdf8',
+                  background: 'rgba(2, 132, 199, 0.09)',
+                  border: '1px solid rgba(2, 132, 199, 0.24)',
+                  color: '#0284c7',
                   borderRadius: '6px',
                   padding: '3px 10px',
                   fontSize: '0.75rem',
+                  fontWeight: 600,
                   fontFamily: 'var(--font-mono)',
                   cursor: 'pointer',
                   transition: 'all 0.2s'
@@ -300,14 +302,14 @@ export default function About({ onOpenResume }) {
           <div
             style={{
               padding: '12px 16px',
-              background: '#1e293b',
+              background: '#ffffff',
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              borderTop: '1px solid rgba(255, 255, 255, 0.08)'
+              borderTop: '1px solid rgba(15, 23, 42, 0.08)'
             }}
           >
-            <span style={{ color: '#38bdf8', fontWeight: 700 }}>$</span>
+            <span style={{ color: '#0284c7', fontWeight: 700 }}>$</span>
             <input
               type="text"
               aria-label="Terminal command input"
@@ -319,7 +321,7 @@ export default function About({ onOpenResume }) {
                 background: 'transparent',
                 border: 'none',
                 outline: 'none',
-                color: '#fff',
+                color: '#0f172a',
                 fontFamily: 'var(--font-mono)',
                 fontSize: '0.85rem',
                 width: '100%'
