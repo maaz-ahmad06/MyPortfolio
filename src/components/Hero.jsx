@@ -42,7 +42,7 @@ export default function Hero({ onOpenResume }) {
   const handleCtaClick = (targetId) => {
     soundManager.playClick();
     const elem = document.querySelector(targetId);
-    if (elem) elem.scrollIntoView({ behavior: 'smooth' });
+    if (elem) elem.scrollIntoView();
   };
 
   return (

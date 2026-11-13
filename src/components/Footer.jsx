@@ -26,7 +26,7 @@ export default function Footer() {
 
   const scrollToTop = () => {
     soundManager.playClick();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo(0, 0);
   };
 
   return (

@@ -172,7 +172,7 @@ export default function About({ onOpenResume }) {
               onClick={(e) => {
                 e.preventDefault();
                 soundManager.playClick();
-                document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+                document.querySelector('#contact')?.scrollIntoView();
               }}
               onMouseEnter={() => soundManager.playHover()}
               className="btn-magnetic btn-primary-glow"
