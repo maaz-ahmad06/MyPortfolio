@@ -1,3 +1,5 @@
+import profileImg from '../assets/profile_img.png';
+
 // Portfolio Central Data Configuration
 // You can easily update your personal info, projects, skills, and links in this single file!
 
@@ -5,7 +7,7 @@ export const personalInfo = {
   name: "Maaz Ahmad",
   firstName: "Maaz",
   lastName: "Ahmad",
-  avatar: "/profile.jpg", // Place your image as profile.jpg in public folder or paste image URL here
+  avatar: profileImg, // Using high-res profile image from assets
   tagline: "Full Stack MERN Developer & Software Engineering Graduate",
   roles: [
     "Full Stack MERN Developer",
