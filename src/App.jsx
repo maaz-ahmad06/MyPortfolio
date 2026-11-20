@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import Preloader from './components/Preloader';
 import ParticleBackground from './components/ParticleBackground';
 import CustomCursor from './components/CustomCursor';
@@ -11,6 +11,8 @@ import Services from './components/Services';
 import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import TrackProjectsPage from './components/TrackProjectsPage';
+import { projectTracks } from './data/portfolioData';
 
 const ResumeModal = lazy(() => import('./components/ResumeModal'));
 
@@ -29,6 +31,15 @@ function shouldShowIntro() {
 export default function App() {
   const [loading, setLoading] = useState(shouldShowIntro);
   const [showResume, setShowResume] = useState(false);
+  const [activeTrack, setActiveTrack] = useState(() => {
+    if (typeof window === 'undefined') return null;
+    const hash = window.location.hash;
+    if (hash && hash.startsWith('#projects-')) {
+      const trackId = hash.replace('#projects-', '');
+      return projectTracks.find((t) => t.id === trackId) || null;
+    }
+    return null;
+  });
 
   const handleIntroComplete = () => {
     try {
@@ -38,6 +49,48 @@ export default function App() {
     }
     setLoading(false);
   };
+
+  const handleOpenTrack = (track) => {
+    setActiveTrack(track);
+    try {
+      window.history.pushState({ trackId: track.id }, '', `#projects-${track.id}`);
+    } catch {
+      // Ignore
+    }
+  };
+
+  const handleCloseTrack = () => {
+    setActiveTrack(null);
+    try {
+      if (window.location.hash.startsWith('#projects-')) {
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+    } catch {
+      // Ignore
+    }
+    // Return scroll position back to #projects on main page
+    setTimeout(() => {
+      const projectsSection = document.getElementById('projects');
+      if (projectsSection) {
+        projectsSection.scrollIntoView();
+      }
+    }, 50);
+  };
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const hash = window.location.hash;
+      if (hash && hash.startsWith('#projects-')) {
+        const trackId = hash.replace('#projects-', '');
+        const matched = projectTracks.find((t) => t.id === trackId);
+        setActiveTrack(matched || null);
+      } else {
+        setActiveTrack(null);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   return (
     <div style={{ position: 'relative', minHeight: '100vh' }}>
@@ -50,22 +103,34 @@ export default function App() {
       {/* Glowing Interactive Custom Cursor */}
       <CustomCursor />
 
-      {/* Floating Glassmorphism Navbar */}
-      <Navbar />
+      {/* When a track is active, render ONLY the dedicated TrackProjectsPage.
+          The rest of the portfolio (Navbar, Hero, About, Services, Footer) is 100% disabled/unmounted
+          preventing any background bleeding, scrolling conflicts, or text overlap! */}
+      {activeTrack ? (
+        <TrackProjectsPage
+          track={activeTrack}
+          onBack={handleCloseTrack}
+        />
+      ) : (
+        <>
+          {/* Floating Glassmorphism Navbar */}
+          <Navbar />
 
-      {/* Main Content Sections */}
-      <main>
-        <Hero onOpenResume={() => setShowResume(true)} />
-        <About onOpenResume={() => setShowResume(true)} />
-        <Skills />
-        <Projects />
-        <Services />
-        <Experience />
-        <Contact />
-      </main>
+          {/* Main Content Sections */}
+          <main>
+            <Hero onOpenResume={() => setShowResume(true)} />
+            <About onOpenResume={() => setShowResume(true)} />
+            <Skills />
+            <Projects onOpenTrack={handleOpenTrack} />
+            <Services />
+            <Experience />
+            <Contact />
+          </main>
 
-      {/* Footer */}
-      <Footer />
+          {/* Footer */}
+          <Footer />
+        </>
+      )}
 
       {/* Printable ATS Resume Modal */}
       {showResume && (
