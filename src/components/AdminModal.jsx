@@ -13,7 +13,17 @@ import {
   AlertCircle,
   Copy,
   ExternalLink,
-  Sparkles
+  Sparkles,
+  Layers,
+  Terminal,
+  Cpu,
+  Server,
+  Smartphone,
+  Globe,
+  Zap,
+  Atom,
+  Database,
+  Bot
 } from 'lucide-react';
 import { usePortfolio } from '../context/PortfolioContext';
 import { soundManager } from '../utils/audioFx';
@@ -22,14 +32,42 @@ import { projectTracks as defaultTracks } from '../data/portfolioData';
 
 const TABS = [
   { id: 'projects', label: 'Projects', icon: FolderGit2 },
+  { id: 'tracks', label: 'Stack Cards', icon: Layers },
   { id: 'skills', label: 'Skills', icon: Code2 },
   { id: 'profile', label: 'Profile', icon: User },
   { id: 'sync', label: 'GitHub Sync', icon: GitBranch }
 ];
 
+const TRACK_PALETTES = [
+  { id: 'emerald', label: 'Emerald (Python/Node)', color: '#10b981', gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)' },
+  { id: 'indigo', label: 'Indigo (C#/.NET/AI)', color: '#8b5cf6', gradient: 'linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%)' },
+  { id: 'crimson', label: 'Crimson (Java/Spring)', color: '#ef4444', gradient: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)' },
+  { id: 'cyan', label: 'Cyan Ocean (React/Vite)', color: '#0284c7', gradient: 'linear-gradient(135deg, #0284c7 0%, #2563eb 100%)' },
+  { id: 'amber', label: 'Amber Gold (Web/Cloud)', color: '#f59e0b', gradient: 'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)' },
+  { id: 'magenta', label: 'Magenta Pink (Mobile/App)', color: '#ec4899', gradient: 'linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%)' },
+  { id: 'teal', label: 'Teal Modern (DevOps/Go)', color: '#0d9488', gradient: 'linear-gradient(135deg, #0d9488 0%, #0284c7 100%)' },
+  { id: 'slate', label: 'Slate Dark (Systems/C++)', color: '#334155', gradient: 'linear-gradient(135deg, #334155 0%, #0f172a 100%)' }
+];
+
+const TRACK_ICONS_MAP = {
+  Terminal,
+  Cpu,
+  Server,
+  Smartphone,
+  Code2,
+  Atom,
+  Database,
+  Bot,
+  Layers,
+  Globe,
+  Zap,
+  Sparkles
+};
+
 export default function AdminModal({ isOpen, onClose }) {
   const {
     projects,
+    projectTracks,
     skills,
     profile,
     adminPin,
@@ -38,6 +76,8 @@ export default function AdminModal({ isOpen, onClose }) {
     setGithubToken,
     addProject,
     deleteProject,
+    addTrack,
+    deleteTrack,
     addSkill,
     deleteSkill,
     updateProfile,
@@ -62,6 +102,18 @@ export default function AdminModal({ isOpen, onClose }) {
     image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80'
   });
   const [projectSuccessMsg, setProjectSuccessMsg] = useState('');
+
+  // Form States - Track Card (Category)
+  const [trackForm, setTrackForm] = useState({
+    title: '',
+    subtitle: '',
+    desc: '',
+    icon: 'Terminal',
+    accentColor: '#10b981',
+    gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+    tags: 'Python, Automation, Scripting, Data'
+  });
+  const [trackSuccessMsg, setTrackSuccessMsg] = useState('');
 
   // Form States - Skill
   const [skillForm, setSkillForm] = useState({
@@ -139,9 +191,8 @@ export default function AdminModal({ isOpen, onClose }) {
     soundManager.playClick();
     if (!projectForm.title.trim()) return;
 
-    let category = 'Frontend (HTML, CSS, JS)';
-    if (projectForm.track === 'frontend-react') category = 'Frontend (React.js)';
-    if (projectForm.track === 'fullstack-mern') category = 'Full Stack (MERN)';
+    const matchedTrack = projectTracks.find((t) => t.id === projectForm.track);
+    const category = matchedTrack ? matchedTrack.title : 'Project';
 
     addProject({
       ...projectForm,
@@ -149,7 +200,7 @@ export default function AdminModal({ isOpen, onClose }) {
     });
 
     soundManager.playSuccess();
-    setProjectSuccessMsg(`Project "${projectForm.title}" added successfully!`);
+    setProjectSuccessMsg(`Project "${projectForm.title}" added to ${category} successfully!`);
     setTimeout(() => setProjectSuccessMsg(''), 4000);
 
     setProjectForm({
@@ -162,6 +213,44 @@ export default function AdminModal({ isOpen, onClose }) {
       demo: '',
       image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80'
     });
+  };
+
+  // Handle Track Card Submit
+  const handleTrackSubmit = (e) => {
+    e.preventDefault();
+    soundManager.playClick();
+    if (!trackForm.title.trim()) return;
+
+    addTrack(trackForm);
+    soundManager.playSuccess();
+    setTrackSuccessMsg(`Stack Card "${trackForm.title}" created successfully! It is now live on your portfolio.`);
+    setTimeout(() => setTrackSuccessMsg(''), 4500);
+
+    setTrackForm({
+      title: '',
+      subtitle: '',
+      desc: '',
+      icon: 'Terminal',
+      accentColor: '#10b981',
+      gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+      tags: ''
+    });
+  };
+
+  // Quick switch from skill to track card creation
+  const handleCreateTrackFromSkill = (skillName) => {
+    soundManager.playClick();
+    const cleanName = skillName?.trim() || 'Modern Technology';
+    setTrackForm({
+      title: `${cleanName} & Development`,
+      subtitle: `Modern ${cleanName} Applications & Solutions`,
+      desc: `Curated collection of production applications, scripts, and systems developed with ${cleanName}.`,
+      icon: 'Terminal',
+      accentColor: '#10b981',
+      gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+      tags: `${cleanName}, Clean Architecture, Solutions`
+    });
+    setActiveTab('tracks');
   };
 
   // Handle Skill Submit
@@ -519,17 +608,50 @@ export default function AdminModal({ isOpen, onClose }) {
                         </div>
 
                         <div>
-                          <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#475569', marginBottom: '6px' }}>
-                            Stack / Category *
-                          </label>
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+                            <label style={{ fontSize: '0.82rem', fontWeight: 600, color: '#475569' }}>
+                              Stack / Category *
+                            </label>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                soundManager.playClick();
+                                setActiveTab('tracks');
+                              }}
+                              style={{
+                                background: 'none',
+                                border: 'none',
+                                color: '#0284c7',
+                                fontSize: '0.78rem',
+                                fontWeight: 700,
+                                cursor: 'pointer',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '4px',
+                                padding: 0
+                              }}
+                            >
+                              <Plus size={12} />
+                              <span>New Stack Card</span>
+                            </button>
+                          </div>
                           <select
                             value={projectForm.track}
-                            onChange={(e) => setProjectForm({ ...projectForm, track: e.target.value })}
+                            onChange={(e) => {
+                              const selectedT = projectTracks.find((t) => t.id === e.target.value);
+                              setProjectForm({
+                                ...projectForm,
+                                track: e.target.value,
+                                badge: selectedT ? selectedT.title.split(' ')[0] : 'Project'
+                              });
+                            }}
                             style={inputStyle}
                           >
-                            <option value="frontend-html-css-js">Frontend (HTML, CSS, JS)</option>
-                            <option value="frontend-react">Frontend (React.js)</option>
-                            <option value="fullstack-mern">Full Stack (MERN)</option>
+                            {projectTracks.map((t) => (
+                              <option key={t.id} value={t.id}>
+                                {t.title} ({projects.filter((p) => p.track === t.id).length} projects)
+                              </option>
+                            ))}
                           </select>
                         </div>
 
@@ -651,7 +773,7 @@ export default function AdminModal({ isOpen, onClose }) {
                           background: '#ffffff'
                         }}
                       >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', overflow: 'hidden' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden' }}>
                           <span
                             style={{
                               padding: '3px 8px',
@@ -664,7 +786,7 @@ export default function AdminModal({ isOpen, onClose }) {
                               whiteSpace: 'nowrap'
                             }}
                           >
-                            {proj.badge}
+                            {projectTracks.find((t) => t.id === proj.track)?.title.split(' ')[0] || proj.badge}
                           </span>
                           <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#0f172a', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
                             {proj.title}
@@ -702,7 +824,378 @@ export default function AdminModal({ isOpen, onClose }) {
               )}
 
               {/* ============================================================= */}
-              {/* TAB 2: SKILLS MANAGEMENT (Python, C#, Java, etc.)              */}
+              {/* TAB 2: STACK CARDS (CATEGORIES) MANAGEMENT                     */}
+              {/* ============================================================= */}
+              {activeTab === 'tracks' && (
+                <div>
+                  {trackSuccessMsg && (
+                    <div
+                      style={{
+                        padding: '12px 16px',
+                        background: 'rgba(5, 150, 105, 0.1)',
+                        border: '1px solid rgba(5, 150, 105, 0.3)',
+                        borderRadius: '10px',
+                        color: '#059669',
+                        fontWeight: 600,
+                        fontSize: '0.88rem',
+                        marginBottom: '20px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px'
+                      }}
+                    >
+                      <CheckCircle2 size={18} />
+                      <span>{trackSuccessMsg}</span>
+                    </div>
+                  )}
+
+                  <div
+                    style={{
+                      background: '#f8fafc',
+                      borderRadius: '16px',
+                      padding: '20px 24px',
+                      border: '1px solid rgba(15, 23, 42, 0.08)',
+                      marginBottom: '28px'
+                    }}
+                  >
+                    <h4 style={{ fontSize: '1.05rem', color: '#0f172a', fontWeight: 700, marginBottom: '6px' }}>
+                      Create New Project Stack Card (e.g. Python, C#, Java, Mobile Apps)
+                    </h4>
+                    <p style={{ color: '#64748b', fontSize: '0.85rem', marginBottom: '18px' }}>
+                      Every card you add here becomes an interactive card on your portfolio landing page. When visitors click it, it opens a dedicated showcase page featuring all projects assigned to that stack!
+                    </p>
+
+                    <form onSubmit={handleTrackSubmit}>
+                      <div
+                        style={{
+                          display: 'grid',
+                          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                          gap: '14px',
+                          marginBottom: '14px'
+                        }}
+                      >
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#475569', marginBottom: '6px' }}>
+                            Card Title / Stack Name *
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. Python & Data Science, C# & .NET"
+                            value={trackForm.title}
+                            onChange={(e) => setTrackForm({ ...trackForm, title: e.target.value })}
+                            style={inputStyle}
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#475569', marginBottom: '6px' }}>
+                            Subtitle / Focus Area
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Automation, AI Models & Backend Services"
+                            value={trackForm.subtitle}
+                            onChange={(e) => setTrackForm({ ...trackForm, subtitle: e.target.value })}
+                            style={inputStyle}
+                          />
+                        </div>
+
+                        <div>
+                          <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#475569', marginBottom: '6px' }}>
+                            Card Icon
+                          </label>
+                          <select
+                            value={trackForm.icon}
+                            onChange={(e) => setTrackForm({ ...trackForm, icon: e.target.value })}
+                            style={inputStyle}
+                          >
+                            <option value="Terminal">Terminal / CLI (Python / Scripting)</option>
+                            <option value="Cpu">Cpu / Chip (C# / Algorithms / AI)</option>
+                            <option value="Server">Server (Java / Spring / Node / Backend)</option>
+                            <option value="Smartphone">Smartphone (Mobile / Flutter / Android)</option>
+                            <option value="Code2">Code2 (General Clean Code)</option>
+                            <option value="Atom">Atom (React / Frontend UI)</option>
+                            <option value="Database">Database (SQL / MERN / Data)</option>
+                            <option value="Bot">Bot / AI (Machine Learning / Automation)</option>
+                            <option value="Layers">Layers (Full Stack Architecture)</option>
+                            <option value="Globe">Globe (Web & Cloud Platforms)</option>
+                            <option value="Zap">Zap (High Performance / Realtime)</option>
+                            <option value="Sparkles">Sparkles (Creative / Next-Gen)</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      {/* Color Palette Selector */}
+                      <div style={{ marginBottom: '14px' }}>
+                        <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#475569', marginBottom: '8px' }}>
+                          Theme Color & Gradient Preset
+                        </label>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                          {TRACK_PALETTES.map((pal) => {
+                            const isSelected = trackForm.accentColor === pal.color;
+                            return (
+                              <button
+                                key={pal.id}
+                                type="button"
+                                onClick={() => {
+                                  soundManager.playClick();
+                                  setTrackForm({
+                                    ...trackForm,
+                                    accentColor: pal.color,
+                                    gradient: pal.gradient
+                                  });
+                                }}
+                                style={{
+                                  padding: '6px 12px',
+                                  borderRadius: '8px',
+                                  background: isSelected ? 'rgba(15, 23, 42, 0.08)' : '#ffffff',
+                                  border: isSelected ? `2px solid ${pal.color}` : '1px solid rgba(15, 23, 42, 0.1)',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: '8px',
+                                  cursor: 'pointer',
+                                  transition: 'all 0.2s'
+                                }}
+                              >
+                                <span style={{ width: '14px', height: '14px', borderRadius: '50%', background: pal.gradient }} />
+                                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: isSelected ? '#0f172a' : '#475569' }}>
+                                  {pal.label}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      <div style={{ marginBottom: '14px' }}>
+                        <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#475569', marginBottom: '6px' }}>
+                          Card Description
+                        </label>
+                        <textarea
+                          rows={2}
+                          placeholder="Brief 1-2 sentence overview of what kinds of applications are in this track..."
+                          value={trackForm.desc}
+                          onChange={(e) => setTrackForm({ ...trackForm, desc: e.target.value })}
+                          style={{ ...inputStyle, resize: 'vertical' }}
+                        />
+                      </div>
+
+                      <div style={{ marginBottom: '16px' }}>
+                        <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#475569', marginBottom: '6px' }}>
+                          Technologies / Tags (comma-separated)
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Python, Pandas, FastAPI, Automation"
+                          value={trackForm.tags}
+                          onChange={(e) => setTrackForm({ ...trackForm, tags: e.target.value })}
+                          style={inputStyle}
+                        />
+                      </div>
+
+                      {/* Live Card Preview */}
+                      <div style={{ marginBottom: '20px' }}>
+                        <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', marginBottom: '8px' }}>
+                          Live Homepage Card Preview
+                        </div>
+                        <div
+                          style={{
+                            background: '#ffffff',
+                            borderRadius: '16px',
+                            border: '1px solid rgba(15, 23, 42, 0.08)',
+                            padding: '20px',
+                            position: 'relative',
+                            overflow: 'hidden',
+                            boxShadow: '0 4px 16px rgba(15, 23, 42, 0.05)'
+                          }}
+                        >
+                          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: trackForm.gradient }} />
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                            <div
+                              style={{
+                                width: '42px',
+                                height: '42px',
+                                borderRadius: '12px',
+                                background: trackForm.gradient,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                color: '#ffffff'
+                              }}
+                            >
+                              {(() => {
+                                const PreviewIcon = TRACK_ICONS_MAP[trackForm.icon] || Code2;
+                                return <PreviewIcon size={20} />;
+                              })()}
+                            </div>
+                            <span
+                              style={{
+                                padding: '4px 10px',
+                                borderRadius: '9999px',
+                                background: `${trackForm.accentColor}18`,
+                                color: trackForm.accentColor,
+                                fontSize: '0.74rem',
+                                fontWeight: 700,
+                                fontFamily: 'var(--font-mono)'
+                              }}
+                            >
+                              0 Live Projects
+                            </span>
+                          </div>
+                          <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', marginBottom: '2px' }}>
+                            {trackForm.title || 'Card Title'}
+                          </div>
+                          <div style={{ fontSize: '0.8rem', color: trackForm.accentColor, fontWeight: 600, marginBottom: '6px' }}>
+                            {trackForm.subtitle || 'Focus Area / Subtitle'}
+                          </div>
+                          <div style={{ fontSize: '0.84rem', color: '#64748b', lineHeight: 1.5 }}>
+                            {trackForm.desc || 'Card description will appear here on your portfolio landing page.'}
+                          </div>
+                        </div>
+                      </div>
+
+                      <button
+                        type="submit"
+                        className="btn-magnetic btn-primary-glow"
+                        style={{
+                          padding: '10px 22px',
+                          borderRadius: '10px',
+                          fontWeight: 700,
+                          fontSize: '0.9rem',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        <Plus size={16} />
+                        <span>Create Stack Showcase Card</span>
+                      </button>
+                    </form>
+                  </div>
+
+                  {/* List of Current Stack Cards */}
+                  <h4 style={{ fontSize: '1rem', color: '#0f172a', fontWeight: 700, marginBottom: '14px' }}>
+                    Active Portfolio Stack Cards ({projectTracks.length})
+                  </h4>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    {projectTracks.map((t) => {
+                      const IconComp = TRACK_ICONS_MAP[t.icon] || Code2;
+                      const count = projects.filter((p) => p.track === t.id).length;
+                      const isDefault = ['frontend-html-css-js', 'frontend-react', 'fullstack-mern'].includes(t.id);
+
+                      return (
+                        <div
+                          key={t.id}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            padding: '14px 18px',
+                            borderRadius: '14px',
+                            border: '1px solid rgba(15, 23, 42, 0.08)',
+                            background: '#ffffff',
+                            position: 'relative',
+                            overflow: 'hidden'
+                          }}
+                        >
+                          <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: '4px', background: t.gradient }} />
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginLeft: '6px' }}>
+                            <div
+                              style={{
+                                width: '38px',
+                                height: '38px',
+                                borderRadius: '10px',
+                                background: t.gradient,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                color: '#ffffff'
+                              }}
+                            >
+                              <IconComp size={18} />
+                            </div>
+                            <div>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <span style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0f172a' }}>{t.title}</span>
+                                <span
+                                  style={{
+                                    padding: '2px 8px',
+                                    borderRadius: '6px',
+                                    background: `${t.accentColor}18`,
+                                    color: t.accentColor,
+                                    fontSize: '0.72rem',
+                                    fontWeight: 700,
+                                    fontFamily: 'var(--font-mono)'
+                                  }}
+                                >
+                                  {count} {count === 1 ? 'Project' : 'Projects'}
+                                </span>
+                              </div>
+                              <div style={{ fontSize: '0.8rem', color: '#64748b' }}>{t.subtitle}</div>
+                            </div>
+                          </div>
+
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                soundManager.playClick();
+                                setProjectForm((prev) => ({
+                                  ...prev,
+                                  track: t.id,
+                                  badge: t.title.split(' ')[0]
+                                }));
+                                setActiveTab('projects');
+                              }}
+                              style={{
+                                padding: '6px 12px',
+                                borderRadius: '8px',
+                                background: '#f8fafc',
+                                border: '1px solid rgba(15, 23, 42, 0.1)',
+                                color: '#0284c7',
+                                fontSize: '0.78rem',
+                                fontWeight: 700,
+                                cursor: 'pointer',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '4px'
+                              }}
+                            >
+                              <Plus size={12} />
+                              <span>Add Project</span>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => {
+                                if (window.confirm(`Delete stack card "${t.title}"? Any projects inside will remain in the database.`)) {
+                                  deleteTrack(t.id);
+                                }
+                              }}
+                              style={{
+                                background: 'none',
+                                border: 'none',
+                                color: isDefault ? '#94a3b8' : '#ef4444',
+                                cursor: 'pointer',
+                                padding: '6px'
+                              }}
+                              title={isDefault ? 'Delete Track' : 'Delete Custom Stack Card'}
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* ============================================================= */}
+              {/* TAB 3: SKILLS MANAGEMENT (Python, C#, Java, etc.)              */}
               {/* ============================================================= */}
               {activeTab === 'skills' && (
                 <div>
@@ -844,6 +1337,46 @@ export default function AdminModal({ isOpen, onClose }) {
                         <Plus size={16} />
                         <span>Add Skill to Portfolio</span>
                       </button>
+
+                      {/* Quick link to create Stack Card for this skill */}
+                      <div
+                        style={{
+                          marginTop: '16px',
+                          padding: '12px 16px',
+                          background: 'rgba(2, 132, 199, 0.06)',
+                          borderRadius: '12px',
+                          border: '1px dashed rgba(2, 132, 199, 0.25)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          flexWrap: 'wrap',
+                          gap: '10px'
+                        }}
+                      >
+                        <div style={{ fontSize: '0.84rem', color: '#334155' }}>
+                          💡 <strong>Have projects for this skill?</strong> Create a dedicated <strong>Stack Showcase Card</strong> so they have their own page on your portfolio!
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => handleCreateTrackFromSkill(skillForm.name)}
+                          style={{
+                            padding: '6px 14px',
+                            borderRadius: '8px',
+                            background: '#0284c7',
+                            color: '#ffffff',
+                            border: 'none',
+                            fontSize: '0.8rem',
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px'
+                          }}
+                        >
+                          <Layers size={14} />
+                          <span>Create Card for {skillForm.name || 'this Skill'}</span>
+                        </button>
+                      </div>
                     </form>
                   </div>
 

@@ -1,12 +1,43 @@
-import { ArrowUpRight, Code2, Atom, Database, FolderGit2 } from 'lucide-react';
+import {
+  ArrowUpRight,
+  Code2,
+  Atom,
+  Database,
+  Terminal,
+  Cpu,
+  Layers,
+  Globe,
+  Laptop,
+  Server,
+  Zap,
+  Sparkles,
+  Smartphone,
+  Box,
+  Bot,
+  FileCode,
+  FolderGit2
+} from 'lucide-react';
 import { usePortfolio } from '../context/PortfolioContext';
 import { soundManager } from '../utils/audioFx';
 import TiltCard from './TiltCard';
 
 const TRACK_ICONS = {
-  Code2: Code2,
-  Atom: Atom,
-  Database: Database
+  Code2,
+  Atom,
+  Database,
+  Terminal,
+  Cpu,
+  Layers,
+  Globe,
+  Laptop,
+  Server,
+  Zap,
+  Sparkles,
+  Smartphone,
+  Box,
+  Bot,
+  FileCode,
+  FolderGit2
 };
 
 export default function Projects({ onOpenTrack }) {
@@ -23,7 +54,7 @@ export default function Projects({ onOpenTrack }) {
           Explore My <span className="gradient-text">Creations by Stack</span>
         </h2>
         <p className="section-subtitle">
-          Click any of the 3 development categories below to open its dedicated collection of real-world applications, live interactive demos, and source code.
+          Click any of the {projectTracks.length} technology stack categories below to open its dedicated collection of real-world applications, live interactive demos, and source code.
         </p>
       </div>
 

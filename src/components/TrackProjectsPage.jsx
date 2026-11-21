@@ -5,9 +5,20 @@ import {
   Code2,
   Atom,
   Database,
-  Search,
-  Sparkles,
+  Terminal,
+  Cpu,
   Layers,
+  Globe,
+  Laptop,
+  Server,
+  Zap,
+  Sparkles,
+  Smartphone,
+  Box,
+  Bot,
+  FileCode,
+  FolderGit2,
+  Search,
   Eye,
   ExternalLink
 } from 'lucide-react';
@@ -19,9 +30,22 @@ import TiltCard from './TiltCard';
 const ProjectModal = lazy(() => import('./ProjectModal'));
 
 const TRACK_ICONS = {
-  Code2: Code2,
-  Atom: Atom,
-  Database: Database
+  Code2,
+  Atom,
+  Database,
+  Terminal,
+  Cpu,
+  Layers,
+  Globe,
+  Laptop,
+  Server,
+  Zap,
+  Sparkles,
+  Smartphone,
+  Box,
+  Bot,
+  FileCode,
+  FolderGit2
 };
 
 export default function TrackProjectsPage({ track, onBack }) {
@@ -30,6 +54,7 @@ export default function TrackProjectsPage({ track, onBack }) {
   const [selectedProject, setSelectedProject] = useState(null);
 
   const IconComponent = TRACK_ICONS[track.icon] || Code2;
+  const trackTotalProjects = projects.filter((p) => p.track === track.id).length;
 
   // Filter projects by current track and search query
   const filteredProjects = useMemo(() => {
@@ -149,7 +174,7 @@ export default function TrackProjectsPage({ track, onBack }) {
               }}
             >
               <IconComponent size={14} />
-              <span>{track.title} &bull; {track.count} Projects</span>
+              <span>{track.title} &bull; {trackTotalProjects} Projects</span>
             </span>
           </div>
         </div>
@@ -270,7 +295,7 @@ export default function TrackProjectsPage({ track, onBack }) {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={`Search ${track.count} projects (e.g. weather, quiz)...`}
+                placeholder={`Search ${trackTotalProjects} projects (e.g. weather, quiz)...`}
                 style={{
                   width: '100%',
                   padding: '12px 14px 12px 40px',
@@ -309,25 +334,29 @@ export default function TrackProjectsPage({ track, onBack }) {
           >
             <Sparkles size={40} color={track.accentColor} style={{ marginBottom: '14px' }} />
             <h3 style={{ fontSize: '1.25rem', color: '#0f172a', marginBottom: '8px' }}>
-              No projects matched &quot;{searchQuery}&quot;
+              {searchQuery ? `No projects matched "${searchQuery}"` : `No projects added to ${track.title} yet`}
             </h3>
             <p style={{ color: '#64748b', fontSize: '0.92rem', marginBottom: '18px' }}>
-              Try a different keyword or clear the search to view all {track.count} projects.
+              {searchQuery
+                ? `Try a different keyword or clear the search to view all ${trackTotalProjects} projects.`
+                : `Projects for this stack can be published anytime through the Secret Admin Portal (Ctrl + Shift + A).`}
             </p>
-            <button
-              onClick={() => setSearchQuery('')}
-              style={{
-                padding: '10px 22px',
-                background: track.accentColor,
-                color: '#ffffff',
-                border: 'none',
-                borderRadius: '10px',
-                fontWeight: 700,
-                cursor: 'pointer'
-              }}
-            >
-              Clear Search
-            </button>
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                style={{
+                  padding: '10px 22px',
+                  background: track.accentColor,
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '10px',
+                  fontWeight: 700,
+                  cursor: 'pointer'
+                }}
+              >
+                Clear Search
+              </button>
+            )}
           </div>
         ) : (
           <div

@@ -38,15 +38,16 @@ function PortfolioAppContent() {
     return window.location.hash === '#admin';
   });
 
-  const [activeTrack, setActiveTrack] = useState(() => {
+  const [activeTrackId, setActiveTrackId] = useState(() => {
     if (typeof window === 'undefined') return null;
     const hash = window.location.hash;
     if (hash && hash.startsWith('#projects-')) {
-      const trackId = hash.replace('#projects-', '');
-      return projectTracks.find((t) => t.id === trackId) || null;
+      return hash.replace('#projects-', '');
     }
     return null;
   });
+
+  const activeTrack = activeTrackId ? projectTracks.find((t) => t.id === activeTrackId) || null : null;
 
   const handleIntroComplete = () => {
     try {
@@ -58,7 +59,7 @@ function PortfolioAppContent() {
   };
 
   const handleOpenTrack = (track) => {
-    setActiveTrack(track);
+    setActiveTrackId(track.id);
     try {
       window.history.pushState({ trackId: track.id }, '', `#projects-${track.id}`);
     } catch {
@@ -67,7 +68,7 @@ function PortfolioAppContent() {
   };
 
   const handleCloseTrack = () => {
-    setActiveTrack(null);
+    setActiveTrackId(null);
     try {
       if (window.location.hash.startsWith('#projects-')) {
         window.history.replaceState(null, '', window.location.pathname + window.location.search);
@@ -92,16 +93,15 @@ function PortfolioAppContent() {
         setShowAdmin(true);
       } else if (hash && hash.startsWith('#projects-')) {
         const trackId = hash.replace('#projects-', '');
-        const matched = projectTracks.find((t) => t.id === trackId);
-        setActiveTrack(matched || null);
+        setActiveTrackId(trackId);
       } else {
-        setActiveTrack(null);
+        setActiveTrackId(null);
       }
     };
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, [projectTracks]);
+  }, []);
 
   // Keyboard shortcut for Secret Admin: Ctrl + Shift + A (or Cmd + Shift + A)
   useEffect(() => {

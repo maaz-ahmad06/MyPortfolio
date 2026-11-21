@@ -9,6 +9,7 @@ import { generatePortfolioDataJsString } from '../utils/portfolioSync';
 
 const STORAGE_KEYS = {
   PROJECTS: 'portfolio_custom_projects',
+  TRACKS: 'portfolio_custom_tracks',
   SKILLS: 'portfolio_custom_skills',
   PROFILE: 'portfolio_custom_profile',
   GH_TOKEN: 'portfolio_admin_gh_token',
@@ -70,6 +71,17 @@ export function PortfolioProvider({ children }) {
     }
   });
 
+  // Initialize tracks/stack cards from localStorage or default data
+  const [tracks, setTracks] = useState(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEYS.TRACKS);
+      if (saved) return JSON.parse(saved);
+    } catch {
+      // Fallback
+    }
+    return defaultTracks;
+  });
+
   // Save changes to localStorage
   useEffect(() => {
     try {
@@ -78,6 +90,14 @@ export function PortfolioProvider({ children }) {
       // Ignore
     }
   }, [projects]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEYS.TRACKS, JSON.stringify(tracks));
+    } catch {
+      // Ignore
+    }
+  }, [tracks]);
 
   useEffect(() => {
     try {
@@ -116,28 +136,34 @@ export function PortfolioProvider({ children }) {
   }, [githubToken]);
 
   // Compute dynamic project tracks with real counts
-  const dynamicTracks = defaultTracks.map((track) => {
+  const dynamicTracks = tracks.map((track) => {
     const count = projects.filter((p) => p.track === track.id).length;
     return {
       ...track,
       count,
-      badge: `${count} Live Projects`
+      badge: `${count} Live Project${count === 1 ? '' : 's'}`
     };
   });
 
   // Actions: Add Project
   const addProject = (projectData) => {
+    const targetTrackId = projectData.track || (dynamicTracks[0] ? dynamicTracks[0].id : 'frontend-html-css-js');
+    const matchedTrack = dynamicTracks.find((t) => t.id === targetTrackId);
     const newProject = {
       id: projectData.id || `proj-${Date.now()}`,
-      track: projectData.track || 'frontend-html-css-js',
-      category: projectData.category || 'Frontend (HTML, CSS, JS)',
+      track: targetTrackId,
+      category: projectData.category || matchedTrack?.title || 'Project',
       title: projectData.title,
       badge: projectData.badge || 'Project',
       shortDesc: projectData.shortDesc || '',
       longDesc: projectData.longDesc || projectData.shortDesc || '',
-      tech: Array.isArray(projectData.tech) ? projectData.tech : projectData.tech.split(',').map((t) => t.trim()),
+      tech: Array.isArray(projectData.tech)
+        ? projectData.tech
+        : (typeof projectData.tech === 'string'
+            ? projectData.tech.split(',').map((t) => t.trim()).filter(Boolean)
+            : ['HTML5', 'CSS3', 'JavaScript']),
       highlights: projectData.highlights?.length ? projectData.highlights : ['Responsive modern design', 'Clean component architecture'],
-      gradient: projectData.gradient || 'linear-gradient(135deg, #0284c7 0%, #2563eb 100%)',
+      gradient: projectData.gradient || matchedTrack?.gradient || 'linear-gradient(135deg, #0284c7 0%, #2563eb 100%)',
       github: projectData.github || 'https://github.com/maaz-ahmad06',
       demo: projectData.demo || '',
       image: projectData.image || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80'
@@ -150,6 +176,56 @@ export function PortfolioProvider({ children }) {
   // Actions: Delete Project
   const deleteProject = (projectId) => {
     setProjects((prev) => prev.filter((p) => p.id !== projectId));
+  };
+
+  // Actions: Add / Update Project Track (Stack Card)
+  const addTrack = (trackData) => {
+    const baseSlug = (trackData.title || 'custom')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+    const id = trackData.id || baseSlug || `track-${Date.now()}`;
+
+    const accentColor = trackData.accentColor || '#0284c7';
+    const gradient = trackData.gradient || `linear-gradient(135deg, ${accentColor} 0%, #2563eb 100%)`;
+    const bgSoft = trackData.bgSoft || `${accentColor}18`;
+    const borderSoft = trackData.borderSoft || `${accentColor}40`;
+
+    const tags = Array.isArray(trackData.tags)
+      ? trackData.tags
+      : (typeof trackData.tags === 'string' && trackData.tags.trim()
+          ? trackData.tags.split(',').map((t) => t.trim()).filter(Boolean)
+          : [trackData.title]);
+
+    const newTrack = {
+      id,
+      title: trackData.title,
+      subtitle: trackData.subtitle || 'Specialized Technology Stack',
+      desc: trackData.desc || `Curated collection of applications and projects engineered using ${trackData.title}.`,
+      badge: 'New Stack',
+      count: 0,
+      accentColor,
+      gradient,
+      bgSoft,
+      borderSoft,
+      icon: trackData.icon || 'Code2',
+      tags
+    };
+
+    setTracks((prev) => {
+      const exists = prev.some((t) => t.id === id);
+      if (exists) {
+        return prev.map((t) => (t.id === id ? { ...t, ...newTrack } : t));
+      }
+      return [...prev, newTrack];
+    });
+
+    return newTrack;
+  };
+
+  // Actions: Delete Project Track (Stack Card)
+  const deleteTrack = (trackId) => {
+    setTracks((prev) => prev.filter((t) => t.id !== trackId));
   };
 
   // Actions: Add Skill
@@ -193,9 +269,11 @@ export function PortfolioProvider({ children }) {
   // Reset to original repository defaults
   const resetToDefaults = () => {
     setProjects(defaultProjects);
+    setTracks(defaultTracks);
     setSkills(defaultSkills);
     setProfile(defaultPersonalInfo);
     localStorage.removeItem(STORAGE_KEYS.PROJECTS);
+    localStorage.removeItem(STORAGE_KEYS.TRACKS);
     localStorage.removeItem(STORAGE_KEYS.SKILLS);
     localStorage.removeItem(STORAGE_KEYS.PROFILE);
   };
@@ -264,15 +342,18 @@ export function PortfolioProvider({ children }) {
     <PortfolioContext.Provider
       value={{
         projects,
+        tracks,
+        projectTracks: dynamicTracks,
         skills,
         profile,
-        projectTracks: dynamicTracks,
         adminPin,
         setAdminPin,
         githubToken,
         setGithubToken,
         addProject,
         deleteProject,
+        addTrack,
+        deleteTrack,
         addSkill,
         deleteSkill,
         updateProfile,
