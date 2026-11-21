@@ -95,14 +95,26 @@ export default function AdminModal({ isOpen, onClose }) {
   const [newPin, setNewPin] = useState('');
   const [pinSuccessMsg, setPinSuccessMsg] = useState('');
 
-  // Keyboard Escape
+  // Lock background scrolling and handle Escape
   useEffect(() => {
     if (!isOpen) return;
+
     const onKeyDown = (e) => {
       if (e.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+
+    // Completely freeze background body & html scrolling
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = originalBodyOverflow || 'unset';
+      document.documentElement.style.overflow = originalHtmlOverflow || 'unset';
+    };
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
@@ -220,7 +232,9 @@ export default function AdminModal({ isOpen, onClose }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '20px'
+        padding: '20px',
+        overscrollBehavior: 'contain',
+        touchAction: 'none'
       }}
       onClick={onClose}
     >
@@ -236,7 +250,8 @@ export default function AdminModal({ isOpen, onClose }) {
           display: 'flex',
           flexDirection: 'column',
           overflow: 'hidden',
-          transition: 'max-width 0.3s ease'
+          transition: 'max-width 0.3s ease',
+          overscrollBehavior: 'contain'
         }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -442,7 +457,7 @@ export default function AdminModal({ isOpen, onClose }) {
             </div>
 
             {/* Modal Scrollable Body */}
-            <div style={{ padding: '24px 28px', overflowY: 'auto', flex: 1 }}>
+            <div style={{ padding: '24px 28px', overflowY: 'auto', flex: 1, overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' }}>
               {/* ============================================================= */}
               {/* TAB 1: PROJECTS MANAGEMENT                                    */}
               {/* ============================================================= */}
