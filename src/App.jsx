@@ -12,7 +12,8 @@ import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import TrackProjectsPage from './components/TrackProjectsPage';
-import { projectTracks } from './data/portfolioData';
+import AdminModal from './components/AdminModal';
+import { PortfolioProvider, usePortfolio } from './context/PortfolioContext';
 
 const ResumeModal = lazy(() => import('./components/ResumeModal'));
 
@@ -28,9 +29,15 @@ function shouldShowIntro() {
   }
 }
 
-export default function App() {
+function PortfolioAppContent() {
+  const { projectTracks } = usePortfolio();
   const [loading, setLoading] = useState(shouldShowIntro);
   const [showResume, setShowResume] = useState(false);
+  const [showAdmin, setShowAdmin] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.location.hash === '#admin';
+  });
+
   const [activeTrack, setActiveTrack] = useState(() => {
     if (typeof window === 'undefined') return null;
     const hash = window.location.hash;
@@ -77,10 +84,13 @@ export default function App() {
     }, 50);
   };
 
+  // Listen for hash changes & browser back button
   useEffect(() => {
     const handlePopState = () => {
       const hash = window.location.hash;
-      if (hash && hash.startsWith('#projects-')) {
+      if (hash === '#admin') {
+        setShowAdmin(true);
+      } else if (hash && hash.startsWith('#projects-')) {
         const trackId = hash.replace('#projects-', '');
         const matched = projectTracks.find((t) => t.id === trackId);
         setActiveTrack(matched || null);
@@ -88,8 +98,21 @@ export default function App() {
         setActiveTrack(null);
       }
     };
+
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
+  }, [projectTracks]);
+
+  // Keyboard shortcut for Secret Admin: Ctrl + Shift + A (or Cmd + Shift + A)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+        e.preventDefault();
+        setShowAdmin((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   return (
@@ -103,9 +126,7 @@ export default function App() {
       {/* Glowing Interactive Custom Cursor */}
       <CustomCursor />
 
-      {/* When a track is active, render ONLY the dedicated TrackProjectsPage.
-          The rest of the portfolio (Navbar, Hero, About, Services, Footer) is 100% disabled/unmounted
-          preventing any background bleeding, scrolling conflicts, or text overlap! */}
+      {/* When a track is active, render ONLY the dedicated TrackProjectsPage */}
       {activeTrack ? (
         <TrackProjectsPage
           track={activeTrack}
@@ -128,7 +149,7 @@ export default function App() {
           </main>
 
           {/* Footer */}
-          <Footer />
+          <Footer onOpenAdmin={() => setShowAdmin(true)} />
         </>
       )}
 
@@ -138,6 +159,29 @@ export default function App() {
           <ResumeModal onClose={() => setShowResume(false)} />
         </Suspense>
       )}
+
+      {/* Secret Admin CMS Modal */}
+      <AdminModal
+        isOpen={showAdmin}
+        onClose={() => {
+          setShowAdmin(false);
+          if (window.location.hash === '#admin') {
+            try {
+              window.history.replaceState(null, '', window.location.pathname + window.location.search);
+            } catch {
+              // Ignore
+            }
+          }
+        }}
+      />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <PortfolioProvider>
+      <PortfolioAppContent />
+    </PortfolioProvider>
   );
 }

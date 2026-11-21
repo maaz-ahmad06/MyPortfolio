@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { ArrowUp, Clock } from 'lucide-react';
+import { ArrowUp, Clock, Lock } from 'lucide-react';
 import { personalInfo } from '../data/portfolioData';
 import { soundManager } from '../utils/audioFx';
 
-export default function Footer() {
+export default function Footer({ onOpenAdmin }) {
   const [currentTime, setCurrentTime] = useState('');
 
   useEffect(() => {
@@ -169,8 +169,28 @@ export default function Footer() {
             color: '#64748b'
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span>&copy; {new Date().getFullYear()} {personalInfo.name}. Engineered with React 19 & MERN Stack.</span>
+            {onOpenAdmin && (
+              <button
+                onClick={onOpenAdmin}
+                title="Admin CMS Portal"
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#cbd5e1',
+                  cursor: 'pointer',
+                  padding: '4px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  transition: 'color 0.2s'
+                }}
+                onMouseOver={(e) => (e.currentTarget.style.color = '#0284c7')}
+                onMouseOut={(e) => (e.currentTarget.style.color = '#cbd5e1')}
+              >
+                <Lock size={12} />
+              </button>
+            )}
           </div>
 
           <div style={{ display: 'flex', gap: '16px' }}>

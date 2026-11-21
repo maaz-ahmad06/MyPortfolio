@@ -1,5 +1,5 @@
 import { ArrowUpRight, Code2, Atom, Database, FolderGit2 } from 'lucide-react';
-import { projectTracks } from '../data/portfolioData';
+import { usePortfolio } from '../context/PortfolioContext';
 import { soundManager } from '../utils/audioFx';
 import TiltCard from './TiltCard';
 
@@ -10,6 +10,7 @@ const TRACK_ICONS = {
 };
 
 export default function Projects({ onOpenTrack }) {
+  const { projectTracks } = usePortfolio();
   return (
     <section id="projects" className="section-wrapper">
       {/* Section Header */}

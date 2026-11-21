@@ -12,7 +12,7 @@ import {
   ExternalLink
 } from 'lucide-react';
 import { GithubIcon } from './Icons';
-import { projectsData } from '../data/portfolioData';
+import { usePortfolio } from '../context/PortfolioContext';
 import { soundManager } from '../utils/audioFx';
 import TiltCard from './TiltCard';
 
@@ -25,6 +25,7 @@ const TRACK_ICONS = {
 };
 
 export default function TrackProjectsPage({ track, onBack }) {
+  const { projects } = usePortfolio();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProject, setSelectedProject] = useState(null);
 
@@ -32,7 +33,7 @@ export default function TrackProjectsPage({ track, onBack }) {
 
   // Filter projects by current track and search query
   const filteredProjects = useMemo(() => {
-    return projectsData.filter((project) => {
+    return projects.filter((project) => {
       if (project.track !== track.id) return false;
       if (!searchQuery.trim()) return true;
 
@@ -43,7 +44,7 @@ export default function TrackProjectsPage({ track, onBack }) {
       const inTech = project.tech.some((t) => t.toLowerCase().includes(q));
       return inTitle || inDesc || inBadge || inTech;
     });
-  }, [track.id, searchQuery]);
+  }, [track.id, searchQuery, projects]);
 
   // Scroll to top on page mount
   useEffect(() => {

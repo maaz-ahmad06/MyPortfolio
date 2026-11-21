@@ -17,11 +17,13 @@ import {
   Palette
 } from 'lucide-react';
 import { FigmaIcon } from './Icons';
-import { skillsData, marqueeSkills } from '../data/portfolioData';
+import { marqueeSkills } from '../data/portfolioData';
+import { usePortfolio } from '../context/PortfolioContext';
 import { soundManager } from '../utils/audioFx';
 import TiltCard from './TiltCard';
 
 export default function Skills() {
+  const { skills } = usePortfolio();
   const [activeTab, setActiveTab] = useState('all');
 
   // Icon mapping helper
@@ -49,9 +51,9 @@ export default function Skills() {
   };
 
   const allSkills = [
-    ...skillsData.frontend.map(s => ({ ...s, category: 'frontend' })),
-    ...skillsData.backend.map(s => ({ ...s, category: 'backend' })),
-    ...skillsData.tools.map(s => ({ ...s, category: 'tools' }))
+    ...(skills?.frontend || []).map(s => ({ ...s, category: 'frontend' })),
+    ...(skills?.backend || []).map(s => ({ ...s, category: 'backend' })),
+    ...(skills?.tools || []).map(s => ({ ...s, category: 'tools' }))
   ];
 
   const filteredSkills = activeTab === 'all' 
