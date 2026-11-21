@@ -12,11 +12,21 @@ const STORAGE_KEYS = {
   TRACKS: 'portfolio_custom_tracks',
   SKILLS: 'portfolio_custom_skills',
   PROFILE: 'portfolio_custom_profile',
+  CV: 'portfolio_custom_cv',
   GH_TOKEN: 'portfolio_admin_gh_token',
   PIN: 'portfolio_admin_pin'
 };
 
 const DEFAULT_PIN = '21988';
+
+const DEFAULT_CV = {
+  hasCustomCv: false,
+  fileType: null, // 'pdf' | 'image' | 'url'
+  fileName: '',
+  fileSize: 0,
+  dataUrl: '',
+  updatedAt: null
+};
 
 const PortfolioContext = createContext(null);
 
@@ -82,6 +92,17 @@ export function PortfolioProvider({ children }) {
     return defaultTracks;
   });
 
+  // Initialize custom CV / Resume from localStorage
+  const [cvData, setCvData] = useState(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEYS.CV);
+      if (saved) return JSON.parse(saved);
+    } catch {
+      // Fallback
+    }
+    return DEFAULT_CV;
+  });
+
   // Save changes to localStorage
   useEffect(() => {
     try {
@@ -134,6 +155,18 @@ export function PortfolioProvider({ children }) {
       // Ignore
     }
   }, [githubToken]);
+
+  useEffect(() => {
+    try {
+      if (cvData && cvData.hasCustomCv) {
+        localStorage.setItem(STORAGE_KEYS.CV, JSON.stringify(cvData));
+      } else {
+        localStorage.removeItem(STORAGE_KEYS.CV);
+      }
+    } catch {
+      // Ignore
+    }
+  }, [cvData]);
 
   // Compute dynamic project tracks with real counts
   const dynamicTracks = tracks.map((track) => {
@@ -266,16 +299,59 @@ export function PortfolioProvider({ children }) {
     setProfile((prev) => ({ ...prev, ...fields }));
   };
 
+  // Actions: Upload / Set Custom CV (PDF or Image)
+  const uploadCustomCv = ({ fileType, fileName, fileSize, dataUrl }) => {
+    const isPdf =
+      fileType?.toLowerCase().includes('pdf') ||
+      fileName?.toLowerCase().endsWith('.pdf') ||
+      dataUrl?.startsWith('data:application/pdf');
+    const isImg =
+      fileType?.toLowerCase().includes('image') ||
+      /\.(png|jpe?g|webp)$/i.test(fileName || '') ||
+      dataUrl?.startsWith('data:image/');
+
+    let resolvedType = 'url';
+    if (isPdf) resolvedType = 'pdf';
+    else if (isImg) resolvedType = 'image';
+
+    const newCv = {
+      hasCustomCv: true,
+      fileType: resolvedType,
+      fileName: fileName || (resolvedType === 'pdf' ? 'Resume_Maaz_Ahmad.pdf' : 'Resume_Maaz_Ahmad.png'),
+      fileSize: fileSize || 0,
+      dataUrl,
+      updatedAt: new Date().toISOString()
+    };
+
+    setCvData(newCv);
+    setProfile((prev) => ({
+      ...prev,
+      resumeUrl: dataUrl
+    }));
+    return newCv;
+  };
+
+  // Actions: Remove Custom CV
+  const removeCustomCv = () => {
+    setCvData(DEFAULT_CV);
+    setProfile((prev) => ({
+      ...prev,
+      resumeUrl: '#resume'
+    }));
+  };
+
   // Reset to original repository defaults
   const resetToDefaults = () => {
     setProjects(defaultProjects);
     setTracks(defaultTracks);
     setSkills(defaultSkills);
     setProfile(defaultPersonalInfo);
+    setCvData(DEFAULT_CV);
     localStorage.removeItem(STORAGE_KEYS.PROJECTS);
     localStorage.removeItem(STORAGE_KEYS.TRACKS);
     localStorage.removeItem(STORAGE_KEYS.SKILLS);
     localStorage.removeItem(STORAGE_KEYS.PROFILE);
+    localStorage.removeItem(STORAGE_KEYS.CV);
   };
 
   // Direct GitHub API Commit Push
@@ -346,6 +422,7 @@ export function PortfolioProvider({ children }) {
         projectTracks: dynamicTracks,
         skills,
         profile,
+        cvData,
         adminPin,
         setAdminPin,
         githubToken,
@@ -357,6 +434,8 @@ export function PortfolioProvider({ children }) {
         addSkill,
         deleteSkill,
         updateProfile,
+        uploadCustomCv,
+        removeCustomCv,
         resetToDefaults,
         pushToGitHub
       }}

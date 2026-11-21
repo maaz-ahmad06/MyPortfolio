@@ -23,7 +23,11 @@ import {
   Zap,
   Atom,
   Database,
-  Bot
+  Bot,
+  FileText,
+  FileUp,
+  Download,
+  FileCheck
 } from 'lucide-react';
 import { usePortfolio } from '../context/PortfolioContext';
 import { soundManager } from '../utils/audioFx';
@@ -34,6 +38,7 @@ const TABS = [
   { id: 'projects', label: 'Projects', icon: FolderGit2 },
   { id: 'tracks', label: 'Stack Cards', icon: Layers },
   { id: 'skills', label: 'Skills', icon: Code2 },
+  { id: 'cv', label: 'CV / Resume', icon: FileText },
   { id: 'profile', label: 'Profile', icon: User },
   { id: 'sync', label: 'GitHub Sync', icon: GitBranch }
 ];
@@ -70,6 +75,7 @@ export default function AdminModal({ isOpen, onClose }) {
     projectTracks,
     skills,
     profile,
+    cvData,
     adminPin,
     setAdminPin,
     githubToken,
@@ -81,6 +87,8 @@ export default function AdminModal({ isOpen, onClose }) {
     addSkill,
     deleteSkill,
     updateProfile,
+    uploadCustomCv,
+    removeCustomCv,
     resetToDefaults,
     pushToGitHub
   } = usePortfolio();
@@ -114,6 +122,13 @@ export default function AdminModal({ isOpen, onClose }) {
     tags: 'Python, Automation, Scripting, Data'
   });
   const [trackSuccessMsg, setTrackSuccessMsg] = useState('');
+
+  // Form States - CV Upload
+  const [stagedCvFile, setStagedCvFile] = useState(null);
+  const [cvUrlInput, setCvUrlInput] = useState('');
+  const [cvSuccessMsg, setCvSuccessMsg] = useState('');
+  const [cvErrorMsg, setCvErrorMsg] = useState('');
+  const [isProcessingCv, setIsProcessingCv] = useState(false);
 
   // Form States - Skill
   const [skillForm, setSkillForm] = useState({
@@ -282,6 +297,90 @@ export default function AdminModal({ isOpen, onClose }) {
     soundManager.playSuccess();
     setProfileSuccessMsg('Profile information updated successfully!');
     setTimeout(() => setProfileSuccessMsg(''), 4000);
+  };
+
+  // CV Upload Handlers
+  const handleCvFileSelect = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    soundManager.playClick();
+    setCvErrorMsg('');
+    setCvSuccessMsg('');
+
+    const MAX_SIZE_MB = 4.5;
+    if (file.size > MAX_SIZE_MB * 1024 * 1024) {
+      setCvErrorMsg(`File is too large (${(file.size / (1024 * 1024)).toFixed(1)}MB). Please choose a file under ${MAX_SIZE_MB}MB or provide a hosted URL.`);
+      return;
+    }
+
+    setIsProcessingCv(true);
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const dataUrl = event.target?.result;
+      if (typeof dataUrl === 'string') {
+        setStagedCvFile({
+          name: file.name,
+          size: file.size,
+          type: file.type || (file.name.endsWith('.pdf') ? 'application/pdf' : 'image/png'),
+          dataUrl
+        });
+        soundManager.playSuccess();
+      }
+      setIsProcessingCv(false);
+    };
+    reader.onerror = () => {
+      setCvErrorMsg('Could not read the selected file. Please try again.');
+      setIsProcessingCv(false);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleSaveStagedCv = () => {
+    if (!stagedCvFile) return;
+    try {
+      uploadCustomCv({
+        fileType: stagedCvFile.type,
+        fileName: stagedCvFile.name,
+        fileSize: stagedCvFile.size,
+        dataUrl: stagedCvFile.dataUrl
+      });
+      soundManager.playSuccess();
+      setCvSuccessMsg(`CV "${stagedCvFile.name}" activated successfully! Visitors will now see and be able to download your uploaded document.`);
+      setStagedCvFile(null);
+      setTimeout(() => setCvSuccessMsg(''), 5000);
+    } catch {
+      setCvErrorMsg('Browser storage quota reached. Please optimize your file or provide a hosted URL.');
+    }
+  };
+
+  const handleSetCvUrl = (e) => {
+    e.preventDefault();
+    soundManager.playClick();
+    const url = cvUrlInput.trim();
+    if (!url) return;
+
+    const isPdf = url.toLowerCase().includes('.pdf');
+    uploadCustomCv({
+      fileType: isPdf ? 'pdf' : 'url',
+      fileName: 'Hosted_CV',
+      fileSize: 0,
+      dataUrl: url
+    });
+    soundManager.playSuccess();
+    setCvSuccessMsg('Hosted CV URL activated successfully!');
+    setCvUrlInput('');
+    setTimeout(() => setCvSuccessMsg(''), 5000);
+  };
+
+  const handleRemoveCustomCv = () => {
+    if (window.confirm('Remove uploaded custom CV and revert back to the auto-generated ATS Resume?')) {
+      soundManager.playClick();
+      removeCustomCv();
+      soundManager.playSuccess();
+      setCvSuccessMsg('Reverted to default ATS Resume.');
+      setTimeout(() => setCvSuccessMsg(''), 4000);
+    }
   };
 
   // Handle GitHub Sync
@@ -1428,7 +1527,374 @@ export default function AdminModal({ isOpen, onClose }) {
               )}
 
               {/* ============================================================= */}
-              {/* TAB 3: PROFILE QUICK UPDATE                                  */}
+              {/* TAB 4: CV / RESUME UPLOADER (PDF / PNG / JPG)                 */}
+              {/* ============================================================= */}
+              {activeTab === 'cv' && (
+                <div>
+                  {cvSuccessMsg && (
+                    <div
+                      style={{
+                        padding: '12px 16px',
+                        background: 'rgba(5, 150, 105, 0.1)',
+                        border: '1px solid rgba(5, 150, 105, 0.3)',
+                        borderRadius: '10px',
+                        color: '#059669',
+                        fontWeight: 600,
+                        fontSize: '0.88rem',
+                        marginBottom: '20px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px'
+                      }}
+                    >
+                      <CheckCircle2 size={18} />
+                      <span>{cvSuccessMsg}</span>
+                    </div>
+                  )}
+
+                  {cvErrorMsg && (
+                    <div
+                      style={{
+                        padding: '12px 16px',
+                        background: 'rgba(239, 68, 68, 0.1)',
+                        border: '1px solid rgba(239, 68, 68, 0.3)',
+                        borderRadius: '10px',
+                        color: '#dc2626',
+                        fontWeight: 600,
+                        fontSize: '0.88rem',
+                        marginBottom: '20px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px'
+                      }}
+                    >
+                      <AlertCircle size={18} />
+                      <span>{cvErrorMsg}</span>
+                    </div>
+                  )}
+
+                  {/* 1. Current Active CV Status Card */}
+                  <div
+                    style={{
+                      background: cvData?.hasCustomCv ? 'rgba(2, 132, 199, 0.04)' : '#f8fafc',
+                      borderRadius: '16px',
+                      padding: '20px 24px',
+                      border: cvData?.hasCustomCv
+                        ? '1px solid rgba(2, 132, 199, 0.25)'
+                        : '1px solid rgba(15, 23, 42, 0.08)',
+                      marginBottom: '24px'
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px', marginBottom: '12px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <span
+                          style={{
+                            padding: '4px 10px',
+                            borderRadius: '9999px',
+                            background: cvData?.hasCustomCv ? '#0284c7' : '#64748b',
+                            color: '#ffffff',
+                            fontSize: '0.74rem',
+                            fontWeight: 700,
+                            fontFamily: 'var(--font-mono)'
+                          }}
+                        >
+                          {cvData?.hasCustomCv ? `ACTIVE CUSTOM CV (${cvData.fileType?.toUpperCase()})` : 'AUTO-GENERATED ATS RESUME ACTIVE'}
+                        </span>
+                      </div>
+
+                      {cvData?.hasCustomCv && (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <a
+                            href={cvData.dataUrl}
+                            download={cvData.fileName || 'Maaz_Ahmad_CV'}
+                            className="btn-magnetic"
+                            style={{
+                              padding: '6px 14px',
+                              borderRadius: '8px',
+                              background: '#ffffff',
+                              border: '1px solid rgba(15, 23, 42, 0.12)',
+                              color: '#0f172a',
+                              fontSize: '0.8rem',
+                              fontWeight: 700,
+                              cursor: 'pointer',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              textDecoration: 'none'
+                            }}
+                          >
+                            <Download size={14} />
+                            <span>Download Current</span>
+                          </a>
+
+                          <a
+                            href={cvData.dataUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="btn-magnetic"
+                            style={{
+                              padding: '6px 14px',
+                              borderRadius: '8px',
+                              background: '#ffffff',
+                              border: '1px solid rgba(15, 23, 42, 0.12)',
+                              color: '#0284c7',
+                              fontSize: '0.8rem',
+                              fontWeight: 700,
+                              cursor: 'pointer',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              textDecoration: 'none'
+                            }}
+                          >
+                            <ExternalLink size={14} />
+                            <span>View Full</span>
+                          </a>
+
+                          <button
+                            type="button"
+                            onClick={handleRemoveCustomCv}
+                            style={{
+                              padding: '6px 12px',
+                              borderRadius: '8px',
+                              background: '#fee2e2',
+                              border: '1px solid #fca5a5',
+                              color: '#b91c1c',
+                              fontSize: '0.8rem',
+                              fontWeight: 700,
+                              cursor: 'pointer',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '4px'
+                            }}
+                            title="Remove custom CV and revert to default"
+                          >
+                            <Trash2 size={13} />
+                            <span>Revert to ATS</span>
+                          </button>
+                        </div>
+                      )}
+                    </div>
+
+                    {cvData?.hasCustomCv ? (
+                      <div>
+                        <div style={{ fontSize: '1rem', fontWeight: 700, color: '#0f172a', marginBottom: '4px' }}>
+                          📄 {cvData.fileName || 'Custom CV'}
+                        </div>
+                        <div style={{ fontSize: '0.82rem', color: '#64748b' }}>
+                          {cvData.fileSize > 0 && `Size: ${(cvData.fileSize / 1024).toFixed(1)} KB • `}
+                          Format: {cvData.fileType?.toUpperCase()} • Last updated: {cvData.updatedAt ? new Date(cvData.updatedAt).toLocaleDateString() : 'Recently'}
+                        </div>
+                      </div>
+                    ) : (
+                      <p style={{ fontSize: '0.88rem', color: '#475569', margin: 0, lineHeight: 1.5 }}>
+                        Visitors who click <strong>&quot;View CV / Resume&quot;</strong> in the Hero or About section are currently shown the clean, auto-generated ATS resume sheet. You can upload your own custom designed <strong>PDF</strong> or <strong>PNG/JPG image</strong> below to replace it anytime!
+                      </p>
+                    )}
+                  </div>
+
+                  {/* 2. Upload Box */}
+                  <div
+                    style={{
+                      background: '#f8fafc',
+                      borderRadius: '16px',
+                      padding: '24px',
+                      border: '1px solid rgba(15, 23, 42, 0.08)',
+                      marginBottom: '24px'
+                    }}
+                  >
+                    <h4 style={{ fontSize: '1.05rem', color: '#0f172a', fontWeight: 700, marginBottom: '6px' }}>
+                      Upload New CV / Resume File
+                    </h4>
+                    <p style={{ color: '#64748b', fontSize: '0.85rem', marginBottom: '18px' }}>
+                      Supports <strong>PDF documents (.pdf)</strong> or high-resolution <strong>PNG / JPG images</strong>. Perfect when you update your CV in Canva, Figma, or Word and want to publish the new version immediately.
+                    </p>
+
+                    {/* Drag and Drop / Click Area */}
+                    <label
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '32px 20px',
+                        borderRadius: '14px',
+                        border: '2px dashed rgba(2, 132, 199, 0.4)',
+                        background: '#ffffff',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s',
+                        marginBottom: '16px',
+                        textAlign: 'center'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.borderColor = '#0284c7';
+                        e.currentTarget.style.background = 'rgba(2, 132, 199, 0.02)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor = 'rgba(2, 132, 199, 0.4)';
+                        e.currentTarget.style.background = '#ffffff';
+                      }}
+                    >
+                      <input
+                        type="file"
+                        accept=".pdf,image/png,image/jpeg,image/webp"
+                        onChange={handleCvFileSelect}
+                        style={{ display: 'none' }}
+                      />
+                      <div
+                        style={{
+                          width: '54px',
+                          height: '54px',
+                          borderRadius: '14px',
+                          background: 'rgba(2, 132, 199, 0.1)',
+                          color: '#0284c7',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          marginBottom: '12px'
+                        }}
+                      >
+                        <FileUp size={28} />
+                      </div>
+                      <div style={{ fontSize: '0.96rem', fontWeight: 700, color: '#0f172a', marginBottom: '4px' }}>
+                        Click to Browse or Drag &amp; Drop CV File
+                      </div>
+                      <div style={{ fontSize: '0.8rem', color: '#64748b' }}>
+                        Accepted: .PDF, .PNG, .JPG, .WEBP (Recommended size: under 4MB)
+                      </div>
+                    </label>
+
+                    {/* Staged File Confirmation Card */}
+                    {stagedCvFile && (
+                      <div
+                        style={{
+                          padding: '16px',
+                          borderRadius: '12px',
+                          background: '#ffffff',
+                          border: '1px solid rgba(2, 132, 199, 0.3)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          flexWrap: 'wrap',
+                          gap: '12px',
+                          marginBottom: '16px'
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                          <div
+                            style={{
+                              width: '42px',
+                              height: '42px',
+                              borderRadius: '10px',
+                              background: '#0284c7',
+                              color: '#ffffff',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center'
+                            }}
+                          >
+                            <FileCheck size={22} />
+                          </div>
+                          <div>
+                            <div style={{ fontSize: '0.92rem', fontWeight: 700, color: '#0f172a' }}>
+                              {stagedCvFile.name}
+                            </div>
+                            <div style={{ fontSize: '0.78rem', color: '#64748b' }}>
+                              {(stagedCvFile.size / 1024).toFixed(1)} KB &bull; Ready to activate
+                            </div>
+                          </div>
+                        </div>
+
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <button
+                            type="button"
+                            onClick={handleSaveStagedCv}
+                            disabled={isProcessingCv}
+                            className="btn-magnetic btn-primary-glow"
+                            style={{
+                              padding: '8px 20px',
+                              borderRadius: '8px',
+                              fontWeight: 700,
+                              fontSize: '0.85rem',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            <CheckCircle2 size={15} />
+                            <span>Activate This CV</span>
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => setStagedCvFile(null)}
+                            style={{
+                              padding: '8px 14px',
+                              borderRadius: '8px',
+                              background: '#f1f5f9',
+                              border: 'none',
+                              color: '#475569',
+                              fontSize: '0.85rem',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* 3. Direct Hosted URL Fallback */}
+                  <div
+                    style={{
+                      background: '#f8fafc',
+                      borderRadius: '16px',
+                      padding: '20px 24px',
+                      border: '1px solid rgba(15, 23, 42, 0.08)'
+                    }}
+                  >
+                    <h4 style={{ fontSize: '0.95rem', color: '#0f172a', fontWeight: 700, marginBottom: '6px' }}>
+                      Or Provide Hosted CV URL (Google Drive / GitHub / Dropbox)
+                    </h4>
+                    <p style={{ color: '#64748b', fontSize: '0.82rem', marginBottom: '14px' }}>
+                      If your PDF is hosted on Google Drive, GitHub, or OneDrive, you can paste its public link directly:
+                    </p>
+
+                    <form onSubmit={handleSetCvUrl} style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                      <input
+                        type="url"
+                        placeholder="https://drive.google.com/... or https://raw.githubusercontent.com/..."
+                        value={cvUrlInput}
+                        onChange={(e) => setCvUrlInput(e.target.value)}
+                        style={{ ...inputStyle, flex: 1, minWidth: '240px' }}
+                      />
+                      <button
+                        type="submit"
+                        className="btn-magnetic btn-primary-glow"
+                        style={{
+                          padding: '10px 20px',
+                          borderRadius: '10px',
+                          fontWeight: 700,
+                          fontSize: '0.85rem',
+                          cursor: 'pointer',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          whiteSpace: 'nowrap'
+                        }}
+                      >
+                        <ExternalLink size={15} />
+                        <span>Set Link as Active CV</span>
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              )}
+
+              {/* ============================================================= */}
+              {/* TAB 5: PROFILE QUICK UPDATE                                  */}
               {/* ============================================================= */}
               {activeTab === 'profile' && (
                 <div>
