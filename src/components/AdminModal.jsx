@@ -128,7 +128,7 @@ export default function AdminModal({ isOpen, onClose }) {
       setPinError('');
       setPinInput('');
     } else {
-      setPinError('Incorrect PIN. (Default PIN: 21988)');
+      setPinError('Incorrect PIN. Access denied.');
       soundManager.playSuccess(); // subtle sound
     }
   };
@@ -333,9 +333,7 @@ export default function AdminModal({ isOpen, onClose }) {
               </button>
             </form>
 
-            <div style={{ marginTop: '20px', fontSize: '0.8rem', color: '#94a3b8' }}>
-              Default PIN: <strong style={{ color: '#0284c7' }}>21988</strong> (Changeable inside settings)
-            </div>
+            
           </div>
         ) : (
           /* =================================================================== */
