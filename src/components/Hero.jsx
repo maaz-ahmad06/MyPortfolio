@@ -451,7 +451,7 @@ export default function Hero({ onOpenResume }) {
               {completedProjectsDisplay}
             </span>
             <span style={{ fontSize: '0.72rem', color: '#475569', fontWeight: 600, lineHeight: 1.2 }}>
-              MERN<br />Projects
+              Live<br />Projects
             </span>
           </div>
         </div>

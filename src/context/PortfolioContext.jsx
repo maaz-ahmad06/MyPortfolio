@@ -37,11 +37,21 @@ export function PortfolioProvider({ children }) {
       const saved = localStorage.getItem(STORAGE_KEYS.PROJECTS);
       if (saved) {
         const parsed = JSON.parse(saved);
-        // Clean out any previous dummy/default bundled projects
-        const userProjects = parsed.filter(
-          (p) => !p.id.endsWith('-vanilla') && !p.id.endsWith('-react') && !p.id.endsWith('-mern')
-        );
-        return userProjects;
+        // Clean out only dummy placeholder projects
+        const DUMMY_IDS = new Set([
+          'task-flow-pro',
+          'weather-nexus',
+          'cryptoview-api',
+          'dev-pulse-mern',
+          'shop-zen-ecommerce',
+          'auth-guard-rest-api'
+        ]);
+        const filtered = parsed.filter((p) => !DUMMY_IDS.has(p.id));
+
+        // Ensure authentic HTML/CSS/JS default projects are retained even if browser previously saved an empty list
+        const existingIds = new Set(filtered.map((p) => p.id));
+        const missingDefaults = defaultProjects.filter((p) => !existingIds.has(p.id));
+        return [...missingDefaults, ...filtered];
       }
     } catch {
       // Fallback
