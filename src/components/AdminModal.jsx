@@ -859,65 +859,81 @@ export default function AdminModal({ isOpen, onClose }) {
                   </h4>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxHeight: '300px', overflowY: 'auto' }}>
-                    {projects.map((proj) => (
+                    {projects.length === 0 ? (
                       <div
-                        key={proj.id}
                         style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          padding: '12px 16px',
+                          textAlign: 'center',
+                          padding: '32px 16px',
+                          background: '#ffffff',
                           borderRadius: '12px',
-                          border: '1px solid rgba(15, 23, 42, 0.08)',
-                          background: '#ffffff'
+                          border: '1px dashed rgba(15, 23, 42, 0.15)',
+                          color: '#64748b',
+                          fontSize: '0.88rem'
                         }}
                       >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden' }}>
-                          <span
-                            style={{
-                              padding: '3px 8px',
-                              borderRadius: '6px',
-                              background: 'rgba(2, 132, 199, 0.1)',
-                              color: '#0284c7',
-                              fontSize: '0.72rem',
-                              fontFamily: 'var(--font-mono)',
-                              fontWeight: 700,
-                              whiteSpace: 'nowrap'
-                            }}
-                          >
-                            {projectTracks.find((t) => t.id === proj.track)?.title.split(' ')[0] || proj.badge}
-                          </span>
-                          <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#0f172a', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
-                            {proj.title}
-                          </span>
-                        </div>
-
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                          {proj.demo && (
-                            <a href={proj.demo} target="_blank" rel="noreferrer" style={{ color: '#0284c7' }} title="Visit Demo">
-                              <ExternalLink size={16} />
-                            </a>
-                          )}
-                          <button
-                            onClick={() => {
-                              if (window.confirm(`Delete project "${proj.title}"?`)) {
-                                deleteProject(proj.id);
-                              }
-                            }}
-                            style={{
-                              background: 'none',
-                              border: 'none',
-                              color: '#ef4444',
-                              cursor: 'pointer',
-                              padding: '4px'
-                            }}
-                            title="Delete Project"
-                          >
-                            <Trash2 size={16} />
-                          </button>
-                        </div>
+                        No projects in portfolio yet. Use the form above to add your first project!
                       </div>
-                    ))}
+                    ) : (
+                      projects.map((proj) => (
+                        <div
+                          key={proj.id}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            padding: '12px 16px',
+                            borderRadius: '12px',
+                            border: '1px solid rgba(15, 23, 42, 0.08)',
+                            background: '#ffffff'
+                          }}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden' }}>
+                            <span
+                              style={{
+                                padding: '3px 8px',
+                                borderRadius: '6px',
+                                background: 'rgba(2, 132, 199, 0.1)',
+                                color: '#0284c7',
+                                fontSize: '0.72rem',
+                                fontFamily: 'var(--font-mono)',
+                                fontWeight: 700,
+                                whiteSpace: 'nowrap'
+                              }}
+                            >
+                              {projectTracks.find((t) => t.id === proj.track)?.title.split(' ')[0] || proj.badge}
+                            </span>
+                            <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#0f172a', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
+                              {proj.title}
+                            </span>
+                          </div>
+
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            {proj.demo && (
+                              <a href={proj.demo} target="_blank" rel="noreferrer" style={{ color: '#0284c7' }} title="Visit Demo">
+                                <ExternalLink size={16} />
+                              </a>
+                            )}
+                            <button
+                              onClick={() => {
+                                if (window.confirm(`Delete project "${proj.title}"?`)) {
+                                  deleteProject(proj.id);
+                                }
+                              }}
+                              style={{
+                                background: 'none',
+                                border: 'none',
+                                color: '#ef4444',
+                                cursor: 'pointer',
+                                padding: '4px'
+                              }}
+                              title="Delete Project"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </div>
+                      ))
+                    )}
                   </div>
                 </div>
               )}

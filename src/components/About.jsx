@@ -1,10 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { User, CheckCircle, ExternalLink, FileText, Sparkles } from 'lucide-react';
-import { personalInfo, terminalCommands } from '../data/portfolioData';
+import { personalInfo as defaultPersonalInfo, terminalCommands } from '../data/portfolioData';
+import { usePortfolio } from '../context/PortfolioContext';
 import { soundManager } from '../utils/audioFx';
 import TiltCard from './TiltCard';
 
 export default function About({ onOpenResume }) {
+  const { profile, projects } = usePortfolio();
+  const personalInfo = profile || defaultPersonalInfo;
+  const completedProjectsDisplay = projects.length > 0 ? `${projects.length}+` : (personalInfo.completedProjects || '0');
+
   const [terminalInput, setTerminalInput] = useState('');
   const [terminalHistory, setTerminalHistory] = useState([
     { type: 'system', text: `Welcome to ${personalInfo.name}'s Interactive Terminal!` },
@@ -339,7 +344,7 @@ export default function About({ onOpenResume }) {
             color: "#0284c7"
           },
           {
-            number: personalInfo.completedProjects,
+            number: completedProjectsDisplay,
             label: "Projects Completed",
             sub: "Spanning MERN platforms, API architectures, and frontend apps.",
             color: "#6366f1"

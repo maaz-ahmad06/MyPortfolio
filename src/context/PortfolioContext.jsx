@@ -35,7 +35,14 @@ export function PortfolioProvider({ children }) {
   const [projects, setProjects] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEYS.PROJECTS);
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Clean out any previous dummy/default bundled projects
+        const userProjects = parsed.filter(
+          (p) => !p.id.endsWith('-vanilla') && !p.id.endsWith('-react') && !p.id.endsWith('-mern')
+        );
+        return userProjects;
+      }
     } catch {
       // Fallback
     }

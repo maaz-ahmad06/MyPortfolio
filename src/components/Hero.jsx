@@ -1,10 +1,15 @@
 import { useState, useEffect } from 'react';
 import { ArrowRight, FileText, MessageCircle, Sparkles, Server, Atom, ChevronDown } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './Icons';
-import { personalInfo } from '../data/portfolioData';
+import { personalInfo as defaultPersonalInfo } from '../data/portfolioData';
+import { usePortfolio } from '../context/PortfolioContext';
 import { soundManager } from '../utils/audioFx';
 
 export default function Hero({ onOpenResume }) {
+  const { profile, projects } = usePortfolio();
+  const personalInfo = profile || defaultPersonalInfo;
+  const completedProjectsDisplay = projects.length > 0 ? `${projects.length}+` : (personalInfo.completedProjects || '0');
+
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -37,7 +42,7 @@ export default function Hero({ onOpenResume }) {
     }, typingSpeed);
 
     return () => clearTimeout(timer);
-  }, [displayText, isDeleting, currentRoleIndex, typingSpeed]);
+  }, [displayText, isDeleting, currentRoleIndex, typingSpeed, personalInfo.roles]);
 
   const handleCtaClick = (targetId) => {
     soundManager.playClick();
@@ -443,7 +448,7 @@ export default function Hero({ onOpenResume }) {
             }}
           >
             <span style={{ fontSize: '1.4rem', fontWeight: 800 }} className="gradient-text-alt">
-              {personalInfo.completedProjects}
+              {completedProjectsDisplay}
             </span>
             <span style={{ fontSize: '0.72rem', color: '#475569', fontWeight: 600, lineHeight: 1.2 }}>
               MERN<br />Projects
