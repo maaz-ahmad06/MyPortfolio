@@ -27,7 +27,10 @@ import {
   FileText,
   FileUp,
   Download,
-  FileCheck
+  FileCheck,
+  ImageIcon,
+  HardDrive,
+  UploadCloud
 } from 'lucide-react';
 import { usePortfolio } from '../context/PortfolioContext';
 import { soundManager } from '../utils/audioFx';
@@ -107,9 +110,16 @@ export default function AdminModal({ isOpen, onClose }) {
     tech: 'HTML5, CSS3, JavaScript',
     github: 'https://github.com/maaz-ahmad06',
     demo: '',
-    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80'
+    image: ''
   });
   const [projectSuccessMsg, setProjectSuccessMsg] = useState('');
+
+  // Project Image Upload & Selector State (Local Storage / PC vs URL)
+  const [projectImageMode, setProjectImageMode] = useState('file'); // 'file' | 'url'
+  const [projectImageMeta, setProjectImageMeta] = useState(null);
+  const [projectImgError, setProjectImgError] = useState('');
+  const [isProcessingImg, setIsProcessingImg] = useState(false);
+  const [isProjectImgDragOver, setIsProjectImgDragOver] = useState(false);
 
   // Form States - Track Card (Category)
   const [trackForm, setTrackForm] = useState({
@@ -200,6 +210,85 @@ export default function AdminModal({ isOpen, onClose }) {
     }
   };
 
+  // Handle Local Project Image File Selection & Compression
+  const handleProjectFileChange = (file) => {
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      setProjectImgError('Please select a valid image file (PNG, JPG, WebP, SVG).');
+      return;
+    }
+    setProjectImgError('');
+    setIsProcessingImg(true);
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const rawDataUrl = e.target?.result;
+      if (typeof rawDataUrl !== 'string') {
+        setIsProcessingImg(false);
+        return;
+      }
+      const img = new window.Image();
+      img.onload = () => {
+        // Optimize image to max 1200px width/height for fast loading & compact storage
+        const maxDim = 1200;
+        let { width, height } = img;
+        if (width > maxDim || height > maxDim) {
+          if (width > height) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          const isPng = file.type === 'image/png';
+          const optimizedDataUrl = isPng
+            ? canvas.toDataURL('image/png', 0.85)
+            : canvas.toDataURL('image/jpeg', 0.82);
+
+          setProjectForm((prev) => ({
+            ...prev,
+            image: optimizedDataUrl
+          }));
+          setProjectImageMeta({
+            name: file.name,
+            size: Math.round(optimizedDataUrl.length * 0.75),
+            dimensions: `${width}×${height}`
+          });
+        } else {
+          setProjectForm((prev) => ({ ...prev, image: rawDataUrl }));
+          setProjectImageMeta({
+            name: file.name,
+            size: file.size,
+            dimensions: `${width}×${height}`
+          });
+        }
+        setIsProcessingImg(false);
+      };
+      img.onerror = () => {
+        setProjectForm((prev) => ({ ...prev, image: rawDataUrl }));
+        setProjectImageMeta({
+          name: file.name,
+          size: file.size,
+          dimensions: 'Original'
+        });
+        setIsProcessingImg(false);
+      };
+      img.src = rawDataUrl;
+    };
+    reader.onerror = () => {
+      setProjectImgError('Failed to read file from local storage.');
+      setIsProcessingImg(false);
+    };
+    reader.readAsDataURL(file);
+  };
+
   // Handle Project Submit
   const handleProjectSubmit = (e) => {
     e.preventDefault();
@@ -209,8 +298,14 @@ export default function AdminModal({ isOpen, onClose }) {
     const matchedTrack = projectTracks.find((t) => t.id === projectForm.track);
     const category = matchedTrack ? matchedTrack.title : 'Project';
 
+    // If no image was provided, use a nice fallback
+    const finalImage = projectForm.image && projectForm.image.trim()
+      ? projectForm.image.trim()
+      : 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80';
+
     addProject({
       ...projectForm,
+      image: finalImage,
       category
     });
 
@@ -226,8 +321,9 @@ export default function AdminModal({ isOpen, onClose }) {
       tech: 'HTML5, CSS3, JavaScript',
       github: 'https://github.com/maaz-ahmad06',
       demo: '',
-      image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80'
+      image: ''
     });
+    setProjectImageMeta(null);
   };
 
   // Handle Track Card Submit
@@ -820,17 +916,297 @@ export default function AdminModal({ isOpen, onClose }) {
                         />
                       </div>
 
-                      <div style={{ marginBottom: '18px' }}>
-                        <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#475569', marginBottom: '6px' }}>
-                          Project Thumbnail Image URL
-                        </label>
-                        <input
-                          type="url"
-                          placeholder="Paste image URL (Unsplash or direct image link)"
-                          value={projectForm.image}
-                          onChange={(e) => setProjectForm({ ...projectForm, image: e.target.value })}
-                          style={inputStyle}
-                        />
+                      {/* Project Thumbnail Image Selector (Local Storage / PC vs Web URL) */}
+                      <div style={{ marginBottom: '20px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexWrap: 'wrap', gap: '8px' }}>
+                          <label style={{ fontSize: '0.82rem', fontWeight: 600, color: '#475569', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <ImageIcon size={15} color="#0284c7" />
+                            <span>Project Thumbnail Image</span>
+                          </label>
+
+                          {/* Source Mode Toggle: Local PC vs Online URL */}
+                          <div
+                            style={{
+                              display: 'inline-flex',
+                              background: '#f1f5f9',
+                              padding: '3px',
+                              borderRadius: '8px',
+                              gap: '4px'
+                            }}
+                          >
+                            <button
+                              type="button"
+                              onClick={() => {
+                                soundManager.playClick();
+                                setProjectImageMode('file');
+                              }}
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '5px',
+                                padding: '4px 10px',
+                                borderRadius: '6px',
+                                border: 'none',
+                                fontSize: '0.74rem',
+                                fontWeight: 600,
+                                cursor: 'pointer',
+                                background: projectImageMode === 'file' ? '#ffffff' : 'transparent',
+                                color: projectImageMode === 'file' ? '#0284c7' : '#64748b',
+                                boxShadow: projectImageMode === 'file' ? '0 1px 4px rgba(0,0,0,0.08)' : 'none',
+                                transition: 'all 0.2s ease'
+                              }}
+                            >
+                              <HardDrive size={13} />
+                              <span>Select from PC (Local)</span>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => {
+                                soundManager.playClick();
+                                setProjectImageMode('url');
+                              }}
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '5px',
+                                padding: '4px 10px',
+                                borderRadius: '6px',
+                                border: 'none',
+                                fontSize: '0.74rem',
+                                fontWeight: 600,
+                                cursor: 'pointer',
+                                background: projectImageMode === 'url' ? '#ffffff' : 'transparent',
+                                color: projectImageMode === 'url' ? '#0284c7' : '#64748b',
+                                boxShadow: projectImageMode === 'url' ? '0 1px 4px rgba(0,0,0,0.08)' : 'none',
+                                transition: 'all 0.2s ease'
+                              }}
+                            >
+                              <Globe size={13} />
+                              <span>Image URL</span>
+                            </button>
+                          </div>
+                        </div>
+
+                        {projectImgError && (
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#dc2626', fontSize: '0.78rem', marginBottom: '8px' }}>
+                            <AlertCircle size={14} />
+                            <span>{projectImgError}</span>
+                          </div>
+                        )}
+
+                        {projectImageMode === 'file' ? (
+                          <div>
+                            {/* Hidden local file input */}
+                            <input
+                              type="file"
+                              id="project-thumbnail-file-input"
+                              accept="image/png,image/jpeg,image/webp,image/svg+xml,image/gif"
+                              style={{ display: 'none' }}
+                              onChange={(e) => {
+                                if (e.target.files?.[0]) {
+                                  handleProjectFileChange(e.target.files[0]);
+                                }
+                              }}
+                            />
+
+                            {projectForm.image ? (
+                              /* Selected Local Image Preview Card */
+                              <div
+                                style={{
+                                  borderRadius: '12px',
+                                  border: '1px solid rgba(2, 132, 199, 0.25)',
+                                  background: 'linear-gradient(135deg, rgba(2, 132, 199, 0.03) 0%, rgba(99, 102, 241, 0.04) 100%)',
+                                  padding: '12px',
+                                  display: 'flex',
+                                  flexDirection: 'column',
+                                  gap: '10px'
+                                }}
+                              >
+                                <div style={{ position: 'relative', width: '100%', height: '180px', borderRadius: '8px', overflow: 'hidden', background: '#0f172a' }}>
+                                  <img
+                                    src={projectForm.image}
+                                    alt="Project preview"
+                                    style={{
+                                      width: '100%',
+                                      height: '100%',
+                                      objectFit: 'cover'
+                                    }}
+                                  />
+                                  <div
+                                    style={{
+                                      position: 'absolute',
+                                      top: '8px',
+                                      left: '8px',
+                                      background: 'rgba(15, 23, 42, 0.78)',
+                                      backdropFilter: 'blur(8px)',
+                                      padding: '4px 10px',
+                                      borderRadius: '6px',
+                                      color: '#38bdf8',
+                                      fontSize: '0.72rem',
+                                      fontWeight: 700,
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      gap: '5px'
+                                    }}
+                                  >
+                                    <CheckCircle2 size={13} color="#38bdf8" />
+                                    <span>Image Selected from Local Storage</span>
+                                  </div>
+                                </div>
+
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
+                                  <div style={{ fontSize: '0.78rem', color: '#64748b' }}>
+                                    {projectImageMeta ? (
+                                      <span>
+                                        <strong style={{ color: '#0f172a' }}>{projectImageMeta.name}</strong> &bull; {(projectImageMeta.size / 1024).toFixed(0)} KB &bull; {projectImageMeta.dimensions}
+                                      </span>
+                                    ) : (
+                                      <span>Image ready for publishing</span>
+                                    )}
+                                  </div>
+
+                                  <div style={{ display: 'flex', gap: '8px' }}>
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        soundManager.playClick();
+                                        document.getElementById('project-thumbnail-file-input')?.click();
+                                      }}
+                                      style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '5px',
+                                        padding: '6px 12px',
+                                        borderRadius: '7px',
+                                        border: '1px solid rgba(2, 132, 199, 0.3)',
+                                        background: '#ffffff',
+                                        color: '#0284c7',
+                                        fontSize: '0.78rem',
+                                        fontWeight: 600,
+                                        cursor: 'pointer'
+                                      }}
+                                    >
+                                      <UploadCloud size={14} />
+                                      <span>Change Image</span>
+                                    </button>
+
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        soundManager.playClick();
+                                        setProjectForm((prev) => ({ ...prev, image: '' }));
+                                        setProjectImageMeta(null);
+                                      }}
+                                      style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '5px',
+                                        padding: '6px 12px',
+                                        borderRadius: '7px',
+                                        border: '1px solid rgba(239, 68, 68, 0.25)',
+                                        background: '#fff1f2',
+                                        color: '#e11d48',
+                                        fontSize: '0.78rem',
+                                        fontWeight: 600,
+                                        cursor: 'pointer'
+                                      }}
+                                    >
+                                      <Trash2 size={13} />
+                                      <span>Remove</span>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            ) : (
+                              /* Empty Dropzone / Click-to-browse Area */
+                              <div
+                                onClick={() => {
+                                  soundManager.playClick();
+                                  document.getElementById('project-thumbnail-file-input')?.click();
+                                }}
+                                onDragOver={(e) => {
+                                  e.preventDefault();
+                                  setIsProjectImgDragOver(true);
+                                }}
+                                onDragLeave={() => setIsProjectImgDragOver(false)}
+                                onDrop={(e) => {
+                                  e.preventDefault();
+                                  setIsProjectImgDragOver(false);
+                                  if (e.dataTransfer.files?.[0]) {
+                                    handleProjectFileChange(e.dataTransfer.files[0]);
+                                  }
+                                }}
+                                style={{
+                                  border: isProjectImgDragOver
+                                    ? '2px dashed #0284c7'
+                                    : '2px dashed rgba(2, 132, 199, 0.35)',
+                                  background: isProjectImgDragOver
+                                    ? 'rgba(2, 132, 199, 0.08)'
+                                    : 'rgba(2, 132, 199, 0.03)',
+                                  borderRadius: '12px',
+                                  padding: '26px 16px',
+                                  textAlign: 'center',
+                                  cursor: 'pointer',
+                                  transition: 'all 0.2s ease',
+                                  display: 'flex',
+                                  flexDirection: 'column',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  gap: '8px'
+                                }}
+                              >
+                                <div
+                                  style={{
+                                    width: '46px',
+                                    height: '46px',
+                                    borderRadius: '12px',
+                                    background: 'linear-gradient(135deg, #0284c7 0%, #6366f1 100%)',
+                                    color: '#ffffff',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    boxShadow: '0 6px 16px rgba(2, 132, 199, 0.25)'
+                                  }}
+                                >
+                                  {isProcessingImg ? <Sparkles size={22} className="animate-spin" /> : <HardDrive size={22} />}
+                                </div>
+
+                                <div>
+                                  <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#0f172a' }}>
+                                    {isProcessingImg ? 'Processing & Optimizing Image...' : 'Click to Select Image from Local Storage (PC)'}
+                                  </div>
+                                  <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '2px' }}>
+                                    Drag & drop or browse your local files (PNG, JPG, WebP, SVG). Auto-optimized for web!
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          /* Web URL Mode */
+                          <div>
+                            <input
+                              type="url"
+                              placeholder="Paste image URL (https://... or unsplash)"
+                              value={projectForm.image}
+                              onChange={(e) => setProjectForm({ ...projectForm, image: e.target.value })}
+                              style={inputStyle}
+                            />
+                            {projectForm.image && (
+                              <div style={{ marginTop: '8px', height: '140px', borderRadius: '8px', overflow: 'hidden', background: '#0f172a' }}>
+                                <img
+                                  src={projectForm.image}
+                                  alt="Preview"
+                                  onError={(e) => {
+                                    e.currentTarget.style.display = 'none';
+                                  }}
+                                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                />
+                              </div>
+                            )}
+                          </div>
+                        )}
                       </div>
 
                       <button
