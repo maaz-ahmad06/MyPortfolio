@@ -23,7 +23,7 @@ export const personalInfo = {
   phone: "+92 335 3545245",
   status: "Available for Full-time Roles & Freelance Projects",
   yearsExperience: "2+",
-  completedProjects: "18+",
+  completedProjects: "24+",
   satisfiedClients: "15+",
   codeCommits: "850+",
   socials: {
@@ -85,15 +85,15 @@ export const projectTracks = [
     id: "frontend-react",
     title: "Frontend (React.js)",
     subtitle: "Modern SPAs & Component UI",
-    desc: "High-performance Single Page Applications, responsive Kanban boards, live API dashboards, and modern component-driven architectures.",
-    badge: "0 Live Projects",
-    count: 0,
+    desc: "6 live Single Page Applications, conversational AI assistants, automotive portals, and dynamic state-driven tools built with React 19, Tailwind CSS v4, and Vite.",
+    badge: "6 Live Projects",
+    count: 6,
     accentColor: "#0284c7",
     gradient: "linear-gradient(135deg, #0284c7 0%, #4f46e5 100%)",
     bgSoft: "rgba(2, 132, 199, 0.08)",
     borderSoft: "rgba(2, 132, 199, 0.25)",
     icon: "Atom",
-    tags: ["React 19", "TailwindCSS", "Vite", "Redux Toolkit", "Hooks"]
+    tags: ["React 19", "TailwindCSS v4", "Vite", "Google AI API", "Hooks"]
   },
   {
     id: "fullstack-mern",
@@ -474,6 +474,130 @@ export const projectsData = [
     github: "https://github.com/maaz-ahmad06/HTML-CSS-JS/tree/main/Projects/RPODUCT%20PAGE",
     demo: "https://maaz-ahmad06.github.io/HTML-CSS-JS/Projects/RPODUCT%20PAGE/",
     image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80"
+  },
+
+  // ==========================================
+  // TRACK 2: FRONTEND (REACT.JS) - 6 LIVE PROJECTS
+  // ==========================================
+  {
+    id: "agency-ai-react",
+    track: "frontend-react",
+    category: "Frontend (React.js)",
+    title: "Agency AI - Next-Gen Digital Marketing Platform",
+    badge: "AI Landing Page",
+    shortDesc: "High-converting digital AI agency landing page with smooth Framer Motion entrance animations, interactive pricing, and Tailwind CSS v4 styling.",
+    longDesc: "A production-grade AI Agency landing page engineered using React 19, Tailwind CSS v4, Motion, and Vite. Features high-converting hero sections, dynamic service showcase cards, interactive testimonial carousels, and engaging toast notifications.",
+    tech: ["React 19", "TailwindCSS v4", "Motion", "Vite", "React Hot Toast"],
+    highlights: [
+      "Smooth spring animations and scroll reveals with Motion",
+      "Modern Tailwind CSS v4 design system with dark glassmorphism",
+      "Interactive lead-generation CTA with toast feedback",
+      "Fully responsive across mobile, tablet, and widescreen layouts"
+    ],
+    gradient: "linear-gradient(135deg, #0284c7 0%, #6366f1 100%)",
+    github: "https://github.com/maaz-ahmad06/React-js/tree/main/AGENCY-AI",
+    demo: "https://agency-ai-beta-azure.vercel.app/",
+    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: "gemini-clone-react",
+    track: "frontend-react",
+    category: "Frontend (React.js)",
+    title: "Gemini AI Clone - Conversational AI Assistant",
+    badge: "Google AI API",
+    shortDesc: "Full Google Gemini conversational AI clone integrating Google Generative AI API with streaming prompt responses and chat history.",
+    longDesc: "A Google Gemini conversational intelligence interface built with React 19 and the official @google/generative-ai SDK. Features instant prompt execution, contextual conversation responses, animated typing effects, suggestion prompts, and mobile-friendly sidebar navigation.",
+    tech: ["React 19", "Google Gemini API", "Vite", "Generative AI", "JavaScript ES6+"],
+    highlights: [
+      "Direct integration with official @google/generative-ai SDK",
+      "Dynamic prompt history sidebar with new chat session creator",
+      "Animated response streaming mimicking Gemini native interface",
+      "Prompt suggestion quick-cards and responsive input bar"
+    ],
+    gradient: "linear-gradient(135deg, #2563eb 0%, #9333ea 100%)",
+    github: "https://github.com/maaz-ahmad06/React-js/tree/main/gemini-clone",
+    demo: "https://gemini-clone-peach-eight.vercel.app/",
+    image: "https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: "ev-website-react",
+    track: "frontend-react",
+    category: "Frontend (React.js)",
+    title: "EV Future - Electric Vehicle Experience Platform",
+    badge: "Modern UI / Showcase",
+    shortDesc: "Interactive electric vehicle platform featuring dynamic hero video background switcher, animated spec counters, and vehicle feature explorer.",
+    longDesc: "An immersive automotive product showcase website engineered with React 19 and Vite. Designed to highlight next-generation electric vehicles with smooth background video playback, dynamic car feature sliders, battery/range statistics, and inquiry forms.",
+    tech: ["React 19", "Vite", "CSS3 Animations", "Interactive Media", "Modern UI"],
+    highlights: [
+      "Background video and high-resolution photo transitions",
+      "Interactive vehicle specification overview and telemetry counters",
+      "Clean minimalist luxury UI styling with responsive layouts",
+      "Stateful navigation and dynamic feature discovery carousel"
+    ],
+    gradient: "linear-gradient(135deg, #059669 0%, #0284c7 100%)",
+    github: "https://github.com/maaz-ahmad06/React-js/tree/main/ev-website",
+    demo: "https://ev-website-flame-three.vercel.app/",
+    image: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: "news-mag-react",
+    track: "frontend-react",
+    category: "Frontend (React.js)",
+    title: "NewsMag - Real-Time Global News Magazine",
+    badge: "News API",
+    shortDesc: "Dynamic real-time news aggregation platform fetching top breaking headlines across Technology, Business, Sports, and Entertainment categories.",
+    longDesc: "A fast real-time news application built with React 19, Bootstrap/Tailwind, and News API. Users can browse categorized breaking news, search stories, read summarized cards, and launch direct articles with live timestamp indicators.",
+    tech: ["React 19", "News API", "Vite", "RESTful Fetch", "Responsive Grid"],
+    highlights: [
+      "Category-based news filtering (Tech, Business, Sports, Health, Entertainment)",
+      "Async API data fetching with robust loading skeletons and fallback imagery",
+      "Article snippet cards with source badges and external reading links",
+      "Clean magazine grid layout with mobile navigation"
+    ],
+    gradient: "linear-gradient(135deg, #ea580c 0%, #dc2626 100%)",
+    github: "https://github.com/maaz-ahmad06/React-js/tree/main/news-mag",
+    demo: "https://news-mag-gold-ten.vercel.app/",
+    image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: "quiz-app-react",
+    track: "frontend-react",
+    category: "Frontend (React.js)",
+    title: "React Quiz Engine - Timed Interactive Challenge",
+    badge: "State-Driven Quiz",
+    shortDesc: "Dynamic React quiz application with question progression, instant feedback, score calculation, and final performance analytics.",
+    longDesc: "An interactive assessment web application developed with React 19 hooks (useState, useEffect, useRef). Features timed question rounds, color-coded answer validation, running score tally, and a performance report card upon test completion.",
+    tech: ["React 19", "React Hooks", "Vite", "State Management", "CSS Grid"],
+    highlights: [
+      "Single Page Application state management for seamless question transitions",
+      "Instant visual true/false response indicator disabling duplicate submissions",
+      "Detailed end-of-quiz score summary with restart and review option",
+      "Optimized mobile-friendly UI with progress gauge"
+    ],
+    gradient: "linear-gradient(135deg, #7c3aed 0%, #db2777 100%)",
+    github: "https://github.com/maaz-ahmad06/React-js/tree/main/quiz-app",
+    demo: "https://quiz-app-sepia-kappa-38.vercel.app/",
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: "todo-list-react",
+    track: "frontend-react",
+    category: "Frontend (React.js)",
+    title: "TaskMaster - React Todo & Productivity Tracker",
+    badge: "State & LocalStorage",
+    shortDesc: "Intuitive task management app with real-time add, toggle completion, delete actions, filter tabs, and persistent local storage sync.",
+    longDesc: "A modern task management application built in React 19. Empowers users to organize daily goals, cross out completed items, filter by active or finished tasks, and persist state across browser sessions.",
+    tech: ["React 19", "React Hooks", "Vite", "LocalStorage Persistence", "CSS Modules"],
+    highlights: [
+      "Full CRUD task management with instant state synchronization",
+      "Filter controls (All, Active, Completed) for organized workflow",
+      "Automatic LocalStorage persistence preventing data loss on reload",
+      "Smooth item entrance/exit micro-interactions and empty-state illustrations"
+    ],
+    gradient: "linear-gradient(135deg, #0284c7 0%, #10b981 100%)",
+    github: "https://github.com/maaz-ahmad06/React-js/tree/main/todo-list",
+    demo: "https://todo-list-ashy-alpha-70hijm2ov8.vercel.app/",
+    image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=800&q=80"
   }
 ];
 
