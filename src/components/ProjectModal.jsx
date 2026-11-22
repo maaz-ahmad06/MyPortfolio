@@ -234,30 +234,34 @@ export default function ProjectModal({ project, onClose }) {
 
         {/* Modal Action Buttons */}
         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-          <a
-            href={project.demo}
-            target="_blank"
-            rel="noreferrer"
-            onMouseEnter={() => soundManager.playHover()}
-            onClick={() => soundManager.playClick()}
-            className="btn-magnetic btn-primary-glow"
-            style={{ flex: 1, minWidth: '160px' }}
-          >
-            <ExternalLink size={18} />
-            <span>Launch Live Demo</span>
-          </a>
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noreferrer"
-            onMouseEnter={() => soundManager.playHover()}
-            onClick={() => soundManager.playClick()}
-            className="btn-magnetic btn-glass-glow"
-            style={{ flex: 1, minWidth: '160px' }}
-          >
-            <GithubIcon size={18} />
-            <span>Source Code</span>
-          </a>
+          {project.demo && (
+            <a
+              href={project.demo}
+              target="_blank"
+              rel="noreferrer"
+              onMouseEnter={() => soundManager.playHover()}
+              onClick={() => soundManager.playClick()}
+              className="btn-magnetic btn-primary-glow"
+              style={{ flex: 1, minWidth: '160px' }}
+            >
+              <ExternalLink size={18} />
+              <span>Launch Live Demo</span>
+            </a>
+          )}
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noreferrer"
+              onMouseEnter={() => soundManager.playHover()}
+              onClick={() => soundManager.playClick()}
+              className="btn-magnetic btn-glass-glow"
+              style={{ flex: 1, minWidth: '160px' }}
+            >
+              <GithubIcon size={18} />
+              <span>Source Code</span>
+            </a>
+          )}
         </div>
       </div>
     </div>
