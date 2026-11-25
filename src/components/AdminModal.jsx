@@ -157,10 +157,13 @@ export default function AdminModal({ isOpen, onClose }) {
     status: profile.status || '',
     phone: profile.phone || '',
     email: profile.email || '',
-    completedProjects: profile.completedProjects || '18+',
+    yearsExperience: profile.yearsExperience || 'Fresher',
+    completedProjects: profile.completedProjects || '24+',
     satisfiedClients: profile.satisfiedClients || '15+'
   });
   const [profileSuccessMsg, setProfileSuccessMsg] = useState('');
+
+
 
   // Sync state
   const [tokenInput, setTokenInput] = useState(githubToken);
@@ -2359,6 +2362,38 @@ export default function AdminModal({ isOpen, onClose }) {
                           onChange={(e) => setProfileForm({ ...profileForm, email: e.target.value })}
                           style={inputStyle}
                         />
+                      </div>
+
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#475569', marginBottom: '6px' }}>
+                          Experience Level / Years of Experience
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Fresher, Fresh Graduate, 0+, 1+, 2+"
+                          value={profileForm.yearsExperience}
+                          onChange={(e) => setProfileForm({ ...profileForm, yearsExperience: e.target.value })}
+                          style={inputStyle}
+                        />
+                        <span style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '3px', display: 'block' }}>
+                          Shown on the first metrics card in About section (e.g. "Fresher" or "0+").
+                        </span>
+                      </div>
+
+                      <div>
+                        <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#475569', marginBottom: '6px' }}>
+                          Satisfied Clients / Collaborations
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. 15+"
+                          value={profileForm.satisfiedClients}
+                          onChange={(e) => setProfileForm({ ...profileForm, satisfiedClients: e.target.value })}
+                          style={inputStyle}
+                        />
+                        <span style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '3px', display: 'block' }}>
+                          Displayed in personal profile statistics.
+                        </span>
                       </div>
                     </div>
 

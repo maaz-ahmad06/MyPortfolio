@@ -22,7 +22,7 @@ export const personalInfo = {
   email: "maazahmad21988@gmail.com",
   phone: "+92 335 3545245",
   status: "Available for Full-time Roles & Freelance Projects",
-  yearsExperience: "2+",
+  yearsExperience: "Fresher",
   completedProjects: "24+",
   satisfiedClients: "15+",
   codeCommits: "850+",

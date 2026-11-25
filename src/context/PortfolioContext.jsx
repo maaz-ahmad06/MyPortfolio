@@ -74,7 +74,14 @@ export function PortfolioProvider({ children }) {
   const [profile, setProfile] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEYS.PROFILE);
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // If parsed profile still carries the old default "2+", update it to defaultPersonalInfo.yearsExperience
+        if (parsed.yearsExperience === '2+') {
+          parsed.yearsExperience = defaultPersonalInfo.yearsExperience;
+        }
+        return { ...defaultPersonalInfo, ...parsed };
+      }
     } catch {
       // Fallback
     }

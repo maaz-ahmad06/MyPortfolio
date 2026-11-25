@@ -338,10 +338,14 @@ export default function About({ onOpenResume }) {
         {/* Card 3: Metrics & Highlights Row (12 columns split into 3 cards) */}
         {[
           {
-            number: personalInfo.yearsExperience,
-            label: "Years of Experience",
-            sub: "In modern full-stack web engineering & responsive design.",
-            color: "#0284c7"
+            number: personalInfo.yearsExperience || 'Fresher',
+            label: (personalInfo.yearsExperience === 'Fresher' || personalInfo.yearsExperience === 'Fresh Graduate' || personalInfo.yearsExperience === 'Fresh Grad')
+              ? 'Experience Level'
+              : 'Years of Experience',
+            sub: (personalInfo.yearsExperience === 'Fresher' || personalInfo.yearsExperience === 'Fresh Graduate' || personalInfo.yearsExperience === 'Fresh Grad' || personalInfo.yearsExperience === '0' || personalInfo.yearsExperience === '0+')
+              ? 'Software Engineering graduate equipped with modern full-stack web engineering skills.'
+              : 'In modern full-stack web engineering & responsive design.',
+            color: '#0284c7'
           },
           {
             number: completedProjectsDisplay,
@@ -366,7 +370,7 @@ export default function About({ onOpenResume }) {
           >
             <div
               style={{
-                fontSize: '2.8rem',
+                fontSize: stat.number && String(stat.number).length > 4 ? 'clamp(1.85rem, 3.2vw, 2.35rem)' : '2.8rem',
                 fontWeight: 900,
                 color: stat.color,
                 marginBottom: '6px'
